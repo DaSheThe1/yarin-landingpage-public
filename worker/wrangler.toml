@@ -1,0 +1,19 @@
+# Cloudflare Worker that serves POST /api/contact for the (static) GitHub Pages
+# site. It holds the n8n webhook URL + secret so neither ever ships in the
+# browser bundle, mirroring what src/app/api/contact/route.ts did on the VPS.
+#
+# Deploy from this directory:
+#   npx wrangler login
+#   npx wrangler secret put N8N_WEBHOOK_URL
+#   npx wrangler secret put N8N_WEBHOOK_SECRET
+#   npx wrangler deploy
+#
+# The route below makes Cloudflare run this Worker only for /api/contact on the
+# proxied domain; every other path falls through to the GitHub Pages origin.
+name = "yarin-contact"
+main = "src/contact.js"
+compatibility_date = "2025-01-01"
+
+routes = [
+  { pattern = "yarin-avraham.co.il/api/contact", zone_name = "yarin-avraham.co.il" }
+]

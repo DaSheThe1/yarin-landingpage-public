@@ -1,0 +1,72 @@
+name: Deploy to GitHub Pages
+
+# Builds the Hebrew landing page as a static export and publishes it to GitHub
+# Pages. Cloudflare sits in front for DNS/TLS and serves /api/contact via a
+# Worker (see worker/), so the static site needs no server of its own.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Required by actions/deploy-pages: write Pages + OIDC token for the deployment.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deploy at a time; newer pushes supersede in-flight ones.
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_TELEMETRY_DISABLED: 1
+      STATIC_EXPORT: "true"
+      NEXT_PUBLIC_SITE_URL: https://yarin-avraham.co.il
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v5
+        with:
+          version: 11.5.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Static export can't compile the POST handler in /api/contact or the
+      # force-dynamic /api/health route. The Cloudflare Worker serves
+      # /api/contact in production; this only edits the CI checkout.
+      - name: Drop server-only API routes
+        run: rm -rf src/app/api
+
+      # Build, then hoist out/he/* to the root so Hebrew is served at / on the
+      # static host (next-intl's locale-prefix middleware doesn't run on Pages).
+      - name: Build static export
+        run: pnpm exec next build && node scripts/flatten-locale-export.mjs
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

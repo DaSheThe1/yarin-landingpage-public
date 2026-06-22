@@ -1,0 +1,24 @@
+export type GalleryImage = {
+  /** Path under /public. */
+  src: string;
+  /** Hebrew alt text (accessibility). */
+  alt: string;
+  /** Intrinsic dimensions — keeps the masonry layout from shifting on load. */
+  width: number;
+  height: number;
+};
+
+/**
+ * Project gallery shown on /examples. These are real renders/visualizations.
+ * Add new images under /public/images and reference them here — the layout is a
+ * responsive masonry that respects each image's natural aspect ratio.
+ */
+export const galleryImages: GalleryImage[] = [
+  { src: "/images/render-architectural-plans.png", alt: "תכנון אדריכלי — חזיתות ותכניות קומה לוילה", width: 512, height: 653 },
+  { src: "/images/render-modern-pool-villas.png", alt: "הדמיות וילה מודרנית עם בריכה", width: 639, height: 340 },
+  { src: "/images/render-villa-pair.png", alt: "הדמיות וילת אבן בנוף הרים", width: 515, height: 562 },
+  { src: "/images/render-desert-elevations.png", alt: "חזיתות וילה — מבט צפון ודרום", width: 512, height: 277 },
+  { src: "/images/render-stone-villas.png", alt: "הדמיות וילות אבן מודרניות", width: 519, height: 279 },
+  { src: "/images/render-desert-villa.png", alt: "הדמיית וילת מדבר עם בריכה ומטבח חוץ", width: 513, height: 284 },
+  { src: "/images/project-wix-office.png", alt: "עיצוב פנים למשרדים מסחריים", width: 781, height: 491 },
+];

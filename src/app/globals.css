@@ -1,0 +1,548 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* ───────────────────────────────────────────────────────────
+   ירין אליה אברהם — תכנון ועיצוב פנים | cool slate editorial system
+   Cool off-white canvas, ink text, muted slate-navy accent. Modern luxury.
+   Primary action is ink (high contrast); slate-navy is the accent used
+   for eyebrows, hairlines, hovers and small highlights.
+   ─────────────────────────────────────────────────────────── */
+
+:root {
+  /* This is a light-only site — tell the UA so OS dark mode never inverts
+     form controls, scrollbars or the default canvas. */
+  color-scheme: light;
+
+  /* Surfaces — crisp cool off-white canvas, slate layers (cards rise to white) */
+  --background: #f6f7f8;
+  --surface-1: #ffffff;
+  --surface-2: #eceef1;
+  --surface-3: #dfe3e7;
+
+  /* Text — ink, for a sharp modern high-contrast read */
+  --foreground: #16181c;
+  --foreground-soft: #353b42;
+  --muted-foreground: #5b636d;
+  --subtle-foreground: #828b95;
+
+  /* Brand — confident royal blue. -accent is deepened for text contrast. */
+  --brand: #2563eb;
+  --brand-accent: #1e40af;
+  --brand-hover: #1d4ed8;
+  --brand-soft: #7da2f0;
+
+  /* Mapped shadcn-style tokens */
+  --card: #ffffff;
+  --card-foreground: #16181c;
+  --popover: #ffffff;
+  --popover-foreground: #16181c;
+  --primary: #16181c;
+  --primary-foreground: #ffffff;
+  --secondary: rgba(22, 24, 28, 0.05);
+  --secondary-foreground: #16181c;
+  --muted: #eceef1;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --destructive: #b3492f;
+  --success: #4f7a52;
+
+  --border: rgba(22, 24, 28, 0.12);
+  --border-subtle: rgba(22, 24, 28, 0.07);
+  --input: rgba(22, 24, 28, 0.15);
+  --ring: #2563eb;
+  --radius: 0.625rem;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface-1: var(--surface-1);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-foreground: var(--foreground);
+  --color-foreground-soft: var(--foreground-soft);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-subtle-foreground: var(--subtle-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+
+  --color-brand: var(--brand);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-soft: var(--brand-soft);
+
+  --color-border: var(--border);
+  --color-border-subtle: var(--border-subtle);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 12px);
+
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-mono);
+
+  /* Animations */
+  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee-slow: marquee 60s linear infinite;
+  --animate-float: float 7s ease-in-out infinite;
+  --animate-aurora: aurora 18s ease-in-out infinite alternate;
+  --animate-glow-pulse: glow-pulse 4s ease-in-out infinite;
+  --animate-flow: flow 2.4s linear infinite;
+  --animate-shimmer: shimmer 2.6s linear infinite;
+  --animate-spin-slow: spin 24s linear infinite;
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-inter), -apple-system, system-ui, sans-serif;
+    font-feature-settings: "cv01", "ss03";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: color-mix(in oklch, var(--brand), transparent 60%);
+    color: var(--foreground);
+  }
+
+  /* Themed scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(22, 24, 28, 0.18);
+    border-radius: 9999px;
+    border: 2px solid var(--background);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(22, 24, 28, 0.3);
+  }
+}
+
+/* ─────────────────────────  Keyframes  ───────────────────────── */
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes aurora {
+  0% {
+    transform: translate3d(-4%, -2%, 0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate3d(4%, 3%, 0) scale(1.15);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(2%, -3%, 0) scale(1.05);
+    opacity: 0.85;
+  }
+}
+
+@keyframes glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes flow {
+  to {
+    stroke-dashoffset: -16;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-step {
+  0%,
+  100% {
+    border-color: rgba(22, 24, 28, 0.1);
+    background: rgba(22, 24, 28, 0.015);
+  }
+  50% {
+    border-color: rgba(37, 99, 235, 0.65);
+    background: rgba(37, 99, 235, 0.12);
+  }
+}
+
+@keyframes text-shine {
+  to {
+    background-position: -200% center;
+  }
+}
+
+/* The hero title's per-letter colour wave is driven by a single rAF clock in
+   WaveText (one crest, written inline per frame) rather than CSS keyframes — see
+   that component for the rationale and the reduced-motion handling. */
+
+@keyframes glow-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3),
+      0 8px 40px -10px rgba(37, 99, 235, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.55),
+      0 16px 60px -10px rgba(37, 99, 235, 0.5);
+  }
+}
+
+@keyframes beam-spin {
+  to {
+    transform: translate(-50%, -50%) rotate(1turn);
+  }
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-220px);
+    opacity: 0;
+  }
+}
+
+/* Hero showcase: crossfade between renders with a slow Ken Burns zoom. */
+@keyframes hero-slide {
+  0% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+  3% {
+    opacity: 1;
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1.11);
+  }
+  28% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+/* ─────────────────────────  Utilities  ───────────────────────── */
+
+@layer utilities {
+  /* Scroll reveal — toggled by the Reveal component */
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  [data-reveal].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Faint engineered grid backdrop */
+  .bg-grid {
+    background-image: linear-gradient(
+        to right,
+        rgba(22, 24, 28, 0.045) 1px,
+        transparent 1px
+      ),
+      linear-gradient(to bottom, rgba(22, 24, 28, 0.045) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .bg-dot {
+    background-image: radial-gradient(
+      rgba(22, 24, 28, 0.08) 1px,
+      transparent 1px
+    );
+    background-size: 22px 22px;
+  }
+
+  /* Radial fade mask for backdrops */
+  .mask-fade {
+    -webkit-mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      #000 40%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      #000 40%,
+      transparent 100%
+    );
+  }
+
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
+  }
+
+  /* Gradient headline text — charcoal sinking into brass */
+  .text-gradient {
+    background: linear-gradient(
+      180deg,
+      #16181c 0%,
+      #2f3e4e 60%,
+      var(--brand) 130%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(90deg, #2b3a49, #6d8198, #2b3a49);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Animated shimmering headline gradient — brass sweeping over charcoal */
+  .text-shimmer {
+    background: linear-gradient(
+      100deg,
+      #2a2f36 18%,
+      #3f5266 40%,
+      #243240 54%,
+      #2a2f36 78%
+    );
+    background-size: 220% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: text-shine 6s linear infinite;
+  }
+
+  /* Breathing brand glow for emphasis */
+  .glow-breathe {
+    animation: glow-breathe 4.5s ease-in-out infinite;
+  }
+
+  /* Travelling colour wave across split letters (see WaveText). Words stay
+     intact (nowrap) so the phrase still wraps cleanly at spaces. */
+  .wave-word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  /* The crest (colour + lift) is written inline per frame by WaveText from a
+     single rAF clock — see that component for why it isn't a CSS animation. */
+  .wave-text-char {
+    display: inline-block;
+    color: var(--foreground);
+    will-change: color, transform;
+  }
+
+  /* Rotating gradient border (beam) */
+  .beam {
+    position: relative;
+    isolation: isolate;
+  }
+  .beam::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 180%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    background: conic-gradient(
+      from 0deg,
+      transparent 0 58%,
+      rgba(37, 99, 235, 0.9) 74%,
+      rgba(125, 162, 240, 0.7) 84%,
+      transparent 92%
+    );
+    animation: beam-spin 7s linear infinite;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* Translucent glass card — warm white frost over the ivory canvas */
+  .glass {
+    background: rgba(255, 255, 255, 0.55);
+    border: 1px solid rgba(22, 24, 28, 0.08);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Hairline gradient top-border accent */
+  .hairline-top {
+    position: relative;
+  }
+  .hairline-top::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(37, 99, 235, 0.7),
+      transparent
+    );
+  }
+
+  /* Gradient ring border */
+  .ring-shine {
+    position: relative;
+  }
+  .ring-shine::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(
+      120deg,
+      rgba(22, 24, 28, 0.1),
+      rgba(37, 99, 235, 0.45),
+      rgba(22, 24, 28, 0.03)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow-brand {
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35),
+      0 8px 40px -8px rgba(37, 99, 235, 0.4);
+  }
+
+  .shadow-card {
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
+      0 20px 50px -24px rgba(22, 24, 28, 0.35);
+  }
+
+  /* Marquee fade edges */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 12%,
+      #000 88%,
+      transparent
+    );
+  }
+
+  .anim-shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(22, 24, 28, 0.04) 0%,
+      rgba(22, 24, 28, 0.1) 50%,
+      rgba(22, 24, 28, 0.04) 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2.6s linear infinite;
+  }
+}
+
+/* ─────────────────────────  RTL  ───────────────────────── */
+
+/* Inline directional icons (the "→" / "↗" / send glyphs next to button and
+   link labels) point toward the reading direction, so mirror them in RTL.
+   Faux-browser frames and the testimonial carousel opt out by forcing
+   dir="ltr" locally, so their controls are unaffected. */
+[dir="rtl"] [data-icon="inline-end"],
+[dir="rtl"] [data-icon="inline-start"] {
+  transform: scaleX(-1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  /* The tool strip is a deliberate brand element — keep it gently scrolling
+     even when reduced motion is requested (higher specificity overrides the
+     blanket rule above). It pauses on hover. */
+  .marquee-track {
+    animation-duration: 100s !important;
+    animation-iteration-count: infinite !important;
+  }
+  /* The hero title wave keeps its blue colour sweep but drops the vertical lift
+     under reduced motion — handled in WaveText (it reads the same media query),
+     so no CSS animation override is needed here. */
+}

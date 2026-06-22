@@ -1,0 +1,16 @@
+.agents
+.claude
+.codex
+.git
+.github
+.next
+coverage
+docs
+node_modules
+out
+*.log
+*.pem
+*:Zone.Identifier
+.env
+.env.*
+!.env.example
