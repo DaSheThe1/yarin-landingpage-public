@@ -674,7 +674,7 @@ export function FounderTeaser() {
                 className="absolute inset-0 grid place-items-center bg-gradient-to-br from-brand/20 via-brand/5 to-surface-3"
               >
                 <Image
-                  src="/images/yarin-icon.png"
+                  src="/images/yarin-icon.webp"
                   alt=""
                   width={128}
                   height={128}

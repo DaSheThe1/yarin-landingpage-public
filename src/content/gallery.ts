@@ -14,11 +14,11 @@ export type GalleryImage = {
  * responsive masonry that respects each image's natural aspect ratio.
  */
 export const galleryImages: GalleryImage[] = [
-  { src: "/images/render-architectural-plans.png", alt: "תכנון אדריכלי — חזיתות ותכניות קומה לוילה", width: 512, height: 653 },
-  { src: "/images/render-modern-pool-villas.png", alt: "הדמיות וילה מודרנית עם בריכה", width: 639, height: 340 },
-  { src: "/images/render-villa-pair.png", alt: "הדמיות וילת אבן בנוף הרים", width: 515, height: 562 },
-  { src: "/images/render-desert-elevations.png", alt: "חזיתות וילה — מבט צפון ודרום", width: 512, height: 277 },
-  { src: "/images/render-stone-villas.png", alt: "הדמיות וילות אבן מודרניות", width: 519, height: 279 },
-  { src: "/images/render-desert-villa.png", alt: "הדמיית וילת מדבר עם בריכה ומטבח חוץ", width: 513, height: 284 },
-  { src: "/images/project-wix-office.png", alt: "עיצוב פנים למשרדים מסחריים", width: 781, height: 491 },
+  { src: "/images/render-architectural-plans.webp", alt: "תכנון אדריכלי — חזיתות ותכניות קומה לוילה", width: 512, height: 653 },
+  { src: "/images/render-modern-pool-villas.webp", alt: "הדמיות וילה מודרנית עם בריכה", width: 639, height: 340 },
+  { src: "/images/render-villa-pair.webp", alt: "הדמיות וילת אבן בנוף הרים", width: 515, height: 562 },
+  { src: "/images/render-desert-elevations.webp", alt: "חזיתות וילה — מבט צפון ודרום", width: 512, height: 277 },
+  { src: "/images/render-stone-villas.webp", alt: "הדמיות וילות אבן מודרניות", width: 519, height: 279 },
+  { src: "/images/render-desert-villa.webp", alt: "הדמיית וילת מדבר עם בריכה ומטבח חוץ", width: 513, height: 284 },
+  { src: "/images/project-wix-office.webp", alt: "עיצוב פנים למשרדים מסחריים", width: 781, height: 491 },
 ];

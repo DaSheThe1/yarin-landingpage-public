@@ -41,7 +41,7 @@ export function SiteHeader() {
           className="group flex items-center gap-2.5 text-[15px] font-semibold tracking-tight text-foreground"
         >
           <Image
-            src="/images/yarin-icon.png"
+            src="/images/yarin-icon.webp"
             alt={siteConfig.name}
             width={32}
             height={32}

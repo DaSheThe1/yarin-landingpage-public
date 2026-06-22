@@ -56,6 +56,10 @@ export function pageMetadata({
 const organizationId = `${siteConfig.url}/#organization`;
 const founderId = `${siteConfig.url}/#founder`;
 
+// Public profile URLs (Instagram, etc.) as a flat list, empties dropped. Used
+// as schema.org `sameAs` so search/AI engines can disambiguate the entity.
+const sameAs = Object.values(siteConfig.profiles).filter(Boolean);
+
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
@@ -64,9 +68,11 @@ export function organizationSchema() {
     name: siteConfig.legalName,
     alternateName: siteConfig.name,
     url: siteConfig.url,
+    image: `${siteConfig.url}/images/render-modern-pool-villas.webp`,
     email: siteConfig.email,
     telephone: siteConfig.phoneE164,
     description: siteConfig.description,
+    ...(sameAs.length ? { sameAs } : {}),
     areaServed: ["מרכז", "צפון", "ישראל"],
     address: {
       "@type": "PostalAddress",
@@ -110,6 +116,8 @@ export function personSchema() {
     worksFor: { "@id": organizationId },
     nationality: siteConfig.founder.location,
     url: `${siteConfig.url}/about`,
+    image: `${siteConfig.url}/images/yarin-portrait.webp`,
+    ...(sameAs.length ? { sameAs } : {}),
   };
 }
 

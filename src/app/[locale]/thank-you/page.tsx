@@ -37,7 +37,8 @@ export async function generateMetadata({
     title: t("metaTitle"),
     description: t("metaDescription"),
     robots: { index: false, follow: false },
-    alternates: { canonical: `${siteConfig.url}/${locale}/thank-you` },
+    // Root-served, no locale prefix — the real URL is /thank-you/, not /he/thank-you.
+    alternates: { canonical: `${siteConfig.url}/thank-you` },
   };
 }
 
@@ -71,7 +72,7 @@ export default async function ThankYouPage({
           className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"
         />
 
-        <div className="relative mx-auto w-full max-w-5xl px-6 pb-20 pt-20 lg:pt-24">
+        <div className="relative mx-auto w-full max-w-6xl px-6 pb-20 pt-20 lg:pt-24">
           <div className="mx-auto max-w-3xl text-center">
             <Reveal className="flex justify-center">
               <Eyebrow>{t("eyebrow")}</Eyebrow>
@@ -90,7 +91,7 @@ export default async function ThankYouPage({
           </div>
 
           {/* The video is the point of this page — give it the most room. */}
-          <Reveal delay={200} className="mt-12 lg:mt-14">
+          <Reveal delay={200} className="mt-10 lg:mt-12">
             <ThankYouVideo />
           </Reveal>
 
@@ -105,7 +106,7 @@ export default async function ThankYouPage({
 
       {/* What happens next */}
       <section className="bg-background px-6 pb-20">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <Reveal>
             <p className="text-center font-mono text-xs uppercase tracking-[0.18em] text-subtle-foreground">
               {t("whatNext")}
@@ -139,7 +140,7 @@ export default async function ThankYouPage({
 
       {/* While you wait — keep them on the site instead of bouncing */}
       <section className="bg-background px-6 pb-24">
-        <div className="mx-auto max-w-5xl">
+        <div className="mx-auto max-w-6xl">
           <Reveal>
             <div className="ring-shine relative overflow-hidden rounded-3xl border border-black/[0.08] bg-surface-1 p-7 sm:p-9">
               <div

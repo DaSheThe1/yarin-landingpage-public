@@ -111,7 +111,7 @@ export function ThankYouVideo() {
   };
 
   return (
-    <div dir="ltr" className="relative mx-auto max-w-4xl">
+    <div dir="ltr" className="relative mx-auto max-w-6xl">
       {/* Ambient glow + rotating beam behind the frame for a premium feel */}
       <div
         aria-hidden

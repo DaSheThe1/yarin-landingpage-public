@@ -14,6 +14,35 @@ Next.js App Router + TypeScript + Tailwind/shadcn, pnpm, Playwright e2e.
 no public pricing, no payments. Scaffolded from the `automations-website`
 template; the next-intl machinery stays so English can be added later.
 
+## Repositories & publishing (mandatory)
+
+There are **two** repos, with **one source of truth**:
+
+- **This (private) repo** — the single source of truth. ALL work happens here:
+  branch, PR, merge, version-bump. It also holds private material the public site
+  must never expose (`n8n-workflows/`, VPS `infra/`, `Dockerfile`/`compose.yaml`/
+  `deploy.sh`, the `video/` project, ad-hoc screenshots, `.env.local`).
+- **The public repo** (`github.com/DaSheThe1/yarin-landingpage-public`) — a
+  **generated mirror** that GitHub Pages builds from. **Never edit, commit, or
+  merge in it directly.** It has no independent history worth preserving.
+
+Workflow — nothing is done twice:
+
+1. Develop + merge to `main` **here**.
+2. Run `scripts/publish-public.sh`. It mirrors the working tree into the public
+   clone (deny-listing the private paths above), normalizes the two e2e specs,
+   runs a **hard leak gate** (aborts if any infra hostname, the leads Sheet id,
+   the n8n webhook path, the real `.env.local` secret, or a private key appears),
+   then commits + pushes.
+3. The **public** repo's `deploy-pages.yml` builds the static export and deploys
+   to Pages (public repos get free Actions minutes). This repo does not deploy.
+
+Rules: never commit real secrets or infra hostnames even **here** (examples use
+`REPLACE_WITH_…` placeholders; real values live in `.env.local` / Cloudflare /
+the n8n node). If you add a new private-only file, add it to the deny list in
+`scripts/publish-public.sh` — but the leak gate is the real backstop, so a miss
+fails the publish rather than leaking.
+
 ## Hebrew & i18n
 
 - All user-facing copy lives in `messages/he.json`, keyed by section. Do not

@@ -110,7 +110,7 @@ export default async function AboutPage({
             <div>
               <div className="relative mb-8 aspect-[4/3] overflow-hidden rounded-2xl border border-black/[0.08] bg-surface-1 shadow-card">
                 <Image
-                  src="/images/yarin-portrait.png"
+                  src="/images/yarin-portrait.webp"
                   alt={siteConfig.founder.nameHe}
                   fill
                   sizes="(min-width: 1024px) 45vw, 90vw"

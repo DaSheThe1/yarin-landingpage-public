@@ -15,10 +15,10 @@ export type ServiceMedia = {
  */
 export const serviceMedia: (ServiceMedia | undefined)[] = [
   // Matched by index to services.items in messages/he.json.
-  { type: "image", src: "/images/render-desert-elevations.png", alt: "הדמיית חזיתות וילה" }, // תכנון אדריכלי
-  { type: "image", src: "/images/render-modern-pool-villas.png", alt: "הדמיית עיצוב פנים וחוץ לוילה מודרנית" }, // עיצוב פנים
-  { type: "image", src: "/images/render-architectural-plans.png", alt: "תכניות ותכנון אדריכלי להיתר בנייה" }, // ליווי מול רשויות והיתרי בנייה
-  { type: "image", src: "/images/render-desert-villa.png", alt: "הדמיית וילה עם תשתיות מתוכננות" }, // תכניות חשמל ואינסטלציה
-  { type: "image", src: "/images/render-stone-villas.png", alt: "הדמיות וילות אבן" },
-  { type: "image", src: "/images/render-villa-pair.png", alt: "הדמיות וילה" },
+  { type: "image", src: "/images/render-desert-elevations.webp", alt: "הדמיית חזיתות וילה" }, // תכנון אדריכלי
+  { type: "image", src: "/images/render-modern-pool-villas.webp", alt: "הדמיית עיצוב פנים וחוץ לוילה מודרנית" }, // עיצוב פנים
+  { type: "image", src: "/images/render-architectural-plans.webp", alt: "תכניות ותכנון אדריכלי להיתר בנייה" }, // ליווי מול רשויות והיתרי בנייה
+  { type: "image", src: "/images/render-desert-villa.webp", alt: "הדמיית וילה עם תשתיות מתוכננות" }, // תכניות חשמל ואינסטלציה
+  { type: "image", src: "/images/render-stone-villas.webp", alt: "הדמיות וילות אבן" },
+  { type: "image", src: "/images/render-villa-pair.webp", alt: "הדמיות וילה" },
 ];

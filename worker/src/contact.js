@@ -11,6 +11,10 @@
 // Validation mirrors src/lib/contact-schema.ts so the Worker and the client form
 // reject the same inputs.
 
+// Only this origin's own form may submit. Cross-site browser POSTs carry a
+// different Origin and are rejected; same-origin form posts carry exactly this.
+const ALLOWED_ORIGIN = "https://yarin-avraham.co.il";
+
 const PHONE_ALLOWED_CHARS = /^[\d\s+().-]+$/;
 
 function isValidPhone(value) {
@@ -18,6 +22,16 @@ function isValidPhone(value) {
   if (!trimmed || !PHONE_ALLOWED_CHARS.test(trimmed)) return false;
   const digits = trimmed.replace(/\D/g, "");
   return digits.length >= 7 && digits.length <= 15;
+}
+
+// Neutralize spreadsheet formula injection: a name beginning with = + - @ (or a
+// tab/CR) would execute as a formula when the lead lands in Google Sheets.
+// Prefix a single quote so Sheets stores it as literal text. Real names never
+// start with these, so legitimate leads are untouched. (phone needs no such
+// guard — PHONE_ALLOWED_CHARS already rejects =, @, and letters, so it cannot
+// carry a HYPERLINK/IMPORTDATA-style formula.)
+function sanitizeForSheet(value) {
+  return /^[=+\-@\t\r]/.test(value) ? `'${value}` : value;
 }
 
 function json(obj, status) {
@@ -31,6 +45,15 @@ const worker = {
   async fetch(request, env) {
     if (request.method !== "POST") {
       return json({ ok: false, error: "Method Not Allowed" }, 405);
+    }
+
+    // Block cross-site browser submissions. A same-origin form POST sends
+    // Origin: https://yarin-avraham.co.il; any other Origin is not our form.
+    // Non-browser clients send no Origin — those are gated by the n8n shared
+    // secret and the Cloudflare rate-limiting rule on this route.
+    const origin = request.headers.get("Origin");
+    if (origin && origin !== ALLOWED_ORIGIN) {
+      return json({ ok: false, error: "Forbidden" }, 403);
     }
 
     const body = await request.json().catch(() => null);
@@ -74,7 +97,7 @@ const worker = {
       source: "yarin-landingpage",
       type: "lead_form_submission",
       submittedAt: new Date().toISOString(),
-      contact: { name, phone, email: "" },
+      contact: { name: sanitizeForSheet(name), phone, email: "" },
       meta: {
         page: "/contact",
         siteUrl: "https://yarin-avraham.co.il",

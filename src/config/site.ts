@@ -14,6 +14,12 @@ export const siteConfig = {
   phoneE164: "+972509010688",
   // wa.me wants the number in international form without "+" or separators.
   whatsappUrl: "https://wa.me/972509010688",
+  // Public profiles, surfaced as schema.org `sameAs` for entity disambiguation
+  // (the strongest lever for AI answer engines to pin and cite the entity).
+  // Add more as they go live — empty strings are filtered out before use.
+  profiles: {
+    instagram: "https://www.instagram.com/yarin.architecture",
+  },
   defaultTitle:
     "ירין אליה אברהם | תכנון ועיצוב פנים לוילות ובתי יוקרה",
   description:

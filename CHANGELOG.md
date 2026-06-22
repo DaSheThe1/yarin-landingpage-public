@@ -9,6 +9,42 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.6.1] - 2026-06-23
+
+### Added
+
+- **`sameAs` entity links + `image` in structured data.** `ProfessionalService`
+  and `Person` JSON-LD now carry `sameAs` (Instagram) and a representative
+  `image`, the strongest lever for AI answer engines to disambiguate and cite the
+  entity. Profiles live in `siteConfig.profiles` and are filtered for empties, so
+  new links activate with no code change.
+- **WebP image pipeline.** New `scripts/optimize-images.mjs` (sharp) converts
+  every `public/images/*.png` to a WebP sibling and is prepended to `build:static`
+  (plus a standalone `optimize:images` script). Cut the referenced image payload
+  ~90% (7.0 MB → 0.67 MB; the about portrait 1.8 MB → 0.22 MB) for a better LCP.
+  Components reference the `.webp`; PNGs remain the in-repo source of truth.
+
+### Fixed
+
+- **Thank-you canonical** pointed at `/he/thank-you`, a locale-prefixed URL that
+  doesn't exist on this root-served site. Now self-references `/thank-you`. The
+  page stays `noindex,follow` and out of the sitemap.
+
+### Security
+
+- **Hardened the Cloudflare Worker lead endpoint** (`worker/src/contact.js`).
+  Cross-origin browser submissions are now rejected (the `Origin`, when present,
+  must be `https://yarin-avraham.co.il`), and the `name` field is escaped against
+  spreadsheet formula injection — a leading `= + - @` (or tab/CR) is prefixed
+  with `'` so a crafted name can't execute as a formula when the lead lands in
+  the Google Sheet. `phone` needs no such guard (its charset allowlist already
+  rejects `=`/`@`/letters). Volumetric abuse is covered by a Cloudflare Rate
+  Limiting Rule on `/api/contact`.
+- **Stopped committing the production n8n webhook URL.**
+  `.env.production.example` now carries a `REPLACE_WITH_…` placeholder instead of
+  the real webhook path; the `x-webhook-secret` shared secret remains the access
+  gate.
+
 ## [0.6.0] - 2026-06-23
 
 ### Added

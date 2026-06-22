@@ -16,10 +16,10 @@ type FullscreenVideo = HTMLVideoElement & {
 // Auto-playing showcase shown until a real demo lands at /public/hero-demo.mp4.
 // One image per ~7s slot; keep the count in sync with the cycle math below.
 const showcase = [
-  { src: "/images/render-modern-pool-villas.png", alt: "הדמיית וילה מודרנית עם בריכה" },
-  { src: "/images/render-stone-villas.png", alt: "הדמיות וילות אבן בנוף הרים" },
-  { src: "/images/render-desert-villa.png", alt: "הדמיית וילת מדבר עם בריכה" },
-  { src: "/images/render-desert-elevations.png", alt: "חזיתות וילה — מבט צפון ודרום" },
+  { src: "/images/render-modern-pool-villas.webp", alt: "הדמיית וילה מודרנית עם בריכה" },
+  { src: "/images/render-stone-villas.webp", alt: "הדמיות וילות אבן בנוף הרים" },
+  { src: "/images/render-desert-villa.webp", alt: "הדמיית וילת מדבר עם בריכה" },
+  { src: "/images/render-desert-elevations.webp", alt: "חזיתות וילה — מבט צפון ודרום" },
 ];
 const slotSeconds = 7;
 
