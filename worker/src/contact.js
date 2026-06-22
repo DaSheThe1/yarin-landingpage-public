@@ -11,9 +11,10 @@
 // Validation mirrors src/lib/contact-schema.ts so the Worker and the client form
 // reject the same inputs.
 
-// Only this origin's own form may submit. Cross-site browser POSTs carry a
-// different Origin and are rejected; same-origin form posts carry exactly this.
-const ALLOWED_ORIGIN = "https://yarin-avraham.co.il";
+// The site's own origin (used for the same-origin check and the payload's
+// siteUrl) comes from the SITE_ORIGIN var in wrangler.toml, so a domain change
+// is a one-line edit there. Falls back to the current domain if unset.
+const DEFAULT_ORIGIN = "https://yarin.trickticmedia.com";
 
 const PHONE_ALLOWED_CHARS = /^[\d\s+().-]+$/;
 
@@ -47,12 +48,13 @@ const worker = {
       return json({ ok: false, error: "Method Not Allowed" }, 405);
     }
 
-    // Block cross-site browser submissions. A same-origin form POST sends
-    // Origin: https://yarin-avraham.co.il; any other Origin is not our form.
-    // Non-browser clients send no Origin — those are gated by the n8n shared
-    // secret and the Cloudflare rate-limiting rule on this route.
+    // Block cross-site browser submissions. A same-origin form POST sends our
+    // own Origin; any other Origin is not our form. Non-browser clients send no
+    // Origin — those are gated by the n8n shared secret and the Cloudflare
+    // rate-limiting rule on this route.
+    const allowedOrigin = env.SITE_ORIGIN || DEFAULT_ORIGIN;
     const origin = request.headers.get("Origin");
-    if (origin && origin !== ALLOWED_ORIGIN) {
+    if (origin && origin !== allowedOrigin) {
       return json({ ok: false, error: "Forbidden" }, 403);
     }
 
@@ -100,7 +102,7 @@ const worker = {
       contact: { name: sanitizeForSheet(name), phone, email: "" },
       meta: {
         page: "/contact",
-        siteUrl: "https://yarin-avraham.co.il",
+        siteUrl: allowedOrigin,
         language: body?.language === "en" ? "en" : "he",
       },
     };

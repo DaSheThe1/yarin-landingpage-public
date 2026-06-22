@@ -6,8 +6,8 @@ export const siteConfig = {
   // Two-letter monogram shown in the header/footer logo badge.
   monogram: "יא",
   // TODO: confirm the real production domain with Yarin before launch.
-  domain: "yarin-avraham.co.il",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yarin-avraham.co.il",
+  domain: "yarin.trickticmedia.com",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yarin.trickticmedia.com",
   email: "yarinavraham96@gmail.com",
   // Display phone (Hebrew/local format) + E.164 for tel: links.
   phone: "050-901-0688",

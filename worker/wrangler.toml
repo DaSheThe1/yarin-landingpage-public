@@ -14,6 +14,13 @@ name = "yarin-contact"
 main = "src/contact.js"
 compatibility_date = "2025-01-01"
 
+# The site's public origin. Single source of truth for the Worker's same-origin
+# check and the n8n payload's siteUrl — change this one line when the domain
+# changes. (zone_name below is the Cloudflare ZONE, i.e. the registrable domain;
+# the route's hostname can be a subdomain of it.)
+[vars]
+SITE_ORIGIN = "https://yarin.trickticmedia.com"
+
 routes = [
-  { pattern = "yarin-avraham.co.il/api/contact", zone_name = "yarin-avraham.co.il" }
+  { pattern = "yarin.trickticmedia.com/api/contact", zone_name = "trickticmedia.com" }
 ]

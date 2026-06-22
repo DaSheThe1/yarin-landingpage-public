@@ -35,6 +35,8 @@
 .DS_Store
 *.pem
 *:Zone.Identifier
+# ad-hoc screenshots / scratch captures (private; never part of the source tree)
+Screenshot *.png
 .agents/
 .claude/
 .codex/

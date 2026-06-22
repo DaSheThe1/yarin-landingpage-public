@@ -37,6 +37,12 @@ Workflow — nothing is done twice:
 3. The **public** repo's `deploy-pages.yml` builds the static export and deploys
    to Pages (public repos get free Actions minutes). This repo does not deploy.
 
+Current live host: **`yarin.trickticmedia.com`** (temporary; eventual target is
+`yarin-avraham.co.il`). The host lives in `src/config/site.ts` /
+`NEXT_PUBLIC_SITE_URL` (build), `public/CNAME` (Pages), and `worker/wrangler.toml`
+`SITE_ORIGIN` + route (Worker). To change domains, update those, re-publish, and
+update the Pages custom domain + Cloudflare DNS/Worker route.
+
 Rules: never commit real secrets or infra hostnames even **here** (examples use
 `REPLACE_WITH_…` placeholders; real values live in `.env.local` / Cloudflare /
 the n8n node). If you add a new private-only file, add it to the deny list in
@@ -80,10 +86,15 @@ commit.
   (`offers`, `services` media, `stats`, `testimonials` sample flag, `faq` type).
 - `src/lib/` — env access (`env.ts`), contact schema, seo, version, utils.
 - `messages/he.json` — all copy.
-- `public/` — images & videos (see `docs/CONTENT-GUIDE.md`).
-- `infra/`, `Dockerfile`, `compose.yaml`, `deploy.sh`, `.github/` — deployment;
-  still references the template's domain/image in places — update when the real
-  domain is confirmed.
+- `public/` — images & videos (see `docs/CONTENT-GUIDE.md`). `public/CNAME` is
+  the Pages custom domain; `public/.nojekyll` keeps `_next/` from being dropped.
+- `.github/workflows/deploy-pages.yml` — the live deploy (static export → Pages).
+- `worker/` — Cloudflare Worker that serves `POST /api/contact` in production
+  (holds the n8n URL/secret). `scripts/flatten-locale-export.mjs` hoists the
+  single-locale export to the site root; `scripts/optimize-images.mjs` makes WebP.
+- `infra/`, `Dockerfile`, `compose.yaml`, `deploy.sh`, `.github/workflows/ci.yml`
+  — **legacy VPS path, no longer used and excluded from the public mirror.** Do
+  not wire new deployment to these; the site ships via GitHub Pages.
 
 ## Instructions for coding agents
 

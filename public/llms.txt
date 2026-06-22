@@ -11,13 +11,13 @@
 
 ## עמודים
 
-- [בית](https://yarin-avraham.co.il/): מה ירין מציע ואיך עובד תהליך הליווי.
-- [שירותים](https://yarin-avraham.co.il/services): תכנון ועיצוב לבנייה חדשה ולשיפוצים.
-- [פרויקטים](https://yarin-avraham.co.il/examples): דוגמאות עבודה וגלריה.
-- [אודות](https://yarin-avraham.co.il/about): הרקע והניסיון של ירין.
-- [צרו קשר](https://yarin-avraham.co.il/contact): קביעת פגישת ייעוץ ראשונית.
+- [בית](https://yarin.trickticmedia.com/): מה ירין מציע ואיך עובד תהליך הליווי.
+- [שירותים](https://yarin.trickticmedia.com/services): תכנון ועיצוב לבנייה חדשה ולשיפוצים.
+- [פרויקטים](https://yarin.trickticmedia.com/examples): דוגמאות עבודה וגלריה.
+- [אודות](https://yarin.trickticmedia.com/about): הרקע והניסיון של ירין.
+- [צרו קשר](https://yarin.trickticmedia.com/contact): קביעת פגישת ייעוץ ראשונית.
 
 ## משפטי
 
-- [מדיניות פרטיות](https://yarin-avraham.co.il/privacy)
-- [תנאי שימוש](https://yarin-avraham.co.il/terms)
+- [מדיניות פרטיות](https://yarin.trickticmedia.com/privacy)
+- [תנאי שימוש](https://yarin.trickticmedia.com/terms)

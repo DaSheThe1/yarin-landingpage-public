@@ -9,6 +9,23 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.6.2] - 2026-06-23
+
+### Changed
+
+- **Live domain set to `yarin.trickticmedia.com`** (temporary; eventual target
+  `yarin-avraham.co.il`). Updated `src/config/site.ts`, the Pages build env
+  (`NEXT_PUBLIC_SITE_URL` in `deploy-pages.yml` + `build:static`), `public/CNAME`,
+  `public/llms.txt`, and the Cloudflare Worker. The Worker's origin/siteUrl now
+  come from a `SITE_ORIGIN` var in `worker/wrangler.toml` (route now
+  `yarin.trickticmedia.com/api/contact`, zone `trickticmedia.com`), so future
+  domain changes are a one-line edit.
+- **Bigger thank-you video.** The post-conversion video is now the page
+  centerpiece — the frame and surrounding sections widen from `max-w-4xl`/
+  `max-w-5xl` to `max-w-6xl`, so on large screens it fills far more of the
+  viewport instead of floating small with empty margin around it. Heading
+  spacing tightened slightly to match.
+
 ## [0.6.1] - 2026-06-23
 
 ### Added

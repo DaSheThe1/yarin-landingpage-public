@@ -15,7 +15,7 @@ the placeholders below with Yarin's real content, photos, videos, and reviews.
 | `email` | yarinavraham96@gmail.com | ✅ |
 | `phone` / `phoneE164` | 050-901-0688 / +972509010688 | ✅ |
 | `monogram` | יא | change if you want a different mark |
-| `domain` / `url` | **`yarin-avraham.co.il` (placeholder)** | ⚠️ confirm the real domain |
+| `domain` / `url` | **`yarin.trickticmedia.com` (placeholder)** | ⚠️ confirm the real domain |
 
 The phone powers `tel:` links and the WhatsApp buttons (`wa.me`). Email powers
 the footer + form fallback.

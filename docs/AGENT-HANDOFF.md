@@ -6,7 +6,7 @@ Use this file when starting a new coding session.
 
 - Business: ירין אליה אברהם — תכנון ועיצוב פנים (architect & interior designer)
 - Repo: `git@github.com:DaSheThe1/yarin-landingpage.git`
-- Domain: `yarin-avraham.co.il` (⚠️ placeholder — confirm before launch)
+- Domain: `yarin.trickticmedia.com` (⚠️ placeholder — confirm before launch)
 - Email: `yarinavraham96@gmail.com` · Phone: `050-901-0688`
 
 ## Start here
