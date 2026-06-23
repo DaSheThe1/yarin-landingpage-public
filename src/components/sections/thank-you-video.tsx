@@ -112,13 +112,10 @@ export function ThankYouVideo() {
 
   return (
     <div dir="ltr" className="relative mx-auto max-w-6xl">
-      {/* Ambient glow + rotating beam behind the frame for a premium feel */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -inset-x-12 -top-12 bottom-0 rounded-[2.5rem] bg-brand/25 blur-[100px]"
-      />
-
-      <div className="beam rounded-[1.4rem]">
+      {/* A clean ring-shine border + shadow frame the video. The previous
+          rotating "beam" (a 180%-sized blue conic-gradient) and the ambient
+          glow were removed — both bled blue up behind the page heading. */}
+      <div className="rounded-[1.4rem]">
         <div className="ring-shine relative overflow-hidden rounded-2xl border border-black/[0.1] bg-surface-1 shadow-card">
           {/* Window chrome */}
           <div className="flex items-center gap-2 border-b border-black/[0.06] px-4 py-3">

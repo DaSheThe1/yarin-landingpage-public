@@ -13,9 +13,12 @@ here. See `AGENTS.md` → "Versioning rules".
 
 ### Changed
 
-- Removed the blue "aurora" radial-gradient wash behind the thank-you page hero
-  (its arbitrary Tailwind value also had unparseable spaces in the `rgba(...)`).
-  The hero now keeps only the neutral grid texture + fade, for a clean light look.
+- Removed the blue wash on the thank-you page. Three layers were tinting the
+  hero blue and bleeding up behind the heading: the page's "aurora" radial
+  gradient, the video's ambient `bg-brand/25 blur-[100px]` glow, and — the main
+  culprit — the rotating `.beam` (a 180%-of-frame blue `conic-gradient`) on the
+  video. All three are gone; the video keeps its `ring-shine` border + shadow,
+  and the hero is now a clean light surface with only the neutral grid texture.
 
 ## [0.6.2] - 2026-06-23
 
