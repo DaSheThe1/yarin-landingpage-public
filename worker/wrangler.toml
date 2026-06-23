@@ -8,19 +8,26 @@
 #   npx wrangler secret put N8N_WEBHOOK_SECRET
 #   npx wrangler deploy
 #
-# The route below makes Cloudflare run this Worker only for /api/contact on the
-# proxied domain; every other path falls through to the GitHub Pages origin.
+# NOTE on TOML ordering: all top-level keys (name/main/routes/...) MUST come
+# before any [table] header. Anything after `[vars]` belongs to that table, so
+# `routes` is kept ABOVE `[vars]` — otherwise it parses as `vars.routes` and the
+# Worker gets no route (wrangler then asks for a workers.dev subdomain).
 name = "yarin-contact"
 main = "src/contact.js"
 compatibility_date = "2025-01-01"
 
-# The site's public origin. Single source of truth for the Worker's same-origin
-# check and the n8n payload's siteUrl — change this one line when the domain
-# changes. (zone_name below is the Cloudflare ZONE, i.e. the registrable domain;
-# the route's hostname can be a subdomain of it.)
-[vars]
-SITE_ORIGIN = "https://yarin.trickticmedia.com"
-
+# Bind the Worker only to /api/contact on the site host; every other path falls
+# through to the GitHub Pages origin. zone_name is the Cloudflare ZONE (the
+# registrable domain); the route hostname can be a subdomain of it.
 routes = [
   { pattern = "yarin.trickticmedia.com/api/contact", zone_name = "trickticmedia.com" }
 ]
+
+# Don't publish a *.workers.dev URL — this Worker is reached only via the route.
+workers_dev = false
+
+# The site's public origin. Single source of truth for the Worker's same-origin
+# check and the n8n payload's siteUrl — change this one line when the domain
+# changes.
+[vars]
+SITE_ORIGIN = "https://yarin.trickticmedia.com"

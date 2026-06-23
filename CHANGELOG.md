@@ -9,6 +9,14 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.6.3] - 2026-06-23
+
+### Changed
+
+- Removed the blue "aurora" radial-gradient wash behind the thank-you page hero
+  (its arbitrary Tailwind value also had unparseable spaces in the `rgba(...)`).
+  The hero now keeps only the neutral grid texture + fade, for a clean light look.
+
 ## [0.6.2] - 2026-06-23
 
 ### Changed

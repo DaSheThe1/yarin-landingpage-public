@@ -60,13 +60,9 @@ export default async function ThankYouPage({
   return (
     <PageShell>
       <section className="relative overflow-hidden">
-        {/* Backdrop layers — mirror the home hero so this feels like a reward,
-            not a dead end. */}
+        {/* Subtle neutral grid texture + a fade into the page. No coloured
+            aurora wash here — keep the thank-you hero clean and light. */}
         <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-60" />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -top-40 left-1/2 h-[42rem] w-[60rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(37, 99, 235,0.45),transparent_60%)] blur-[90px]"
-        />
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"
