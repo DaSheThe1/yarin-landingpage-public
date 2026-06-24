@@ -95,7 +95,7 @@ function LeadDialog({
       role="dialog"
       aria-modal="true"
       aria-label={t("title")}
-      className="fixed inset-0 z-[100] flex items-end justify-center p-4 sm:items-center"
+      className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4"
     >
       {/* Backdrop */}
       <button

@@ -102,12 +102,18 @@ export function WaveText({
         const g = Math.round(rest[1] + (cg - rest[1]) * intensity);
         const b = Math.round(rest[2] + (cb - rest[2]) * intensity);
         el.style.color = `rgb(${r}, ${g}, ${b})`;
-        el.style.transform =
-          intensity > 0.001 ? `translateY(${(-lift * intensity).toFixed(3)}em)` : "";
+        // Always write a 3D transform (even translate3d(0,0,0) at rest) so each
+        // letter keeps ONE stable compositing layer for the whole loop. The
+        // earlier `translateY(…) | ""` promoted the letter to a GPU layer only
+        // while the crest was on it and demoted it right after — that per-pass
+        // layer churn, plus re-rasterising a blurred text-shadow each frame, is
+        // what makes the crest visibly glitch over each letter on real phones
+        // (high DPR, weaker GPU). A persistent layer + lighter shadow fixes it.
+        el.style.transform = `translate3d(0, ${(-lift * intensity).toFixed(3)}em, 0)`;
         el.style.textShadow =
           intensity > 0.05
-            ? `0 6px 18px rgba(201, 168, 76, ${(0.4 * intensity).toFixed(3)})`
-            : "";
+            ? `0 4px 12px rgba(201, 168, 76, ${(0.32 * intensity).toFixed(3)})`
+            : "none";
       }
 
       raf = window.requestAnimationFrame(frame);

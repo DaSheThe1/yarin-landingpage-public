@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
-import { Analytics } from "@/components/analytics/umami";
+import { Analytics } from "@/components/analytics/analytics";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { BackToTop, ScrollProgress } from "@/components/layout/scroll-utils";

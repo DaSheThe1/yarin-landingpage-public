@@ -1,37 +1,42 @@
 import { expect, test, type Page } from "@playwright/test";
 
-// Umami analytics funnel events. These tests STUB the tracker (no live Umami
-// server or env needed): before any navigation we inject a capturing stub at
-// `window.umami.track` that pushes every event into `window.__umamiEvents`,
-// then drive the REAL UI and assert what got captured via page.evaluate.
+// Google Analytics (GA4) funnel events. These tests STUB the tracker (no live
+// GA property or env needed): before any navigation we inject a capturing stub
+// at `window.gtag` that pushes every event into `window.__gaEvents`, then drive
+// the REAL UI and assert what got captured via page.evaluate.
 //
-// The default e2e server has NO Umami env, so `<Analytics/>` renders nothing
-// and the real `window.umami` is never defined — our stub is the only thing
+// The default e2e server has NO GA env, so `<Analytics/>` renders nothing and
+// the real `window.gtag` is never defined — our stub is the only thing
 // providing it, which is exactly the contract we want to exercise.
 
 type CapturedEvent = { name: string; data?: Record<string, unknown> };
 
 declare global {
   interface Window {
-    __umamiEvents?: CapturedEvent[];
+    __gaEvents?: CapturedEvent[];
   }
 }
 
 // Inject the capturing stub before the page's own scripts run so no real
-// trackEvent() call is ever missed.
-async function installUmamiStub(page: Page) {
+// trackEvent() call is ever missed. trackEvent() calls
+// `gtag('event', name, data)`, so we capture the 2nd/3rd args.
+async function installGtagStub(page: Page) {
   await page.addInitScript(() => {
-    window.__umamiEvents = [];
-    window.umami = {
-      track: (name: string, data?: Record<string, unknown>) => {
-        window.__umamiEvents?.push({ name, data });
-      },
+    window.__gaEvents = [];
+    window.gtag = (
+      command: string,
+      name: string,
+      data?: Record<string, unknown>
+    ) => {
+      if (command === "event") {
+        window.__gaEvents?.push({ name, data });
+      }
     };
   });
 }
 
 function readEvents(page: Page): Promise<CapturedEvent[]> {
-  return page.evaluate(() => window.__umamiEvents ?? []);
+  return page.evaluate(() => window.__gaEvents ?? []);
 }
 
 // --- Contact-form wizard helpers (mirrors e2e/contact-form.spec.ts) ----------
@@ -65,7 +70,7 @@ async function fillStepTwo(page: Page) {
 test("lead_submitted fires once with a non-PII payload on success", async ({
   page,
 }) => {
-  await installUmamiStub(page);
+  await installGtagStub(page);
   await page.route("**/api/contact", (route) =>
     route.fulfill({
       status: 202,
@@ -108,7 +113,7 @@ test("lead_submitted fires once with a non-PII payload on success", async ({
 test("thankyou_video_watch fires on the play-with-sound click", async ({
   page,
 }) => {
-  await installUmamiStub(page);
+  await installGtagStub(page);
   await page.goto("/thank-you");
 
   // The play-with-sound control only appears once the video is ready. Its
@@ -136,7 +141,7 @@ test("thankyou_video_watch fires on the play-with-sound click", async ({
 test("hero_video_watch fires when the hero demo fullscreen control is used", async ({
   page,
 }) => {
-  await installUmamiStub(page);
+  await installGtagStub(page);
   await page.goto("/");
 
   // The fullscreen button renders only after the <video> reaches a ready
@@ -158,8 +163,8 @@ test("hero_video_watch fires when the hero demo fullscreen control is used", asy
   expect(hero).toEqual([{ name: "hero_video_watch", data: { location: "hero" } }]);
 });
 
-// 4. No-op safety — with NO umami stub and NO Umami env (the default server),
-//    the loader script is absent and interacting never throws.
+// 4. No-op safety — with NO gtag stub and NO GA env (the default server), the
+//    loader script is absent and interacting never throws.
 test("unconfigured analytics is inert: no loader script, no throw on submit", async ({
   page,
 }) => {
@@ -176,11 +181,15 @@ test("unconfigured analytics is inert: no loader script, no throw on submit", as
 
   await page.goto("/contact");
 
-  // The Umami loader <script data-website-id=...> must NOT be present when env
-  // is unset (loader-rendering with env set is a trivial build-time guard and
-  // is covered by code review — see src/components/analytics/umami.tsx).
+  // Neither tracker's loader must be present when its env is unset (loader-
+  // rendering with env set is a trivial build-time guard, covered by code
+  // review — see src/components/analytics/{google-analytics,umami}.tsx).
+  await expect(
+    page.locator('script[src*="googletagmanager.com/gtag"]')
+  ).toHaveCount(0);
   await expect(page.locator("script[data-website-id]")).toHaveCount(0);
-  // And `window.umami` was never defined (we did not install the stub here).
+  // And neither global was defined (we did not install the stub here).
+  expect(await page.evaluate(() => typeof window.gtag)).toBe("undefined");
   expect(await page.evaluate(() => typeof window.umami)).toBe("undefined");
 
   // Drive a real interaction whose success path calls trackEvent(): it must be

@@ -2,11 +2,16 @@ import { siteConfig } from "@/config/site";
 
 export const publicEnv = {
   siteUrl: siteConfig.url,
-  // Umami (privacy-friendly, cookieless analytics). Both are PUBLIC by design —
-  // the tracker script URL and website id are meant to ship to the browser.
-  // Both are OPTIONAL: when EITHER is unset, analytics is a complete no-op
-  // (no script rendered, trackEvent does nothing), so dev/test/CI/preview
-  // builds without Umami env keep working unchanged.
+  // We run two trackers in parallel and each is INDEPENDENT: GA4 for the client
+  // (familiar dashboards) and Umami for cookieless cross-checks. Every var below
+  // is PUBLIC by design (it ships to the browser) and OPTIONAL — when a tracker's
+  // var(s) are unset it is a complete no-op (no script rendered, trackEvent skips
+  // it), so dev/test/CI/preview builds keep working unchanged.
+
+  // Google Analytics 4 measurement id (e.g. "G-XXXXXXXXXX").
+  gaId: process.env.NEXT_PUBLIC_GA_ID,
+  // Umami: tracker script URL + the website UUID from its dashboard. Both are
+  // required for Umami to load; either missing makes Umami a no-op.
   umamiScriptUrl: process.env.NEXT_PUBLIC_UMAMI_SCRIPT_URL,
   umamiWebsiteId: process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID,
 };

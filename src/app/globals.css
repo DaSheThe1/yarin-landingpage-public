@@ -574,7 +574,12 @@
   .wave-text-char {
     display: inline-block;
     color: var(--foreground);
-    will-change: color, transform;
+    /* Keep each letter on its own GPU compositing layer the whole time so the
+       per-frame lift (translate3d, written inline by WaveText) never re-promotes
+       /demotes the layer — that churn glitched the crest on real phones. */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    will-change: transform;
   }
 
   /* Rotating gradient border (beam) */

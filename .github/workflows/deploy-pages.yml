@@ -26,6 +26,16 @@ jobs:
       NEXT_TELEMETRY_DISABLED: 1
       STATIC_EXPORT: "true"
       NEXT_PUBLIC_SITE_URL: https://yarin-architecture.com
+      # Analytics ids/URLs — all PUBLIC by design (they ship to the browser),
+      # so it is safe to hardcode them here. GA4 measurement id (GA4 Admin →
+      # Data Streams). The Umami pair needs both the script URL and website UUID
+      # to load; leave the URL blank to ship GA4 only (Umami then no-ops).
+      NEXT_PUBLIC_GA_ID: G-SPLPV5SK6S
+      # Set this to your Umami instance's tracker URL, e.g.
+      # https://analytics.yourdomain.com/script.js — Umami needs BOTH this and
+      # the website id below to load.
+      NEXT_PUBLIC_UMAMI_SCRIPT_URL: ""
+      NEXT_PUBLIC_UMAMI_WEBSITE_ID: "517f479d-cd51-4b6e-9d26-389eebb95a42"
     steps:
       - name: Checkout
         uses: actions/checkout@v6

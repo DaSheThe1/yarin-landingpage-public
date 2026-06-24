@@ -9,6 +9,49 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.9.0] - 2026-06-24
+
+### Added
+
+- **Google Analytics 4, running alongside the existing Umami integration.** GA4
+  is for the client (free, hosted, familiar dashboards); Umami stays as our
+  cookieless cross-check. Both are fully client-side, so both work on the static
+  GitHub Pages export. The two trackers are independent: each loads only when
+  its own PUBLIC env vars are set and is otherwise a complete no-op.
+  - New `src/components/analytics/google-analytics.tsx` (gtag.js) and
+    `analytics.tsx` (composes GA4 + Umami); the Umami component stays in
+    `umami.tsx`. `trackEvent()` in `src/lib/analytics.ts` now fans each custom
+    event out to both `window.gtag('event', …)` and `window.umami.track(…)`.
+    The custom funnel event names are unchanged.
+  - New env var `NEXT_PUBLIC_GA_ID` (the existing `NEXT_PUBLIC_UMAMI_*` vars are
+    unchanged). Wired into `.env.example`, `.env.production.example`,
+    `deploy-pages.yml` and `compose.yaml` build envs.
+  - Privacy policy (`messages/he.json`) now discloses both trackers — GA4's
+    cookies and Google as a processor, and Umami as cookieless/aggregate.
+  - `docs/16-analytics.md` rewritten for the dual-tracker setup.
+
+  The live GA4 measurement id (`G-SPLPV5SK6S`) and Umami website id are set in
+  `deploy-pages.yml`. **Remaining before Umami ships:** set
+  `NEXT_PUBLIC_UMAMI_SCRIPT_URL` to the instance's `…/script.js` URL (until then
+  GA4 ships alone and Umami no-ops).
+
+### Fixed
+
+- **Mobile (real-device) layout polish — invisible on a minimized desktop
+  window, only on an actual phone.**
+  - Lead popup now centers vertically at all widths (was `items-end` below the
+    `sm` breakpoint, so on a phone it stuck to the bottom of the screen) and
+    scrolls if the form is taller than the viewport.
+  - Hero `WaveText` no longer glitches over each letter: every letter keeps one
+    stable GPU compositing layer (always `translate3d(...)`, pinned in CSS)
+    instead of being promoted/demoted as the gold crest passes, and the
+    per-frame text-shadow is lightened — both were re-rasterising every frame on
+    weaker phone GPUs.
+  - Tightened the vertical rhythm between the top home-page sections on mobile
+    (hero → services → offers → process). Stacked `py-20`/`pb-16` paddings left
+    ~140px dead gaps on phones; reduced to `py-12`/`pb-12` below `sm` while the
+    desktop spacing (`sm:py-24`) is unchanged.
+
 ## [0.8.1] - 2026-06-24
 
 ### Changed

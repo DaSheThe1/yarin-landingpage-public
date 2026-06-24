@@ -135,7 +135,7 @@ export function HeroSection() {
       {/* On mobile the showcase video is pulled up directly under the title so
           it's the immediate focal point (order-2); the subtitle + badges drop
           below it (order-3). On lg+ the natural reading order is restored. */}
-      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-6 pb-16 pt-6 sm:pb-24 lg:pt-10">
+      <div className="relative mx-auto flex w-full max-w-6xl flex-col items-center px-6 pb-12 pt-6 sm:pb-24 lg:pt-10">
         <div className="order-1 mx-auto max-w-3xl text-center">
           <Reveal className="flex justify-center">
             <Eyebrow>{t("eyebrow")}</Eyebrow>
@@ -380,7 +380,7 @@ export function ProcessSection() {
   const icons = [Search, Map, Target, Wrench, ShieldCheck, ClipboardList];
 
   return (
-    <section className="relative overflow-hidden bg-background px-6 pt-10 pb-16 sm:pt-12 sm:pb-20">
+    <section className="relative overflow-hidden bg-background px-6 pt-10 pb-12 sm:pt-12 sm:pb-20">
       <div
         aria-hidden
         className="pointer-events-none absolute left-1/2 top-1/2 h-[24rem] w-[48rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand/10 blur-[120px]"
@@ -489,7 +489,7 @@ export function ServicesTeaser() {
   const services = tServices.raw("items") as ServiceItem[];
 
   return (
-    <section className="bg-background px-6 py-20 sm:py-24">
+    <section className="bg-background px-6 py-12 sm:py-24">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="ring-shine relative grid gap-10 overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 p-7 sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -551,7 +551,7 @@ export function OffersSection() {
   const offer = items[offers.findIndex((o) => o.featured)] ?? items[0];
 
   return (
-    <section className="bg-background px-6 pt-20 pb-12 sm:pt-24 sm:pb-14">
+    <section className="bg-background px-6 pt-12 pb-12 sm:pt-24 sm:pb-14">
       <div className="mx-auto max-w-5xl">
         <Reveal>
           <SectionHeading
