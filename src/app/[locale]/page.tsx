@@ -20,11 +20,14 @@ import {
   webSiteSchema,
 } from "@/lib/seo";
 import { StatsSection } from "@/components/sections/stats";
+import { Testimonials } from "@/components/sections/testimonials";
 import { TrustBand } from "@/components/sections/trust-band";
 
-// Single-page lead funnel: hero → proof → offer → process → services teaser →
-// trust → founder → FAQ → CTA. The deep dives (full services, project gallery,
-// reviews, about) live on their own pages.
+// Single-page lead funnel: hero → services teaser → offer → proof → process →
+// trust → founder → FAQ → CTA. Services sits directly under the hero (swapped
+// with the stats/numbers section) so it's the first thing after the fold,
+// notably on mobile. The deep dives (full services, project gallery, reviews,
+// about) live on their own pages.
 export default async function Home({
   params,
 }: {
@@ -42,12 +45,13 @@ export default async function Home({
       <JsonLd data={personSchema()} />
       <JsonLd data={faqPageSchema(faqs)} />
       <HeroSection />
-      <StatsSection />
-      <OffersSection />
-      <ProcessSection />
       <ServicesTeaser />
+      <OffersSection />
+      <StatsSection />
+      <ProcessSection />
       <GalleryTeaser />
       <TrustBand />
+      <Testimonials />
       <FounderTeaser />
       <FaqSection />
       <FinalCta />

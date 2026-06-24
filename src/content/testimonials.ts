@@ -10,9 +10,10 @@ export type Testimonial = {
 };
 
 /**
- * While this is true the carousel shows a visible "example reviews" notice so
- * nothing reads as a real endorsement. Flip it to false the moment the
- * placeholder quotes (testimonials.items in the message files) are replaced
- * with genuine client quotes — the notice disappears automatically.
+ * The quotes in `testimonials.items` are real client feedback that Yarin
+ * confirmed; the names are changed at the clients' request (high-value clients
+ * who want privacy), which the section discloses via `testimonials.privacyNote`.
+ * This flag stays false. If you ever add genuinely placeholder/example quotes,
+ * flip it to true to show the visible "example reviews" notice instead.
  */
-export const testimonialsAreSamples = true;
+export const testimonialsAreSamples = false;

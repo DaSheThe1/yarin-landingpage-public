@@ -36,8 +36,8 @@ export function FaqSection() {
                   className={cn(
                     "rounded-xl border transition-colors",
                     isOpen
-                      ? "border-black/[0.14] bg-black/[0.04]"
-                      : "border-black/[0.08] bg-black/[0.02] hover:border-black/[0.12]"
+                      ? "border-white/[0.14] bg-white/[0.04]"
+                      : "border-white/[0.08] bg-white/[0.02] hover:border-white/[0.12]"
                   )}
                 >
                   {/* Question-as-heading: h3 wraps the trigger (accordion pattern). */}

@@ -2,59 +2,69 @@
 @import "tw-animate-css";
 
 /* ───────────────────────────────────────────────────────────
-   ירין אליה אברהם — תכנון ועיצוב פנים | cool slate editorial system
-   Cool off-white canvas, ink text, muted slate-navy accent. Modern luxury.
-   Primary action is ink (high contrast); slate-navy is the accent used
-   for eyebrows, hairlines, hovers and small highlights.
+   ירין אליה אברהם — תכנון ועיצוב פנים | black · gold · white system
+   Deep near-black canvas, warm-white text, metallic gold accent. Dark
+   luxury for villas & high-end homes. Primary action is gold (with black
+   ink on top); gold is also the eyebrow / hairline / hover highlight.
    ─────────────────────────────────────────────────────────── */
 
 :root {
-  /* This is a light-only site — tell the UA so OS dark mode never inverts
-     form controls, scrollbars or the default canvas. */
-  color-scheme: light;
+  /* This is an intentionally dark-only site — tell the UA so form controls,
+     scrollbars and the default canvas all render dark. */
+  color-scheme: dark;
 
-  /* Surfaces — crisp cool off-white canvas, slate layers (cards rise to white) */
-  --background: #f6f7f8;
-  --surface-1: #ffffff;
-  --surface-2: #eceef1;
-  --surface-3: #dfe3e7;
+  /* Surfaces — deep warm black canvas, charcoal layers (cards rise lighter).
+     `--canvas` is the real, solid base colour painted on <html>. `--background`
+     is intentionally TRANSPARENT: every `bg-background` section becomes a window
+     onto the site-wide flowing colour field (SiteBackground) that sits behind
+     the whole site. Use `--canvas` (or `bg-canvas`) wherever a solid black
+     fill is genuinely needed (e.g. the sticky header backdrop, scrollbars). */
+  --canvas: #0a0a0b;
+  --background: transparent;
+  --surface-1: #161518;
+  --surface-2: #1f1d22;
+  --surface-3: #2a282e;
 
-  /* Text — ink, for a sharp modern high-contrast read */
-  --foreground: #16181c;
-  --foreground-soft: #353b42;
-  --muted-foreground: #5b636d;
-  --subtle-foreground: #828b95;
+  /* Text — warm white, for a sharp luxury high-contrast read on black */
+  --foreground: #f4f1ea;
+  --foreground-soft: #d6d1c7;
+  --muted-foreground: #9a9388;
+  --subtle-foreground: #6f6a61;
 
-  /* Brand — confident royal blue. -accent is deepened for text contrast. */
-  --brand: #2563eb;
-  --brand-accent: #1e40af;
-  --brand-hover: #1d4ed8;
-  --brand-soft: #7da2f0;
+  /* Brand — metallic gold. -accent is brightened for text/eyebrow contrast
+     on the dark canvas; -soft is a muted brass used for faint glows. */
+  --brand: #c9a84c;
+  --brand-accent: #e4c878;
+  --brand-hover: #d8b85e;
+  --brand-soft: #8a6f33;
 
   /* Mapped shadcn-style tokens */
-  --card: #ffffff;
-  --card-foreground: #16181c;
-  --popover: #ffffff;
-  --popover-foreground: #16181c;
-  --primary: #16181c;
-  --primary-foreground: #ffffff;
-  --secondary: rgba(22, 24, 28, 0.05);
-  --secondary-foreground: #16181c;
-  --muted: #eceef1;
-  --accent: #2563eb;
-  --accent-foreground: #ffffff;
-  --destructive: #b3492f;
-  --success: #4f7a52;
+  --card: #161518;
+  --card-foreground: #f4f1ea;
+  --popover: #161518;
+  --popover-foreground: #f4f1ea;
+  /* Primary = warm white (default buttons are white with black ink). The gold
+     CTA uses --brand; both put black ink on top via --primary-foreground. */
+  --primary: #f4f1ea;
+  --primary-foreground: #0a0a0b;
+  --secondary: rgba(244, 241, 234, 0.08);
+  --secondary-foreground: #f4f1ea;
+  --muted: #1f1d22;
+  --accent: #c9a84c;
+  --accent-foreground: #0a0a0b;
+  --destructive: #e5736b;
+  --success: #6fbf73;
 
-  --border: rgba(22, 24, 28, 0.12);
-  --border-subtle: rgba(22, 24, 28, 0.07);
-  --input: rgba(22, 24, 28, 0.15);
-  --ring: #2563eb;
+  --border: rgba(244, 241, 234, 0.12);
+  --border-subtle: rgba(244, 241, 234, 0.07);
+  --input: rgba(244, 241, 234, 0.16);
+  --ring: #c9a84c;
   --radius: 0.625rem;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-canvas: var(--canvas);
   --color-surface-1: var(--surface-1);
   --color-surface-2: var(--surface-2);
   --color-surface-3: var(--surface-3);
@@ -114,6 +124,9 @@
 
   html {
     scroll-behavior: smooth;
+    /* The solid base canvas. Everything above it (body, sections) is
+       transparent, so the SiteBackground colour field shows through. */
+    background-color: var(--canvas);
   }
 
   body {
@@ -136,15 +149,15 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: var(--background);
+    background: var(--canvas);
   }
   ::-webkit-scrollbar-thumb {
-    background: rgba(22, 24, 28, 0.18);
+    background: rgba(244, 241, 234, 0.18);
     border-radius: 9999px;
-    border: 2px solid var(--background);
+    border: 2px solid var(--canvas);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: rgba(22, 24, 28, 0.3);
+    background: rgba(201, 168, 76, 0.45);
   }
 }
 
@@ -212,12 +225,12 @@
 @keyframes pulse-step {
   0%,
   100% {
-    border-color: rgba(22, 24, 28, 0.1);
-    background: rgba(22, 24, 28, 0.015);
+    border-color: rgba(244, 241, 234, 0.1);
+    background: rgba(244, 241, 234, 0.015);
   }
   50% {
-    border-color: rgba(37, 99, 235, 0.65);
-    background: rgba(37, 99, 235, 0.12);
+    border-color: rgba(201, 168, 76, 0.65);
+    background: rgba(201, 168, 76, 0.14);
   }
 }
 
@@ -234,12 +247,12 @@
 @keyframes glow-breathe {
   0%,
   100% {
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.3),
-      0 8px 40px -10px rgba(37, 99, 235, 0.3);
+    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.3),
+      0 8px 40px -10px rgba(201, 168, 76, 0.3);
   }
   50% {
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.55),
-      0 16px 60px -10px rgba(37, 99, 235, 0.5);
+    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.6),
+      0 16px 60px -10px rgba(201, 168, 76, 0.5);
   }
 }
 
@@ -289,6 +302,171 @@
   }
 }
 
+/* ──────────────  Site-wide flowing colour field  ──────────────
+   One fixed layer behind the whole site (see SiteBackground). Slow drifting
+   blobs in the warm gold family over the near-black canvas; scrolling lifts
+   saturation/brightness + parallax via the JS-written `--bg-scroll` (0 → 1). */
+
+@keyframes bg-drift-1 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(6%, 4%, 0) scale(1.12);
+  }
+  100% {
+    transform: translate3d(-3%, 6%, 0) scale(1.04);
+  }
+}
+
+@keyframes bg-drift-2 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  50% {
+    transform: translate3d(-7%, -5%, 0) scale(0.94);
+  }
+  100% {
+    transform: translate3d(4%, -3%, 0) scale(1.08);
+  }
+}
+
+@keyframes bg-drift-3 {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(5%, -6%, 0) scale(1.15);
+  }
+  100% {
+    transform: translate3d(-5%, 3%, 0) scale(0.97);
+  }
+}
+
+.site-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -10;
+  overflow: hidden;
+  pointer-events: none;
+  /* Scrolling lifts saturation and brightness a touch, so the gold field
+     visibly "warms" and glows as you move down the page. No hue-rotate — it
+     would drag the gold toward green. */
+  filter: saturate(calc(1 + var(--bg-scroll, 0) * 0.3))
+    brightness(calc(1 + var(--bg-scroll, 0) * 0.08));
+  transition: filter 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.site-bg__inner {
+  position: absolute;
+  inset: -12%;
+  /* Subtle parallax — the field rises slightly faster than the page. */
+  transform: translate3d(0, calc(var(--bg-scroll, 0) * -56px), 0);
+  transition: transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.site-bg__blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(72px);
+  opacity: 0.9;
+  will-change: transform;
+}
+
+/* Metallic gold — top, anchoring the palette to the hero. */
+.site-bg__blob--1 {
+  top: -14%;
+  left: -6%;
+  width: 46rem;
+  height: 46rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(201, 168, 76, 0.22),
+    transparent 68%
+  );
+  animation: bg-drift-1 26s ease-in-out infinite alternate;
+}
+
+/* Bright champagne — top-right, the fresh accent. */
+.site-bg__blob--2 {
+  top: -8%;
+  right: -10%;
+  width: 40rem;
+  height: 40rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(228, 200, 120, 0.16),
+    transparent 68%
+  );
+  animation: bg-drift-2 32s ease-in-out infinite alternate;
+}
+
+/* Deep bronze — lower right, where the eye lands mid-scroll. */
+.site-bg__blob--3 {
+  bottom: 2%;
+  right: 4%;
+  width: 44rem;
+  height: 44rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(138, 111, 51, 0.2),
+    transparent 70%
+  );
+  animation: bg-drift-3 30s ease-in-out infinite alternate;
+}
+
+/* Warm amber — lower left, balancing the bronze. */
+.site-bg__blob--4 {
+  bottom: -10%;
+  left: 2%;
+  width: 38rem;
+  height: 38rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(212, 184, 94, 0.13),
+    transparent 70%
+  );
+  animation: bg-drift-1 36s ease-in-out infinite alternate-reverse;
+}
+
+/* Soft gold wash — large and central, knits the others together. */
+.site-bg__blob--5 {
+  top: 30%;
+  left: 32%;
+  width: 52rem;
+  height: 52rem;
+  background: radial-gradient(
+    circle at center,
+    rgba(201, 168, 76, 0.1),
+    transparent 72%
+  );
+  animation: bg-drift-2 40s ease-in-out infinite alternate;
+}
+
+/* Faint grid texture, fading out before the fold so the wash feels designed. */
+.site-bg__grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+      to right,
+      rgba(244, 241, 234, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(244, 241, 234, 0.035) 1px, transparent 1px);
+  background-size: 56px 56px;
+  -webkit-mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 18%,
+    #000 30%,
+    transparent 80%
+  );
+  mask-image: radial-gradient(
+    ellipse 90% 70% at 50% 18%,
+    #000 30%,
+    transparent 80%
+  );
+}
+
 /* ─────────────────────────  Utilities  ───────────────────────── */
 
 @layer utilities {
@@ -310,16 +488,16 @@
   .bg-grid {
     background-image: linear-gradient(
         to right,
-        rgba(22, 24, 28, 0.045) 1px,
+        rgba(244, 241, 234, 0.05) 1px,
         transparent 1px
       ),
-      linear-gradient(to bottom, rgba(22, 24, 28, 0.045) 1px, transparent 1px);
+      linear-gradient(to bottom, rgba(244, 241, 234, 0.05) 1px, transparent 1px);
     background-size: 56px 56px;
   }
 
   .bg-dot {
     background-image: radial-gradient(
-      rgba(22, 24, 28, 0.08) 1px,
+      rgba(244, 241, 234, 0.08) 1px,
       transparent 1px
     );
     background-size: 22px 22px;
@@ -344,12 +522,12 @@
     mask-image: linear-gradient(to bottom, #000 60%, transparent 100%);
   }
 
-  /* Gradient headline text — charcoal sinking into brass */
+  /* Gradient headline text — warm white sinking into metallic gold */
   .text-gradient {
     background: linear-gradient(
       180deg,
-      #16181c 0%,
-      #2f3e4e 60%,
+      #f4f1ea 0%,
+      #e4c878 65%,
       var(--brand) 130%
     );
     -webkit-background-clip: text;
@@ -358,20 +536,20 @@
   }
 
   .text-gradient-brand {
-    background: linear-gradient(90deg, #2b3a49, #6d8198, #2b3a49);
+    background: linear-gradient(90deg, #c9a84c, #f0dca0, #c9a84c);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
   }
 
-  /* Animated shimmering headline gradient — brass sweeping over charcoal */
+  /* Animated shimmering headline gradient — bright gold sweeping over warm white */
   .text-shimmer {
     background: linear-gradient(
       100deg,
-      #2a2f36 18%,
-      #3f5266 40%,
-      #243240 54%,
-      #2a2f36 78%
+      #f4f1ea 18%,
+      #f0dca0 40%,
+      #c9a84c 54%,
+      #f4f1ea 78%
     );
     background-size: 220% auto;
     -webkit-background-clip: text;
@@ -415,8 +593,8 @@
     background: conic-gradient(
       from 0deg,
       transparent 0 58%,
-      rgba(37, 99, 235, 0.9) 74%,
-      rgba(125, 162, 240, 0.7) 84%,
+      rgba(201, 168, 76, 0.9) 74%,
+      rgba(228, 200, 120, 0.7) 84%,
       transparent 92%
     );
     animation: beam-spin 7s linear infinite;
@@ -424,10 +602,10 @@
     pointer-events: none;
   }
 
-  /* Translucent glass card — warm white frost over the ivory canvas */
+  /* Translucent glass card — dark frost over the near-black canvas */
   .glass {
-    background: rgba(255, 255, 255, 0.55);
-    border: 1px solid rgba(22, 24, 28, 0.08);
+    background: rgba(22, 21, 24, 0.55);
+    border: 1px solid rgba(244, 241, 234, 0.1);
     backdrop-filter: blur(8px);
   }
 
@@ -443,7 +621,7 @@
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(37, 99, 235, 0.7),
+      rgba(201, 168, 76, 0.8),
       transparent
     );
   }
@@ -460,9 +638,9 @@
     padding: 1px;
     background: linear-gradient(
       120deg,
-      rgba(22, 24, 28, 0.1),
-      rgba(37, 99, 235, 0.45),
-      rgba(22, 24, 28, 0.03)
+      rgba(244, 241, 234, 0.1),
+      rgba(201, 168, 76, 0.5),
+      rgba(244, 241, 234, 0.03)
     );
     -webkit-mask: linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -472,13 +650,13 @@
   }
 
   .glow-brand {
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.35),
-      0 8px 40px -8px rgba(37, 99, 235, 0.4);
+    box-shadow: 0 0 0 1px rgba(201, 168, 76, 0.4),
+      0 8px 40px -8px rgba(201, 168, 76, 0.45);
   }
 
   .shadow-card {
-    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.7) inset,
-      0 20px 50px -24px rgba(22, 24, 28, 0.35);
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06) inset,
+      0 24px 50px -24px rgba(0, 0, 0, 0.7);
   }
 
   /* Marquee fade edges */
@@ -502,14 +680,64 @@
   .anim-shimmer {
     background: linear-gradient(
       90deg,
-      rgba(22, 24, 28, 0.04) 0%,
-      rgba(22, 24, 28, 0.1) 50%,
-      rgba(22, 24, 28, 0.04) 100%
+      rgba(244, 241, 234, 0.04) 0%,
+      rgba(244, 241, 234, 0.1) 50%,
+      rgba(244, 241, 234, 0.04) 100%
     );
     background-size: 200% 100%;
     animation: shimmer 2.6s linear infinite;
   }
+
+  /* ── Lively CTA sheen ── A diagonal light sweep that crosses the button on
+     hover/focus, giving the gold CTAs a "polished metal" gleam. Baked into the
+     `brand` button variant (see button.tsx). */
+  .btn-sheen {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-sheen::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 28%,
+      rgba(255, 255, 255, 0.45) 50%,
+      transparent 72%
+    );
+    transform: translateX(-130%);
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: none;
+  }
+  .btn-sheen:hover::after,
+  .btn-sheen:focus-visible::after {
+    transform: translateX(130%);
+  }
+
+  /* ── Page transition ── Enter animation replayed on every route change
+     (the PageTransition wrapper re-keys its subtree by pathname). A gentle
+     slide from the inline-start + fade + micro-zoom; reduced-motion disables
+     it via the global block below. */
+  .page-enter {
+    animation: page-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
 }
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 10px, 0) scale(0.992);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* The design is now intentionally dark (black canvas, warm-white text, gold
+   accents). Gradient headlines are painted warm-white → gold, so they are
+   already light-on-dark and stay legible even on browsers that force dark
+   mode — no `prefers-color-scheme: dark` fallback is needed any more. */
 
 /* ─────────────────────────  RTL  ───────────────────────── */
 

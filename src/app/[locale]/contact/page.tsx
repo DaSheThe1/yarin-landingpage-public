@@ -77,7 +77,7 @@ export default async function ContactPage({
               transform would fight position:sticky. */}
           <div className="self-start lg:sticky lg:top-24">
             <Reveal>
-              <div className="ring-shine relative overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 shadow-card md:p-8">
+              <div className="ring-shine relative overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 shadow-card md:p-8">
                 <div className="hairline-top absolute inset-x-0 top-0" />
                 <ContactForm />
               </div>
@@ -102,7 +102,7 @@ export default async function ContactPage({
                 </ul>
               </div>
 
-              <div className="rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
                 <p className="font-mono text-xs uppercase tracking-wider text-subtle-foreground">
                   {t("howItWorksLabel")}
                 </p>
@@ -114,10 +114,10 @@ export default async function ContactPage({
                         {i < howItWorks.length - 1 ? (
                           <span
                             aria-hidden
-                            className="absolute start-[18px] top-10 h-[calc(100%-12px)] w-px bg-black/[0.08]"
+                            className="absolute start-[18px] top-10 h-[calc(100%-12px)] w-px bg-white/[0.08]"
                           />
                         ) : null}
-                        <span className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-black/10 bg-surface-2 text-brand-accent">
+                        <span className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-surface-2 text-brand-accent">
                           <Icon className="h-4.5 w-4.5" />
                         </span>
                         <div>
@@ -134,7 +134,7 @@ export default async function ContactPage({
                 </ol>
               </div>
 
-              <div className="rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
                 <ul className="space-y-3">
                   {assurances.map((text, i) => {
                     const Icon = assuranceIcons[i] ?? Clock;
@@ -151,7 +151,7 @@ export default async function ContactPage({
                 </ul>
                 <a
                   href={`mailto:${siteConfig.email}`}
-                  className="mt-5 inline-flex items-center gap-1.5 border-t border-black/[0.06] pt-4 text-sm text-brand-accent transition-colors hover:text-brand-hover"
+                  className="mt-5 inline-flex items-center gap-1.5 border-t border-white/[0.06] pt-4 text-sm text-brand-accent transition-colors hover:text-brand-hover"
                 >
                   <Mail className="h-4 w-4" />
                   {t("emailPrefix")} {siteConfig.email}

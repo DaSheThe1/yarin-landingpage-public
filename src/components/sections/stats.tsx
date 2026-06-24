@@ -73,13 +73,13 @@ export function StatsSection() {
   const labels = t.raw("items") as string[];
 
   return (
-    <section className="border-y border-black/[0.06] bg-background px-6 py-12 sm:py-16">
+    <section className="border-y border-white/[0.06] bg-background px-6 py-12 sm:py-16">
       {/* Phones: compact 2×2 cards — a single stacked column reads terribly.
           sm+ keeps the original open, borderless row. */}
       <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:gap-8 lg:grid-cols-4">
         {stats.map((stat, i) => (
           <Reveal key={labels[i]} delay={i * 90} className="h-full">
-            <div className="flex h-full flex-col justify-center rounded-xl border border-black/[0.08] bg-black/[0.02] p-4 text-center sm:block sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:text-start">
+            <div className="flex h-full flex-col justify-center rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 text-center sm:block sm:rounded-none sm:border-0 sm:bg-transparent sm:p-0 sm:text-start">
               <p className="text-3xl font-semibold tracking-tight text-gradient sm:text-4xl lg:text-5xl">
                 <Counter to={stat.to} prefix={stat.prefix} suffix={stat.suffix} />
               </p>

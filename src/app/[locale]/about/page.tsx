@@ -94,7 +94,7 @@ export default async function AboutPage({
             return (
               <span
                 key={fact}
-                className="inline-flex items-center gap-2 rounded-full border border-black/[0.1] bg-black/[0.03] px-3.5 py-1.5 text-sm text-foreground-soft"
+                className="inline-flex items-center gap-2 rounded-full border border-white/[0.1] bg-white/[0.03] px-3.5 py-1.5 text-sm text-foreground-soft"
               >
                 <Icon className="h-4 w-4 text-brand-accent" />
                 {fact}
@@ -108,7 +108,7 @@ export default async function AboutPage({
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
           <Reveal>
             <div>
-              <div className="relative mb-8 aspect-[4/3] overflow-hidden rounded-2xl border border-black/[0.08] bg-surface-1 shadow-card">
+              <div className="relative mb-8 aspect-[4/3] overflow-hidden rounded-2xl border border-white/[0.08] bg-surface-1 shadow-card">
                 <Image
                   src="/images/yarin-portrait.webp"
                   alt={siteConfig.founder.nameHe}
@@ -173,8 +173,8 @@ export default async function AboutPage({
               const Icon = credentialIcons[i] ?? Server;
               return (
                 <Reveal key={text} delay={i * 70}>
-                  <div className="group h-full rounded-xl border border-black/[0.08] bg-black/[0.02] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30 hover:bg-black/[0.04] hover:shadow-card">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 bg-brand/10 text-brand-accent transition-transform duration-300 group-hover:scale-110">
+                  <div className="group h-full rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30 hover:bg-white/[0.04] hover:shadow-card">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/12 bg-brand/10 text-brand-accent transition-transform duration-300 group-hover:scale-110">
                       <Icon className="h-5 w-5" />
                     </div>
                     <p className="mt-4 text-sm font-medium leading-6 text-foreground-soft">

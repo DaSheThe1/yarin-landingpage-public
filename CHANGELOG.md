@@ -9,6 +9,89 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.8.0] - 2026-06-24
+
+Client-feedback rebrand round.
+
+### Changed
+
+- **Whole-site rebrand to a black · gold · white "dark luxury" palette.** The
+  design-token system in `globals.css` was flipped from the cool light/slate
+  scheme to a near-black canvas (`#0a0a0b`), warm-white text (`#f4f1ea`) and a
+  metallic-gold brand accent (`#c9a84c`, brighter `#e4c878` for text/eyebrows).
+  All derived surfaces, borders, gradients (`.text-gradient*`, `.text-shimmer`),
+  the flowing `SiteBackground` blobs, scrollbar, beam/ring/glass utilities and
+  the hero `WaveText` crest were re-tinted to the gold family; `color-scheme`
+  and `themeColor` are now dark. Component-level `black/<alpha>` utilities were
+  remapped to `white/<alpha>` for legibility on black, and dark-on-dark semantic
+  text (success/error) was lightened.
+- Buttons are livelier: the gold `brand` CTA now has a polished-metal sheen that
+  sweeps on hover/focus (`.btn-sheen`), a subtle lift and a deeper gold glow.
+- The professional title copy "מתכנן ומעצב פנים" → "אדריכל ומעצב פנים" across
+  `messages/he.json` (per client request).
+- Home page order: the services teaser now sits directly under the hero
+  (swapped with the stats/numbers section) so it's the first content after the
+  fold, notably on mobile.
+- Home "about" (founder) block now shows the real full-bleed `yarin-portrait`
+  (same image as the About page) filling a taller frame, instead of a small
+  circular placeholder icon.
+
+### Added
+
+- **Lead-capture popup.** A single app-wide modal (`LeadDialogProvider` +
+  `useLeadDialog` + `LeadButton`) reuses the existing name+phone `ContactForm`
+  (→ `/api/contact` → `/thank-you`). Primary CTAs across the site (hero, offer,
+  final CTA, header, footer) now open it instead of navigating to `/contact`.
+  Closes on Escape, backdrop click, and on navigation (so it never lingers over
+  the thank-you page).
+- **Slide + fade page transitions** (`PageTransition`) replayed on every route
+  change; respects `prefers-reduced-motion`.
+- **Client testimonials on the home page.** The testimonials carousel (already
+  on `/reviews`) now also appears on the home page for social proof, with six
+  natural-Hebrew quotes (projects and locations across the center & north).
+  These are real client feedback Yarin confirmed; names are changed at the
+  clients' request, disclosed by a quiet privacy note. The "example reviews"
+  notice is off (`testimonialsAreSamples = false`).
+- **Contact links.** Instagram added to the header and footer; a persistent
+  floating WhatsApp button (`FloatingWhatsApp`, inline-start corner) and the
+  footer WhatsApp link now open WhatsApp with a ready-to-send Hebrew message.
+
+## [0.7.0] - 2026-06-23
+
+### Added
+
+- A site-wide flowing colour-field background behind every page (home, all
+  subpages and thank-you), mounted once in the locale layout as `SiteBackground`.
+  Five large, soft blobs in the cool brand family (royal blue → sky → indigo →
+  teal) drift on slow, independent loops over the off-white canvas; scrolling
+  adds a gentle hue shift and parallax driven by a single rAF-throttled scroll
+  listener (`--bg-scroll`, 0 → 1 down the page), so the palette visibly flows as
+  you move. Honours `prefers-reduced-motion` (drops the scroll wiring and freezes
+  the drift into a calm static mesh).
+
+### Changed
+
+- `--background` is now `transparent` and the solid off-white base moved to a new
+  `--canvas` token painted on `<html>`. Every `bg-background` section is now a
+  window onto the flowing field, while the sticky header backdrop and scrollbars
+  switched to `bg-canvas` / `--canvas` so they keep their solid fill.
+
+## [0.6.4] - 2026-06-23
+
+### Fixed
+
+- Gradient text (the stats numbers, page-hero highlights, trust-band quote, and
+  the thank-you shimmer) became dark-on-dark and unreadable on phones whose
+  browser force-darkens the page — e.g. Samsung Internet's "dark mode for
+  websites". Such engines recolour text set via `color` but cannot touch text
+  painted with `background-clip: text` (its ink is a background), so the
+  gradient digits stayed dark while their card darkened. Added a
+  `prefers-color-scheme: dark` fallback in `globals.css` that degrades
+  `.text-gradient` / `.text-gradient-brand` / `.text-shimmer` to a solid
+  foreground ink the engine can flip. No dark theme is introduced — the site
+  stays light-locked; this only guarantees legibility if a browser overrides
+  the lock.
+
 ## [0.6.3] - 2026-06-23
 
 ### Changed

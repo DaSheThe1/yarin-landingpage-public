@@ -113,11 +113,11 @@ export default async function ThankYouPage({
               const Icon = nextStepIcons[i] ?? MessageCircle;
               return (
                 <Reveal key={title} delay={i * 90} className="h-full">
-                  <div className="relative h-full rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6">
+                  <div className="relative h-full rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6">
                     <span className="absolute end-5 top-5 font-mono text-xs text-subtle-foreground">
                       0{i + 1}
                     </span>
-                    <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-brand/10 text-brand-accent">
+                    <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/12 bg-brand/10 text-brand-accent">
                       <Icon className="h-5 w-5" />
                     </span>
                     <p className="mt-4 text-[15px] font-medium text-foreground">
@@ -138,7 +138,7 @@ export default async function ThankYouPage({
       <section className="bg-background px-6 pb-24">
         <div className="mx-auto max-w-6xl">
           <Reveal>
-            <div className="ring-shine relative overflow-hidden rounded-3xl border border-black/[0.08] bg-surface-1 p-7 sm:p-9">
+            <div className="ring-shine relative overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 p-7 sm:p-9">
               <div
                 aria-hidden
                 className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-brand/15 blur-[100px]"
@@ -157,9 +157,9 @@ export default async function ThankYouPage({
                       <Link
                         key={title}
                         href={href}
-                        className="group flex flex-col rounded-2xl border border-black/[0.08] bg-black/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-black/[0.04]"
+                        className="group flex flex-col rounded-2xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-white/[0.04]"
                       >
-                        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 bg-brand/10 text-brand-accent transition-transform duration-300 group-hover:scale-110">
+                        <span className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/12 bg-brand/10 text-brand-accent transition-transform duration-300 group-hover:scale-110">
                           <Icon className="h-4.5 w-4.5" />
                         </span>
                         <span className="mt-4 flex items-center gap-1 text-[15px] font-medium text-foreground-soft transition-colors group-hover:text-foreground">
@@ -174,7 +174,7 @@ export default async function ThankYouPage({
                   })}
                 </div>
 
-                <div className="mt-8 flex flex-col items-start gap-4 border-t border-black/[0.06] pt-7 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-8 flex flex-col items-start gap-4 border-t border-white/[0.06] pt-7 sm:flex-row sm:items-center sm:justify-between">
                   <a
                     href={`mailto:${siteConfig.email}`}
                     className="inline-flex items-center gap-1.5 text-sm text-brand-accent transition-colors hover:text-brand-hover"

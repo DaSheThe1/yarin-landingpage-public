@@ -13,6 +13,7 @@
 // continuity in the Umami dashboard, so treat them as a contract.
 export type AnalyticsEvent =
   | "hero_video_watch" // user clicks the hero demo to watch it fullscreen
+  | "lead_dialog_opened" // user opened the lead-capture popup (intent)
   | "lead_submitted" // contact form submitted successfully
   | "thankyou_video_watch"; // user clicks to hear Daniel's thank-you message
 

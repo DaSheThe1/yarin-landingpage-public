@@ -13,7 +13,7 @@ export function TrustBand() {
     <section className="bg-background px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-4xl">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-black/[0.08] bg-surface-1 px-6 py-14 text-center sm:px-12">
+          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 px-6 py-14 text-center sm:px-12">
             <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-40" />
             <div
               aria-hidden
@@ -33,7 +33,7 @@ export function TrustBand() {
                 {principles.map((p) => (
                   <span
                     key={p}
-                    className="rounded-full border border-black/[0.1] bg-black/[0.03] px-4 py-1.5 text-sm text-foreground-soft"
+                    className="rounded-full border border-white/[0.1] bg-white/[0.03] px-4 py-1.5 text-sm text-foreground-soft"
                   >
                     {p.replace("{founder}", founderDisplayName(locale))}
                   </span>

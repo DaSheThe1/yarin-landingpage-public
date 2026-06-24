@@ -52,7 +52,7 @@ export function BackToTop() {
       className={cn(
         // Hidden on phones: it overlaps the calculator's sticky result bar
         // and crowds the small screen.
-        "fixed bottom-6 right-6 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-black/12 bg-surface-2/90 text-foreground-soft shadow-card backdrop-blur transition-all duration-300 hover:border-brand/40 hover:text-foreground md:flex",
+        "fixed bottom-6 right-6 z-50 hidden h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-surface-2/90 text-foreground-soft shadow-card backdrop-blur transition-all duration-300 hover:border-brand/40 hover:text-foreground md:flex",
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-3 opacity-0"

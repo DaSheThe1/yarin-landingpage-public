@@ -8,6 +8,10 @@ import { Analytics } from "@/components/analytics/umami";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { BackToTop, ScrollProgress } from "@/components/layout/scroll-utils";
+import { SiteBackground } from "@/components/layout/site-background";
+import { FloatingWhatsApp } from "@/components/layout/floating-whatsapp";
+import { PageTransition } from "@/components/layout/page-transition";
+import { LeadDialogProvider } from "@/components/lead/lead-dialog";
 import { siteConfig } from "@/config/site";
 import { localeDirection, routing, type Locale } from "@/i18n/routing";
 
@@ -29,13 +33,13 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// This is an intentionally light-only ("editorial") design. Declare the light
-// scheme to the UA so neither `prefers-color-scheme: dark` nor a browser's
-// auto/force-dark engine inverts the page; `darkreader-lock` (below, in the
-// metadata) opts out of the Dark Reader extension, which ignores color-scheme.
+// This is an intentionally dark-only ("black · gold · white") design. Declare
+// the dark scheme to the UA so form controls/scrollbars render dark and no
+// engine tries to re-light the page; `darkreader-lock` (below, in the metadata)
+// opts out of the Dark Reader extension, which ignores color-scheme.
 export const viewport: Viewport = {
-  colorScheme: "light",
-  themeColor: "#f6f7f8",
+  colorScheme: "dark",
+  themeColor: "#0a0a0b",
 };
 
 // Per-locale root metadata. Hebrew (default) lives under /he and English under
@@ -78,8 +82,8 @@ export async function generateMetadata({
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-    // Opt out of the Dark Reader extension — it ignores `color-scheme: light`
-    // and would otherwise invert this intentionally light design.
+    // Opt out of the Dark Reader extension — it would otherwise re-tint this
+    // intentionally dark, hand-tuned black/gold design.
     other: {
       "darkreader-lock": "1",
     },
@@ -111,11 +115,15 @@ export default async function LocaleLayout({
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <NextIntlClientProvider>
+          <SiteBackground />
           <ScrollProgress />
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-          <BackToTop />
+          <LeadDialogProvider>
+            <SiteHeader />
+            <PageTransition>{children}</PageTransition>
+            <SiteFooter />
+            <BackToTop />
+            <FloatingWhatsApp />
+          </LeadDialogProvider>
         </NextIntlClientProvider>
         <Analytics />
       </body>

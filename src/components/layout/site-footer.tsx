@@ -3,19 +3,24 @@ import { useLocale, useTranslations } from "next-intl";
 
 import { legalNavigation, mainNavigation } from "@/config/navigation";
 import { founderDisplayName, siteConfig } from "@/config/site";
-import { buttonVariants } from "@/components/ui/button";
+import { LeadButton } from "@/components/lead/lead-button";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
 
 export function SiteFooter() {
   const t = useTranslations("footer");
   const tNav = useTranslations("nav");
+  const tWa = useTranslations("floatingWhatsapp");
   const locale = useLocale();
   const year = new Date().getFullYear();
+  // WhatsApp deep link with a ready-to-send Hebrew message.
+  const whatsappHref = `${siteConfig.whatsappUrl}?text=${encodeURIComponent(
+    tWa("message")
+  )}`;
 
   return (
-    <footer className="relative overflow-hidden border-t border-black/[0.08] bg-background">
+    <footer className="relative overflow-hidden border-t border-white/[0.08] bg-background">
       <div className="pointer-events-none absolute inset-0 bg-grid mask-fade-b opacity-40" />
       <div
         aria-hidden
@@ -24,7 +29,7 @@ export function SiteFooter() {
 
       <div className="relative mx-auto w-full max-w-6xl px-6">
         {/* CTA strip */}
-        <div className="flex flex-col items-start justify-between gap-6 border-b border-black/[0.06] py-12 md:flex-row md:items-center">
+        <div className="flex flex-col items-start justify-between gap-6 border-b border-white/[0.06] py-12 md:flex-row md:items-center">
           <div>
             {/* Not a heading: this CTA repeats on every page and would add a
                 duplicate h2 to every document outline. */}
@@ -35,16 +40,13 @@ export function SiteFooter() {
               {t("ctaText")}
             </p>
           </div>
-          <Link
-            href="/contact"
-            className={cn(
-              buttonVariants({ variant: "brand" }),
-              "h-11 shrink-0 rounded-lg px-5 text-[15px]"
-            )}
+          <LeadButton
+            variant="brand"
+            className="h-11 shrink-0 rounded-lg px-5 text-[15px]"
           >
             {t("cta")}
             <ArrowUpRight data-icon="inline-end" />
-          </Link>
+          </LeadButton>
         </div>
 
         {/* Columns */}
@@ -82,15 +84,26 @@ export function SiteFooter() {
                 <span dir="ltr">{siteConfig.phone}</span>
               </a>
               <a
-                href={siteConfig.whatsappUrl}
+                href={whatsappHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex w-fit items-center gap-2.5 text-[#1b9c4c] transition-colors hover:text-[#157a3b]"
+                className="group inline-flex w-fit items-center gap-2.5 text-[#34d36f] transition-colors hover:text-[#4ade80]"
               >
-                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#25d366]/12 text-[#1b9c4c] transition-colors group-hover:bg-[#25d366]/20">
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#25d366]/12 text-[#34d36f] transition-colors group-hover:bg-[#25d366]/20">
                   <WhatsAppIcon className="h-4 w-4" />
                 </span>
                 {t("whatsapp")}
+              </a>
+              <a
+                href={siteConfig.profiles.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex w-fit items-center gap-2.5 text-brand-accent transition-colors hover:text-brand-hover"
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-brand/10 text-brand-accent transition-colors group-hover:bg-brand/15">
+                  <InstagramIcon className="h-4 w-4" />
+                </span>
+                {t("instagram")}
               </a>
             </div>
           </div>
@@ -126,7 +139,7 @@ export function SiteFooter() {
           </nav>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-3 border-t border-black/[0.06] py-7 text-xs text-subtle-foreground sm:flex-row sm:items-center">
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-white/[0.06] py-7 text-xs text-subtle-foreground sm:flex-row sm:items-center">
           <p>{t("rights", { year, brand: siteConfig.name })}</p>
           <p>{t("tagline")}</p>
         </div>

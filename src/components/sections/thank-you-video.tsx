@@ -116,16 +116,16 @@ export function ThankYouVideo() {
           rotating "beam" (a 180%-sized blue conic-gradient) and the ambient
           glow were removed — both bled blue up behind the page heading. */}
       <div className="rounded-[1.4rem]">
-        <div className="ring-shine relative overflow-hidden rounded-2xl border border-black/[0.1] bg-surface-1 shadow-card">
+        <div className="ring-shine relative overflow-hidden rounded-2xl border border-white/[0.1] bg-surface-1 shadow-card">
           {/* Window chrome */}
-          <div className="flex items-center gap-2 border-b border-black/[0.06] px-4 py-3">
+          <div className="flex items-center gap-2 border-b border-white/[0.06] px-4 py-3">
             <span className="h-3 w-3 rounded-full bg-rose-400/70" />
             <span className="h-3 w-3 rounded-full bg-amber-400/70" />
             <span className="h-3 w-3 rounded-full bg-emerald-400/70" />
-            <span className="ml-3 inline-flex items-center gap-1.5 rounded-md border border-black/[0.06] bg-black/[0.03] px-2.5 py-1 font-mono text-[11px] text-subtle-foreground">
+            <span className="ml-3 inline-flex items-center gap-1.5 rounded-md border border-white/[0.06] bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-subtle-foreground">
               {t("badge")}
             </span>
-            <span className="ml-auto inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-emerald-600">
+            <span className="ml-auto inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wider text-emerald-400">
               <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
               {started ? t("nowPlaying") : t("duration")}
             </span>
@@ -161,7 +161,7 @@ export function ThankYouVideo() {
                 aria-label={t("playAria")}
                 className="group absolute inset-0 flex flex-col items-center justify-center gap-4 bg-gradient-to-b from-black/30 via-black/40 to-black/60 transition-colors hover:from-black/40 hover:to-black/70"
               >
-                <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-brand text-primary-foreground shadow-[0_0_0_1px_rgba(125, 162, 240,0.5),0_12px_44px_-6px_rgba(37, 99, 235,0.9)] transition-transform duration-300 group-hover:scale-110">
+                <span className="relative flex h-20 w-20 items-center justify-center rounded-full bg-brand text-primary-foreground shadow-[0_0_0_1px_rgba(228, 200, 120,0.5),0_12px_44px_-6px_rgba(201, 168, 76,0.9)] transition-transform duration-300 group-hover:scale-110">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-accent/30" />
                   <Play className="relative ml-1 h-8 w-8 fill-current" />
                 </span>
@@ -190,7 +190,7 @@ export function ThankYouVideo() {
       </div>
 
       {/* Floating hint chip */}
-      <div className="absolute -right-4 -top-4 hidden rotate-3 items-center gap-2 rounded-full border border-black/10 bg-surface-2/90 px-3 py-1.5 text-xs text-foreground-soft shadow-card backdrop-blur sm:flex">
+      <div className="absolute -right-4 -top-4 hidden rotate-3 items-center gap-2 rounded-full border border-white/12 bg-surface-2/90 px-3 py-1.5 text-xs text-foreground-soft shadow-card backdrop-blur sm:flex">
         <Play className="h-3 w-3 fill-brand-accent text-brand-accent" />
         {t("watchFirst")}
       </div>
@@ -204,9 +204,9 @@ function VideoPlaceholder() {
     <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-surface-1 bg-grid">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(37, 99, 235,0.18),transparent_70%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.18),transparent_70%)]"
       />
-      <span className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-black/12 bg-black/[0.04] text-brand-accent">
+      <span className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.04] text-brand-accent">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-2xl bg-brand-accent/20" />
         <Play className="relative h-7 w-7 fill-current" />
       </span>

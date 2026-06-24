@@ -81,7 +81,7 @@ export function HeroVideo() {
         className="pointer-events-none absolute -inset-x-10 -top-10 bottom-0 rounded-[2.5rem] bg-brand/20 blur-[90px]"
       />
 
-      <div className="ring-shine relative overflow-hidden rounded-2xl border border-black/[0.1] bg-surface-1 shadow-card sm:rounded-3xl">
+      <div className="ring-shine relative overflow-hidden rounded-2xl border border-white/[0.1] bg-surface-1 shadow-card sm:rounded-3xl">
         <div className="relative aspect-video">
           {/* The auto-playing render showcase sits underneath; once a real
               /public/hero-demo.mp4 can play, the video fades in over it. */}
@@ -125,7 +125,7 @@ export function HeroVideo() {
       </div>
 
       {/* Floating hint chip */}
-      <div className="absolute -right-4 -top-4 hidden rotate-3 items-center gap-2 rounded-full border border-black/10 bg-surface-2/90 px-3 py-1.5 text-xs text-foreground-soft shadow-card backdrop-blur sm:flex">
+      <div className="absolute -right-4 -top-4 hidden rotate-3 items-center gap-2 rounded-full border border-white/12 bg-surface-2/90 px-3 py-1.5 text-xs text-foreground-soft shadow-card backdrop-blur sm:flex">
         <Play className="h-3 w-3 fill-brand-accent text-brand-accent" />
         {t("watchRun")}
       </div>
@@ -159,7 +159,7 @@ function HeroShowcase() {
       {/* Cinematic vignette to seat the overlays */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10"
+        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-white/12"
       />
     </div>
   );

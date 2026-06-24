@@ -1,0 +1,123 @@
+"use client";
+
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
+import { createPortal } from "react-dom";
+import { usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { X } from "lucide-react";
+
+import { ContactForm } from "@/components/sections/contact-form";
+import { trackEvent } from "@/lib/analytics";
+
+// A single, app-wide lead-capture popup. The provider is mounted once in the
+// locale layout; any CTA can open it via `useLeadDialog().open()` (or the
+// `LeadButton` convenience component). It reuses the exact same name+phone
+// `ContactForm` as the /contact page, so there is one lead flow → /api/contact
+// → /thank-you, just surfaced as a popup for the lowest-friction conversion.
+
+type LeadDialogContextValue = {
+  isOpen: boolean;
+  open: () => void;
+  close: () => void;
+};
+
+const LeadDialogContext = createContext<LeadDialogContextValue | null>(null);
+
+export function useLeadDialog() {
+  const ctx = useContext(LeadDialogContext);
+  if (!ctx) {
+    throw new Error("useLeadDialog must be used within <LeadDialogProvider>");
+  }
+  return ctx;
+}
+
+export function LeadDialogProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
+  // We store the pathname the popup was opened on and DERIVE `isOpen` from it
+  // rather than syncing with an effect. The instant the route changes — most
+  // importantly after a successful submit hands off to /thank-you — `isOpen`
+  // becomes false on its own, so the overlay never lingers over the next page.
+  const [openedOn, setOpenedOn] = useState<string | null>(null);
+  const isOpen = openedOn !== null && openedOn === pathname;
+
+  const open = useCallback(() => {
+    setOpenedOn(pathname);
+    // Funnel: the lead popup was opened (intent), distinct from a submitted lead.
+    trackEvent("lead_dialog_opened");
+  }, [pathname]);
+  const close = useCallback(() => setOpenedOn(null), []);
+
+  // Lock body scroll + close on Escape while the popup is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen, close]);
+
+  return (
+    <LeadDialogContext.Provider value={{ isOpen, open, close }}>
+      {children}
+      <LeadDialog isOpen={isOpen} onClose={close} />
+    </LeadDialogContext.Provider>
+  );
+}
+
+function LeadDialog({
+  isOpen,
+  onClose,
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+}) {
+  const t = useTranslations("leadDialog");
+
+  // `isOpen` only becomes true from a user click on the client, so this never
+  // runs `createPortal` during SSR — no separate "mounted" gate is needed.
+  if (!isOpen) return null;
+
+  return createPortal(
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-label={t("title")}
+      className="fixed inset-0 z-[100] flex items-end justify-center p-4 sm:items-center"
+    >
+      {/* Backdrop */}
+      <button
+        type="button"
+        aria-label={t("close")}
+        onClick={onClose}
+        className="absolute inset-0 animate-in fade-in cursor-default bg-black/70 backdrop-blur-sm duration-300"
+      />
+
+      {/* Panel */}
+      <div className="ring-shine glow-brand relative z-10 w-full max-w-md animate-in fade-in zoom-in-95 slide-in-from-bottom-4 overflow-hidden rounded-2xl border border-brand/25 bg-surface-1 p-6 shadow-card duration-300 sm:p-8 sm:slide-in-from-bottom-0">
+        <button
+          type="button"
+          aria-label={t("close")}
+          onClick={onClose}
+          className="absolute end-3.5 top-3.5 flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-white/[0.06] hover:text-foreground"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <ContactForm />
+      </div>
+    </div>,
+    document.body
+  );
+}

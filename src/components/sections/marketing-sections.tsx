@@ -24,6 +24,7 @@ import {
 
 import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
+import { LeadButton } from "@/components/lead/lead-button";
 import { HeroVideo } from "@/components/sections/hero-video";
 import { Reveal } from "@/components/ui/reveal";
 import { WaveText } from "@/components/ui/wave-text";
@@ -120,11 +121,11 @@ export function HeroSection() {
       <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-60" />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[42rem] w-[60rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(37, 99, 235,0.45),transparent_60%)] blur-[90px]"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[42rem] w-[60rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.45),transparent_60%)] blur-[90px]"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute right-[-10%] top-24 h-[28rem] w-[28rem] animate-float rounded-full bg-[radial-gradient(circle_at_center,rgba(37, 99, 235,0.3),transparent_60%)] blur-[100px]"
+        className="pointer-events-none absolute right-[-10%] top-24 h-[28rem] w-[28rem] animate-float rounded-full bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.3),transparent_60%)] blur-[100px]"
       />
       <div
         aria-hidden
@@ -182,16 +183,13 @@ export function HeroSection() {
 
         <Reveal delay={120} className="order-5 w-full">
           <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <Link
-              href="/contact"
-              className={cn(
-                buttonVariants({ variant: "brand" }),
-                "h-11 rounded-lg px-5 text-[15px]"
-              )}
+            <LeadButton
+              variant="brand"
+              className="h-11 rounded-lg px-5 text-[15px]"
             >
               {t("ctaPrimary")}
               <ArrowRight data-icon="inline-end" />
-            </Link>
+            </LeadButton>
             <Link
               href="/examples"
               className={cn(
@@ -227,7 +225,7 @@ export function ProblemSection() {
         <div className="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {problems.map((problem, i) => (
             <Reveal key={problem} delay={i * 60}>
-              <div className="group flex cursor-pointer select-none items-center gap-3 rounded-xl border border-black/[0.08] bg-black/[0.02] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-rose-400/40 hover:bg-rose-400/[0.06] hover:shadow-card">
+              <div className="group flex cursor-pointer select-none items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.02] p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-rose-400/40 hover:bg-rose-400/[0.06] hover:shadow-card">
                 <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-rose-500/10 text-rose-400 transition-transform duration-300 group-hover:scale-110">
                   <span className="h-2 w-2 rounded-full bg-rose-400" />
                 </span>
@@ -269,7 +267,7 @@ export function ServicesOverview({ expanded = false }: { expanded?: boolean }) {
                 <Card className="h-full">
                   <CardContent className="flex h-full flex-col">
                     {expanded && media ? (
-                      <div className="relative mb-5 -mt-1 aspect-video overflow-hidden rounded-xl border border-black/[0.08] bg-surface-1">
+                      <div className="relative mb-5 -mt-1 aspect-video overflow-hidden rounded-xl border border-white/[0.08] bg-surface-1">
                         {media.type === "video" ? (
                           <video
                             autoPlay
@@ -292,7 +290,7 @@ export function ServicesOverview({ expanded = false }: { expanded?: boolean }) {
                         )}
                       </div>
                     ) : null}
-                    <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-black/10 bg-brand/10 text-brand-accent transition-all duration-300 group-hover/card:scale-110 group-hover/card:border-brand/40 group-hover/card:bg-brand/20">
+                    <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-white/12 bg-brand/10 text-brand-accent transition-all duration-300 group-hover/card:scale-110 group-hover/card:border-brand/40 group-hover/card:bg-brand/20">
                       <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="text-lg font-medium tracking-tight text-foreground">
@@ -302,7 +300,7 @@ export function ServicesOverview({ expanded = false }: { expanded?: boolean }) {
                       {service.description}
                     </CardDescription>
                     {expanded ? (
-                      <ul className="mt-5 space-y-2.5 border-t border-black/[0.06] pt-5 text-sm text-foreground-soft">
+                      <ul className="mt-5 space-y-2.5 border-t border-white/[0.06] pt-5 text-sm text-foreground-soft">
                         {service.details.map((detail) => (
                           <li key={detail} className="flex gap-2.5">
                             <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-brand-accent" />
@@ -345,20 +343,20 @@ export function WorkflowExamples({ expanded = false }: { expanded?: boolean }) {
               <Reveal key={workflow.title} delay={(index % 3) * 80}>
                 <Card className="h-full">
                   <CardContent className="flex h-full flex-col">
-                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-black/10 bg-black/[0.04] text-foreground-soft transition-all duration-300 group-hover/card:scale-110 group-hover/card:border-brand/40 group-hover/card:bg-brand/15 group-hover/card:text-brand-accent">
+                    <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-white/12 bg-white/[0.04] text-foreground-soft transition-all duration-300 group-hover/card:scale-110 group-hover/card:border-brand/40 group-hover/card:bg-brand/15 group-hover/card:text-brand-accent">
                       <Icon className="h-5 w-5" />
                     </div>
                     <h3 className="text-[17px] font-medium tracking-tight text-foreground">
                       {workflow.title}
                     </h3>
-                    <p className="mt-2 inline-flex w-fit rounded-md border border-black/[0.06] bg-black/[0.03] px-2 py-1 font-mono text-[11px] text-brand-accent">
+                    <p className="mt-2 inline-flex w-fit rounded-md border border-white/[0.06] bg-white/[0.03] px-2 py-1 font-mono text-[11px] text-brand-accent">
                       {workflow.flow}
                     </p>
                     <CardDescription className="mt-3 leading-6 text-muted-foreground">
                       {workflow.summary}
                     </CardDescription>
                     {expanded ? (
-                      <p className="mt-auto flex items-start gap-2 border-t border-black/[0.06] pt-4 text-sm text-emerald-700">
+                      <p className="mt-auto flex items-start gap-2 border-t border-white/[0.06] pt-4 text-sm text-emerald-400">
                         <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" />
                         {workflow.outcome}
                       </p>
@@ -426,7 +424,7 @@ export function ProcessSection() {
                     delay={60}
                     className="absolute start-0 top-0 md:start-1/2 md:-translate-x-1/2 rtl:md:translate-x-1/2"
                   >
-                    <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-brand/40 bg-surface-2 text-brand-accent shadow-[0_0_0_4px_rgba(246,247,248,1),0_0_24px_-4px_rgba(37, 99, 235,0.6)]">
+                    <span className="relative flex h-11 w-11 items-center justify-center rounded-full border border-brand/40 bg-surface-2 text-brand-accent shadow-[0_0_0_4px_rgba(10,10,11,1),0_0_24px_-4px_rgba(201, 168, 76,0.6)]">
                       <Icon className="h-5 w-5" />
                     </span>
                   </Reveal>
@@ -451,7 +449,7 @@ export function ProcessSection() {
                     {media ? (
                       <div
                         className={cn(
-                          "group relative mt-3 aspect-[16/9] w-full max-w-[180px] overflow-hidden rounded-lg border border-black/[0.08] bg-surface-1 shadow-card",
+                          "group relative mt-3 aspect-[16/9] w-full max-w-[180px] overflow-hidden rounded-lg border border-white/[0.08] bg-surface-1 shadow-card",
                           onRight ? "md:me-auto" : "md:ms-auto"
                         )}
                       >
@@ -494,7 +492,7 @@ export function ServicesTeaser() {
     <section className="bg-background px-6 py-20 sm:py-24">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="ring-shine relative grid gap-10 overflow-hidden rounded-3xl border border-black/[0.08] bg-surface-1 p-7 sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+          <div className="ring-shine relative grid gap-10 overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 p-7 sm:p-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
             <div
               aria-hidden
               className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-brand/15 blur-[100px]"
@@ -525,9 +523,9 @@ export function ServicesTeaser() {
                   <Link
                     key={service.title}
                     href="/services"
-                    className="group flex items-center gap-3 rounded-xl border border-black/[0.08] bg-black/[0.02] p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30 hover:bg-black/[0.04]"
+                    className="group flex items-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.02] p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-brand/30 hover:bg-white/[0.04]"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-black/10 bg-brand/10 text-brand-accent transition-transform duration-300 group-hover:scale-110">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-white/12 bg-brand/10 text-brand-accent transition-transform duration-300 group-hover:scale-110">
                       <Icon className="h-4.5 w-4.5" />
                     </span>
                     <span className="text-sm font-medium leading-5 text-foreground-soft transition-colors group-hover:text-foreground">
@@ -579,18 +577,15 @@ export function OffersSection() {
               <p className="mt-3 leading-7 text-muted-foreground">
                 {offer.summary}
               </p>
-              <Link
-                href="/contact"
-                className={cn(
-                  buttonVariants({ variant: "brand" }),
-                  "mt-7 h-11 rounded-lg px-5 text-[15px]"
-                )}
+              <LeadButton
+                variant="brand"
+                className="mt-7 h-11 rounded-lg px-5 text-[15px]"
               >
                 {offer.cta}
                 <ArrowRight data-icon="inline-end" />
-              </Link>
+              </LeadButton>
             </div>
-            <div aria-hidden className="hidden h-full w-px bg-black/[0.08] md:block" />
+            <div aria-hidden className="hidden h-full w-px bg-white/[0.08] md:block" />
             <ul className="relative space-y-3.5 text-sm text-foreground-soft">
               {offer.includes.map((item) => (
                 <li key={item} className="flex gap-2.5">
@@ -630,8 +625,8 @@ export function WhySection() {
         <div className="grid gap-4 sm:grid-cols-2">
           {reasons.map((reason, i) => (
             <Reveal key={reason.title} delay={i * 80} className="h-full">
-              <div className="group h-full cursor-pointer select-none rounded-xl border border-black/[0.08] bg-black/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-black/[0.04] hover:shadow-card">
-                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 bg-brand/10 text-brand-accent transition-all duration-300 group-hover:scale-110 group-hover:border-brand/40 group-hover:bg-brand/20">
+              <div className="group h-full cursor-pointer select-none rounded-xl border border-white/[0.08] bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-1 hover:border-brand/30 hover:bg-white/[0.04] hover:shadow-card">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/12 bg-brand/10 text-brand-accent transition-all duration-300 group-hover:scale-110 group-hover:border-brand/40 group-hover:bg-brand/20">
                   <CheckCircle2 className="h-5 w-5" />
                 </div>
                 <p className="mt-4 text-[15px] font-medium text-foreground">
@@ -661,26 +656,20 @@ export function FounderTeaser() {
     <section className="bg-background px-6 py-12 sm:py-14">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="ring-shine relative grid gap-8 overflow-hidden rounded-2xl border border-black/[0.08] bg-black/[0.02] p-6 md:grid-cols-[0.85fr_1.15fr] md:p-8">
+          <div className="ring-shine relative grid gap-8 overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.02] p-6 md:grid-cols-[0.85fr_1.15fr] md:p-8">
             <div
               aria-hidden
               className="pointer-events-none absolute -left-20 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-brand/20 blur-[80px]"
             />
-            <div className="relative min-h-80 overflow-hidden rounded-xl border border-black/[0.08] bg-surface-1">
-              {/* Placeholder until a real portrait is provided — uses the same
-                  brand mark as the header, on a soft blue wash. */}
-              <div
-                aria-hidden
-                className="absolute inset-0 grid place-items-center bg-gradient-to-br from-brand/20 via-brand/5 to-surface-3"
-              >
-                <Image
-                  src="/images/yarin-icon.webp"
-                  alt=""
-                  width={128}
-                  height={128}
-                  className="h-28 w-28 rounded-full object-cover shadow-[0_0_0_1px_rgba(37,99,235,0.45),0_12px_40px_-8px_rgba(37,99,235,0.6)]"
-                />
-              </div>
+            <div className="relative min-h-96 overflow-hidden rounded-xl border border-white/[0.08] bg-surface-1 md:min-h-[30rem]">
+              {/* Full-bleed founder portrait (same image as the About page). */}
+              <Image
+                src="/images/yarin-portrait.webp"
+                alt={founderName}
+                fill
+                sizes="(min-width: 768px) 40vw, 90vw"
+                className="object-cover object-top"
+              />
               <div
                 aria-hidden
                 className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent"
@@ -763,11 +752,11 @@ export function FinalCta() {
     <section className="bg-background px-6 pb-28 pt-4">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <div className="relative overflow-hidden rounded-3xl border border-black/[0.08] bg-surface-1 px-6 py-16 text-center sm:px-10">
+          <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 px-6 py-16 text-center sm:px-10">
             <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-50" />
             <div
               aria-hidden
-              className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[44rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(37, 99, 235,0.5),transparent_60%)] blur-[80px]"
+              className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[44rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.5),transparent_60%)] blur-[80px]"
             />
             <div className="relative">
               <h2 className="mx-auto max-w-2xl text-3xl font-medium tracking-tight text-balance sm:text-4xl">
@@ -778,16 +767,13 @@ export function FinalCta() {
                 {t("body")}
               </p>
               <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Link
-                  href="/contact"
-                  className={cn(
-                    buttonVariants({ variant: "brand" }),
-                    "h-11 rounded-lg px-5 text-[15px]"
-                  )}
+                <LeadButton
+                  variant="brand"
+                  className="h-11 rounded-lg px-5 text-[15px]"
                 >
                   {t("ctaPrimary")}
                   <ArrowRight data-icon="inline-end" />
-                </Link>
+                </LeadButton>
                 <Link
                   href="/services"
                   className={cn(

@@ -26,10 +26,21 @@ There are **two** repos, with **one source of truth**:
   **generated mirror** that GitHub Pages builds from. **Never edit, commit, or
   merge in it directly.** It has no independent history worth preserving.
 
+> **Publishing to the public repo is gated on the owner's explicit approval.**
+> Pushing to the public mirror triggers the live GitHub Pages deploy, so it is
+> NEVER automatic. Agents must NOT run `scripts/publish-public.sh`, push to the
+> public remote, or otherwise trigger the public CI/deploy unless Daniel has, in
+> the current conversation, **explicitly told you to publish/deploy/go live**.
+> Merging to `main` **here** (private) is the normal end state of a task; it does
+> not deploy anything. When work is ready, stop after the private merge and tell
+> Daniel it is ready to publish — then wait for his go-ahead. "Approve the PR"
+> or "merge it" is approval to merge **here**, NOT to publish to public.
+
 Workflow — nothing is done twice:
 
-1. Develop + merge to `main` **here**.
-2. Run `scripts/publish-public.sh`. It mirrors the working tree into the public
+1. Develop + merge to `main` **here**. ← default stopping point for any task.
+2. **Only after Daniel explicitly approves publishing**, run
+   `scripts/publish-public.sh`. It mirrors the working tree into the public
    clone (deny-listing the private paths above), normalizes the two e2e specs,
    runs a **hard leak gate** (aborts if any infra hostname, the leads Sheet id,
    the n8n webhook path, the real `.env.local` secret, or a private key appears),

@@ -19,7 +19,7 @@ export function LegalLayout({
           {t("lastUpdatedLabel")} · {lastUpdated}
         </p>
         <div className="mt-10 space-y-10">{children}</div>
-        <p className="mt-14 border-t border-black/[0.06] pt-6 text-xs leading-6 text-subtle-foreground">
+        <p className="mt-14 border-t border-white/[0.06] pt-6 text-xs leading-6 text-subtle-foreground">
           {t("disclaimer")}
         </p>
       </article>

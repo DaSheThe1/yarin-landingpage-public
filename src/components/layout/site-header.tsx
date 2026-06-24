@@ -5,7 +5,8 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ArrowRight, Menu, X } from "lucide-react";
 
-import { buttonVariants } from "@/components/ui/button";
+import { LeadButton } from "@/components/lead/lead-button";
+import { InstagramIcon } from "@/components/ui/instagram-icon";
 import { WhatsAppIcon } from "@/components/ui/whatsapp-icon";
 import { mainNavigation } from "@/config/navigation";
 import { siteConfig } from "@/config/site";
@@ -31,7 +32,7 @@ export function SiteHeader() {
       className={cn(
         "sticky top-0 z-50 border-b transition-colors duration-300",
         scrolled
-          ? "border-black/[0.08] bg-background/80 backdrop-blur-xl"
+          ? "border-white/[0.08] bg-canvas/80 backdrop-blur-xl"
           : "border-transparent bg-transparent"
       )}
     >
@@ -46,7 +47,7 @@ export function SiteHeader() {
             width={32}
             height={32}
             priority
-            className="h-8 w-8 rounded-full object-cover shadow-[0_0_0_1px_rgba(37, 99, 235,0.5),0_4px_16px_-4px_rgba(37, 99, 235,0.8)] transition-transform group-hover:scale-105"
+            className="h-8 w-8 rounded-full object-cover shadow-[0_0_0_1px_rgba(201, 168, 76,0.5),0_4px_16px_-4px_rgba(201, 168, 76,0.8)] transition-transform group-hover:scale-105"
           />
           {siteConfig.name}
         </Link>
@@ -76,30 +77,37 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2">
           <a
+            href={siteConfig.profiles.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={t("instagram")}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/12 bg-white/[0.03] text-foreground-soft transition-colors hover:border-brand/40 hover:text-brand-accent"
+          >
+            <InstagramIcon className="h-4.5 w-4.5" />
+          </a>
+          <a
             href={siteConfig.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
             aria-label={t("whatsapp")}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#25d366]/30 bg-[#25d366]/10 text-[#1b9c4c] transition-colors hover:border-[#25d366]/50 hover:bg-[#25d366]/15"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-[#25d366]/30 bg-[#25d366]/10 text-[#34d36f] transition-colors hover:border-[#25d366]/50 hover:bg-[#25d366]/15"
           >
             <WhatsAppIcon className="h-4.5 w-4.5" />
           </a>
-          <Link
-            href="/contact"
-            className={cn(
-              buttonVariants({ variant: "brand", size: "sm" }),
-              "hidden h-9 rounded-lg px-4 sm:inline-flex"
-            )}
+          <LeadButton
+            variant="brand"
+            size="sm"
+            className="hidden h-9 rounded-lg px-4 sm:inline-flex"
           >
             {t("cta")}
             <ArrowRight data-icon="inline-end" />
-          </Link>
+          </LeadButton>
           <button
             type="button"
             aria-label={t("toggleMenu")}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 bg-black/[0.03] text-foreground-soft transition-colors hover:bg-black/[0.08] md:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-white/12 bg-white/[0.03] text-foreground-soft transition-colors hover:bg-white/[0.08] md:hidden"
           >
             {open ? <X className="h-4.5 w-4.5" /> : <Menu className="h-4.5 w-4.5" />}
           </button>
@@ -109,7 +117,7 @@ export function SiteHeader() {
       {/* Mobile menu */}
       <div
         className={cn(
-          "overflow-hidden border-t border-black/[0.06] bg-background/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 md:hidden",
+          "overflow-hidden border-t border-white/[0.06] bg-canvas/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 md:hidden",
           open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         )}
       >
@@ -125,34 +133,43 @@ export function SiteHeader() {
               className={cn(
                 "rounded-lg px-3 py-2.5 text-sm transition-colors",
                 pathname === item.href
-                  ? "bg-black/[0.05] text-foreground"
-                  : "text-muted-foreground hover:bg-black/[0.04] hover:text-foreground"
+                  ? "bg-white/[0.05] text-foreground"
+                  : "text-muted-foreground hover:bg-white/[0.04] hover:text-foreground"
               )}
             >
               {tNav(item.key)}
             </Link>
           ))}
-          <Link
-            href="/contact"
+          <LeadButton
+            variant="brand"
+            className="mt-2 h-10 rounded-lg px-4"
             onClick={() => setOpen(false)}
-            className={cn(
-              buttonVariants({ variant: "brand" }),
-              "mt-2 h-10 rounded-lg px-4"
-            )}
           >
             {t("cta")}
             <ArrowRight data-icon="inline-end" />
-          </Link>
-          <a
-            href={siteConfig.whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-[#25d366]/30 bg-[#25d366]/10 px-4 text-sm font-medium text-[#1b9c4c] transition-colors hover:bg-[#25d366]/15"
-          >
-            <WhatsAppIcon className="h-4.5 w-4.5" />
-            {t("whatsapp")}
-          </a>
+          </LeadButton>
+          <div className="flex gap-2">
+            <a
+              href={siteConfig.whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-[#25d366]/30 bg-[#25d366]/10 px-4 text-sm font-medium text-[#34d36f] transition-colors hover:bg-[#25d366]/15"
+            >
+              <WhatsAppIcon className="h-4.5 w-4.5" />
+              {t("whatsapp")}
+            </a>
+            <a
+              href={siteConfig.profiles.instagram}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setOpen(false)}
+              className="inline-flex h-10 flex-1 items-center justify-center gap-2 rounded-lg border border-white/12 bg-white/[0.03] px-4 text-sm font-medium text-foreground-soft transition-colors hover:border-brand/40 hover:text-brand-accent"
+            >
+              <InstagramIcon className="h-4.5 w-4.5" />
+              {t("instagram")}
+            </a>
+          </div>
         </nav>
       </div>
     </header>

@@ -63,7 +63,7 @@ export function Testimonials({ showHeading = true }: { showHeading?: boolean }) 
           <Reveal delay={60}>
             <p
               className={cn(
-                "mx-auto flex w-fit items-center gap-2 rounded-full border border-black/10 bg-black/[0.03] px-4 py-1.5 text-xs text-muted-foreground",
+                "mx-auto flex w-fit items-center gap-2 rounded-full border border-white/12 bg-white/[0.03] px-4 py-1.5 text-xs text-muted-foreground",
                 showHeading ? "mt-8" : "mt-0"
               )}
             >
@@ -71,7 +71,20 @@ export function Testimonials({ showHeading = true }: { showHeading?: boolean }) 
               {t("samplesNotice")}
             </p>
           </Reveal>
-        ) : null}
+        ) : (
+          // Real client feedback; names changed for privacy at the clients'
+          // request. A quiet disclosure that reads as credible, not a warning.
+          <Reveal delay={60}>
+            <p
+              className={cn(
+                "text-center text-xs text-subtle-foreground",
+                showHeading ? "mt-6" : "mt-0"
+              )}
+            >
+              {t("privacyNote")}
+            </p>
+          </Reveal>
+        )}
 
         <Reveal delay={120}>
           <div
@@ -139,7 +152,8 @@ function Carousel({
 
   return (
     // Force LTR so the slide transform/drag math is independent of page
-    // direction; the quote content is centered, so it reads fine either way.
+    // direction. Each slide re-declares dir="rtl" on its <figure> so the
+    // Hebrew text itself still renders right-to-left.
     <div dir="ltr">
       <div
         ref={viewportRef}
@@ -153,7 +167,7 @@ function Carousel({
         onPointerUp={endDrag}
         onPointerCancel={endDrag}
         className={cn(
-          "relative overflow-hidden rounded-3xl border border-black/[0.08] bg-surface-1 outline-none",
+          "relative overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 outline-none",
           "touch-pan-y select-none focus-visible:ring-2 focus-visible:ring-brand-accent/50",
           count > 1 && (drag ? "cursor-grabbing" : "cursor-grab")
         )}
@@ -174,8 +188,12 @@ function Carousel({
           }}
         >
           {items.map((t, i) => (
+            // The track stays LTR (above) so the slide transform/drag math is
+            // direction-independent, but each slide's CONTENT is restored to RTL
+            // so the Hebrew quotes wrap and punctuate correctly.
             <figure
               key={t.author + i}
+              dir="rtl"
               aria-hidden={i !== active}
               className="w-full shrink-0 px-6 py-12 sm:px-14 sm:py-14"
             >
@@ -208,7 +226,7 @@ function Carousel({
             type="button"
             onClick={() => go(-1)}
             aria-label={t("prev")}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/12 bg-black/[0.03] text-foreground-soft transition-all hover:-translate-x-0.5 hover:border-black/25 hover:text-foreground"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.03] text-foreground-soft transition-all hover:-translate-x-0.5 hover:border-white/28 hover:text-foreground"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -225,7 +243,7 @@ function Carousel({
                   "h-1.5 rounded-full transition-all",
                   i === active
                     ? "w-6 bg-brand-accent"
-                    : "w-1.5 bg-black/20 hover:bg-black/40"
+                    : "w-1.5 bg-white/22 hover:bg-white/40"
                 )}
               />
             ))}
@@ -235,7 +253,7 @@ function Carousel({
             type="button"
             onClick={() => go(1)}
             aria-label={t("next")}
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-black/12 bg-black/[0.03] text-foreground-soft transition-all hover:translate-x-0.5 hover:border-black/25 hover:text-foreground"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/[0.03] text-foreground-soft transition-all hover:translate-x-0.5 hover:border-white/28 hover:text-foreground"
           >
             <ChevronRight className="h-5 w-5" />
           </button>

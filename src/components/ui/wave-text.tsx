@@ -60,12 +60,13 @@ export function WaveText({
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
-    // Each letter's crest colour (azure → indigo) and the resting ink colour,
-    // pre-resolved to RGB so the per-frame loop only does cheap interpolation.
-    const rest: [number, number, number] = [22, 24, 28]; // --foreground #16181c
+    // Each letter's crest colour (gold → champagne) and the resting warm-white
+    // ink, pre-resolved to RGB so the per-frame loop only does cheap interpolation.
+    const rest: [number, number, number] = [244, 241, 234]; // --foreground #f4f1ea
     const crest = chars.map((_, i) => {
       const t = n > 1 ? i / (n - 1) : 0;
-      return hslToRgb(208 + t * 44, 0.88, 0.6);
+      // Sweep across the gold band: deep gold (≈42°) → bright champagne (≈50°).
+      return hslToRgb(42 + t * 8, 0.72, 0.62);
     });
 
     const sweepDur = cycle * sweep;
@@ -105,7 +106,7 @@ export function WaveText({
           intensity > 0.001 ? `translateY(${(-lift * intensity).toFixed(3)}em)` : "";
         el.style.textShadow =
           intensity > 0.05
-            ? `0 6px 18px rgba(37, 99, 235, ${(0.4 * intensity).toFixed(3)})`
+            ? `0 6px 18px rgba(201, 168, 76, ${(0.4 * intensity).toFixed(3)})`
             : "";
       }
 

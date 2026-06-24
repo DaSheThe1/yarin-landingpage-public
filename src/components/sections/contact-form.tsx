@@ -22,12 +22,12 @@ type Values = {
 };
 
 const fieldBase =
-  "h-12 w-full rounded-lg border bg-black/[0.03] px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-subtle-foreground hover:border-black/20 focus:ring-3 focus:ring-brand-accent/20";
+  "h-12 w-full rounded-lg border bg-white/[0.03] px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-subtle-foreground hover:border-white/22 focus:ring-3 focus:ring-brand-accent/20";
 
 function borderFor(error?: string) {
   return error
     ? "border-rose-400/60 focus:border-rose-400/60"
-    : "border-black/10 focus:border-brand-accent/60";
+    : "border-white/12 focus:border-brand-accent/60";
 }
 
 export function ContactForm() {
@@ -148,7 +148,7 @@ export function ContactForm() {
       {serverError ? (
         <p
           role="alert"
-          className="mt-5 rounded-lg border border-rose-500/30 bg-rose-500/10 p-3 text-sm text-rose-700"
+          className="mt-5 rounded-lg border border-rose-500/30 bg-rose-500/10 p-3 text-sm text-rose-300"
         >
           {serverError}
         </p>
@@ -196,7 +196,7 @@ function RedirectingCard() {
       <p className="mx-auto mt-3 max-w-sm leading-7 text-muted-foreground">
         {t("text")}
       </p>
-      <span className="mx-auto mt-6 block h-5 w-5 animate-spin rounded-full border-2 border-black/20 border-t-brand-soft" />
+      <span className="mx-auto mt-6 block h-5 w-5 animate-spin rounded-full border-2 border-white/22 border-t-brand-soft" />
     </div>
   );
 }
@@ -217,7 +217,7 @@ function Field({
       </label>
       {children}
       {error ? (
-        <p className="mt-1.5 text-xs text-rose-600">{error}</p>
+        <p className="mt-1.5 text-xs text-rose-400">{error}</p>
       ) : null}
     </div>
   );

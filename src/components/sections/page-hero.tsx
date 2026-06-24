@@ -20,11 +20,11 @@ export function PageHero({
       {/* Soft centered hairline instead of a hard full-width rule. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-black/[0.08] to-transparent"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent"
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[52rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(37, 99, 235,0.4),transparent_60%)] blur-[90px]"
+        className="pointer-events-none absolute -top-40 left-1/2 h-[34rem] w-[52rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.4),transparent_60%)] blur-[90px]"
       />
       <div className="relative mx-auto w-full max-w-6xl px-6 pb-14 pt-8 lg:pb-16 lg:pt-12">
         <Reveal>

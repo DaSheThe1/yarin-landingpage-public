@@ -37,14 +37,14 @@ type Values = {
 const STEP_COUNT = 3;
 
 const fieldBase =
-  "h-11 w-full rounded-lg border bg-black/[0.03] px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-subtle-foreground hover:border-black/20 focus:ring-3 focus:ring-brand-accent/20";
+  "h-11 w-full rounded-lg border bg-white/[0.03] px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-subtle-foreground hover:border-white/22 focus:ring-3 focus:ring-brand-accent/20";
 const textareaBase =
-  "w-full rounded-lg border bg-black/[0.03] px-3.5 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-subtle-foreground hover:border-black/20 focus:ring-3 focus:ring-brand-accent/20";
+  "w-full rounded-lg border bg-white/[0.03] px-3.5 py-3 text-sm text-foreground outline-none transition-colors placeholder:text-subtle-foreground hover:border-white/22 focus:ring-3 focus:ring-brand-accent/20";
 
 function borderFor(error?: string) {
   return error
     ? "border-rose-400/60 focus:border-rose-400/60"
-    : "border-black/10 focus:border-brand-accent/60";
+    : "border-white/12 focus:border-brand-accent/60";
 }
 
 const initialValues: Values = {
@@ -340,7 +340,7 @@ export function ContactFormFull() {
       </div>
 
       {/* Navigation */}
-      <div className="mt-8 flex items-center justify-between gap-3 border-t border-black/[0.06] pt-6">
+      <div className="mt-8 flex items-center justify-between gap-3 border-t border-white/[0.06] pt-6">
         {step > 0 ? (
           <button
             type="button"
@@ -408,7 +408,7 @@ function Stepper({ step, steps }: { step: number; steps: string[] }) {
                       ? "border-brand bg-brand text-primary-foreground"
                       : current
                         ? "border-brand-accent/60 bg-brand/15 text-brand-accent"
-                        : "border-black/10 bg-black/[0.03] text-subtle-foreground"
+                        : "border-white/12 bg-white/[0.03] text-subtle-foreground"
                   )}
                 >
                   {complete ? <Check className="h-4 w-4" /> : i + 1}
@@ -425,7 +425,7 @@ function Stepper({ step, steps }: { step: number; steps: string[] }) {
                 </span>
               </div>
               {i < steps.length - 1 ? (
-                <div className="mx-3 h-px flex-1 overflow-hidden rounded-full bg-black/[0.08]">
+                <div className="mx-3 h-px flex-1 overflow-hidden rounded-full bg-white/[0.08]">
                   <div
                     className={cn(
                       "h-full bg-gradient-to-r from-brand to-brand-accent transition-all duration-500",
@@ -464,7 +464,7 @@ function SuggestionChips({
               "inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs transition-colors",
               active
                 ? "border-brand/40 bg-brand/15 text-brand-accent"
-                : "border-black/10 bg-black/[0.02] text-muted-foreground hover:border-black/20 hover:text-foreground"
+                : "border-white/12 bg-white/[0.02] text-muted-foreground hover:border-white/22 hover:text-foreground"
             )}
           >
             {active ? (
@@ -489,7 +489,7 @@ function ReviewSummary({ values }: { values: Values }) {
     { label: t("goal"), value: values.automationGoal },
   ];
   return (
-    <div className="rounded-xl border border-black/[0.08] bg-black/[0.02] p-4">
+    <div className="rounded-xl border border-white/[0.08] bg-white/[0.02] p-4">
       <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-subtle-foreground">
         <Sparkles className="h-3.5 w-3.5 text-brand-accent" />
         {t("title")}
@@ -522,7 +522,7 @@ function RedirectingCard() {
       <p className="mx-auto mt-3 max-w-sm leading-7 text-muted-foreground">
         {t("text")}
       </p>
-      <span className="mx-auto mt-6 block h-5 w-5 animate-spin rounded-full border-2 border-black/20 border-t-brand-soft" />
+      <span className="mx-auto mt-6 block h-5 w-5 animate-spin rounded-full border-2 border-white/22 border-t-brand-soft" />
     </div>
   );
 }

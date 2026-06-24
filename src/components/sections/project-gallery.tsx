@@ -38,7 +38,7 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
               type="button"
               onClick={() => setOpenIdx(index)}
               aria-label={image.alt}
-              className="group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-black/[0.08] bg-surface-1 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_28px_60px_-28px_rgba(37, 99, 235,0.5)]"
+              className="group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-white/[0.08] bg-surface-1 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_28px_60px_-28px_rgba(201, 168, 76,0.5)]"
             >
               <Image
                 src={image.src}
@@ -49,7 +49,7 @@ export function GalleryGrid({ images }: { images: GalleryImage[] }) {
               />
               <div
                 aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-white/12 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
               />
               <span
                 aria-hidden

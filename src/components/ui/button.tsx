@@ -8,15 +8,18 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/80",
+        default: "bg-primary text-primary-foreground hover:bg-primary/85",
+        // The gold hero/CTA action. Lively: a polished-metal sheen sweeps across
+        // on hover/focus (.btn-sheen), it lifts slightly, and its gold glow
+        // deepens. Black ink (text-primary-foreground) on gold for max contrast.
         brand:
-          "bg-brand text-primary-foreground shadow-[0_0_0_1px_rgba(37, 99, 235,0.35),0_8px_30px_-8px_rgba(37, 99, 235,0.7)] hover:bg-brand-hover hover:shadow-[0_0_0_1px_rgba(125, 162, 240,0.5),0_12px_44px_-8px_rgba(37, 99, 235,0.85)]",
+          "btn-sheen bg-brand text-primary-foreground font-semibold shadow-[0_0_0_1px_rgba(201,168,76,0.45),0_8px_30px_-8px_rgba(201,168,76,0.6)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-hover hover:shadow-[0_0_0_1px_rgba(228,200,120,0.6),0_14px_44px_-8px_rgba(201,168,76,0.85)]",
         outline:
-          "border-black/12 bg-black/[0.02] text-foreground-soft hover:bg-black/[0.06] hover:text-foreground hover:border-black/20 aria-expanded:bg-black/[0.06]",
+          "border-white/15 bg-white/[0.02] text-foreground-soft hover:bg-white/[0.06] hover:text-foreground hover:border-white/25 aria-expanded:bg-white/[0.06]",
         secondary:
-          "bg-black/[0.06] text-foreground hover:bg-black/[0.1] aria-expanded:bg-black/[0.06]",
+          "bg-white/[0.06] text-foreground hover:bg-white/[0.1] aria-expanded:bg-white/[0.06]",
         ghost:
-          "text-foreground-soft hover:bg-black/[0.06] hover:text-foreground aria-expanded:bg-black/[0.06]",
+          "text-foreground-soft hover:bg-white/[0.06] hover:text-foreground aria-expanded:bg-white/[0.06]",
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
