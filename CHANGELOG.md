@@ -9,6 +9,31 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.9.2] - 2026-06-24
+
+### Fixed
+
+- **Hero title wave no longer makes letters jump on phones.** The travelling
+  crest used to lift each letter a fraction of an em (and repaint a blurred
+  text-shadow) as it passed; on mobile GPUs that per-frame transform churn read
+  as letters jumping in place rather than recolouring. The crest is now a pure
+  colour sweep — letters stay perfectly still and only change colour — so it is
+  rock-steady on any device.
+- **Lead popup entrance no longer glitches on mobile.** Dropped the backdrop
+  `backdrop-blur` (a backdrop-filter re-rasterising under the animating panel
+  produced a detached, ghosted copy of the popup on phones) and simplified the
+  panel entrance from a stacked fade+zoom+slide to a single gentle fade + short
+  rise, so the centred popup opens cleanly instead of stuttering.
+
+## [0.9.1] - 2026-06-24
+
+### Changed
+
+- **Real demo video on the hero and thank-you page.** Replaced the placeholder
+  reel with the client-provided recording (`public/hero-demo.mp4` and
+  `public/thank-you.mp4`), so both surfaces now play the actual video instead of
+  the render showcase / fallback.
+
 ## [0.9.0] - 2026-06-24
 
 ### Added

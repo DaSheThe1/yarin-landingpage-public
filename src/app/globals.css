@@ -569,17 +569,12 @@
     display: inline-block;
     white-space: nowrap;
   }
-  /* The crest (colour + lift) is written inline per frame by WaveText from a
-     single rAF clock — see that component for why it isn't a CSS animation. */
+  /* The crest (colour only) is written inline per frame by WaveText from a
+     single rAF clock — see that component for why it isn't a CSS animation, and
+     why letters no longer move (the per-frame lift made them jump on phones). */
   .wave-text-char {
     display: inline-block;
     color: var(--foreground);
-    /* Keep each letter on its own GPU compositing layer the whole time so the
-       per-frame lift (translate3d, written inline by WaveText) never re-promotes
-       /demotes the layer — that churn glitched the crest on real phones. */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    will-change: transform;
   }
 
   /* Rotating gradient border (beam) */
@@ -775,7 +770,6 @@
     animation-duration: 100s !important;
     animation-iteration-count: infinite !important;
   }
-  /* The hero title wave keeps its blue colour sweep but drops the vertical lift
-     under reduced motion — handled in WaveText (it reads the same media query),
-     so no CSS animation override is needed here. */
+  /* The hero title wave is a pure colour sweep (letters never move), so there is
+     nothing to tone down for reduced motion — recolouring is not motion. */
 }

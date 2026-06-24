@@ -97,16 +97,21 @@ function LeadDialog({
       aria-label={t("title")}
       className="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto p-4"
     >
-      {/* Backdrop */}
+      {/* Backdrop — solid dark, NO backdrop-blur. A backdrop-filter re-rasterises
+          every frame while the panel above it animates; on phones that produced
+          visible tearing/ghosting (a detached, blurred copy of the panel mid-
+          animation). A flat translucent black fades in cleanly on any GPU. */}
       <button
         type="button"
         aria-label={t("close")}
         onClick={onClose}
-        className="absolute inset-0 animate-in fade-in cursor-default bg-black/70 backdrop-blur-sm duration-300"
+        className="absolute inset-0 animate-in fade-in cursor-default bg-black/75 duration-200"
       />
 
-      {/* Panel */}
-      <div className="ring-shine glow-brand relative z-10 w-full max-w-md animate-in fade-in zoom-in-95 slide-in-from-bottom-4 overflow-hidden rounded-2xl border border-brand/25 bg-surface-1 p-6 shadow-card duration-300 sm:p-8 sm:slide-in-from-bottom-0">
+      {/* Panel — a single gentle fade + short rise. The earlier compound
+          fade+zoom+slide stacked three transforms that stuttered on mobile;
+          one small translate reads as a clean entrance and composites cheaply. */}
+      <div className="ring-shine glow-brand relative z-10 w-full max-w-md animate-in fade-in slide-in-from-bottom-2 overflow-hidden rounded-2xl border border-brand/25 bg-surface-1 p-6 shadow-card duration-200 sm:p-8 sm:slide-in-from-bottom-0">
         <button
           type="button"
           aria-label={t("close")}

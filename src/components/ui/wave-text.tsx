@@ -6,11 +6,17 @@ import { cn } from "@/lib/utils";
 
 /**
  * Renders text as individual letters lit by a single travelling crest: one band
- * of blue lifts and tints each letter in turn, sweeping once across the whole
- * phrase from the first letter to the last, then resting before it repeats.
- * Each letter carries its own shade of blue (azure → indigo, spread by index)
- * so the crest reads as a flowing gradient rather than a flat colour. Letters
- * rest at the readable foreground colour, so the text stays legible.
+ * of gold tints each letter in turn, sweeping once across the whole phrase from
+ * the first letter to the last, then resting before it repeats. Each letter
+ * carries its own shade of gold (deep gold → champagne, spread by index) so the
+ * crest reads as a flowing gradient rather than a flat colour. Letters rest at
+ * the readable foreground colour, so the text stays legible.
+ *
+ * The crest is COLOUR-ONLY — letters do not move. An earlier version also lifted
+ * each letter a fraction of an em as the crest passed; on phones (high DPR,
+ * weaker GPU) the per-frame transform churn made letters visibly *jump* in place
+ * instead of cleanly recolouring. Recolouring a fixed-position letter repaints
+ * cheaply and stays rock-steady, so the lift is gone on every device.
  *
  * The crest is driven by ONE requestAnimationFrame clock that writes each
  * letter's colour/lift inline every frame. This is deliberate: an earlier
@@ -56,10 +62,6 @@ export function WaveText({
     const n = chars.length;
     if (n === 0) return;
 
-    const reduced = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
-
     // Each letter's crest colour (gold → champagne) and the resting warm-white
     // ink, pre-resolved to RGB so the per-frame loop only does cheap interpolation.
     const rest: [number, number, number] = [244, 241, 234]; // --foreground #f4f1ea
@@ -71,7 +73,6 @@ export function WaveText({
 
     const sweepDur = cycle * sweep;
     const sigma = 1.15; // crest half-width, in letters
-    const lift = reduced ? 0 : 0.22; // em of vertical rise at full intensity
     const prev = new Array(n).fill(-1);
     let raf = 0;
     let start = 0;
@@ -101,19 +102,11 @@ export function WaveText({
         const r = Math.round(rest[0] + (cr - rest[0]) * intensity);
         const g = Math.round(rest[1] + (cg - rest[1]) * intensity);
         const b = Math.round(rest[2] + (cb - rest[2]) * intensity);
+        // Colour is the ONLY thing the crest writes — no transform, no shadow.
+        // Letters stay perfectly still and just recolour as the band passes, so
+        // the sweep is rock-steady even on weak mobile GPUs (see the note above
+        // the component for why the per-frame lift/shadow were removed).
         el.style.color = `rgb(${r}, ${g}, ${b})`;
-        // Always write a 3D transform (even translate3d(0,0,0) at rest) so each
-        // letter keeps ONE stable compositing layer for the whole loop. The
-        // earlier `translateY(…) | ""` promoted the letter to a GPU layer only
-        // while the crest was on it and demoted it right after — that per-pass
-        // layer churn, plus re-rasterising a blurred text-shadow each frame, is
-        // what makes the crest visibly glitch over each letter on real phones
-        // (high DPR, weaker GPU). A persistent layer + lighter shadow fixes it.
-        el.style.transform = `translate3d(0, ${(-lift * intensity).toFixed(3)}em, 0)`;
-        el.style.textShadow =
-          intensity > 0.05
-            ? `0 4px 12px rgba(201, 168, 76, ${(0.32 * intensity).toFixed(3)})`
-            : "none";
       }
 
       raf = window.requestAnimationFrame(frame);
