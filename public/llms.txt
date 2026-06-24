@@ -11,13 +11,13 @@
 
 ## עמודים
 
-- [בית](https://yarin.trickticmedia.com/): מה ירין מציע ואיך עובד תהליך הליווי.
-- [שירותים](https://yarin.trickticmedia.com/services): תכנון ועיצוב לבנייה חדשה ולשיפוצים.
-- [פרויקטים](https://yarin.trickticmedia.com/examples): דוגמאות עבודה וגלריה.
-- [אודות](https://yarin.trickticmedia.com/about): הרקע והניסיון של ירין.
-- [צרו קשר](https://yarin.trickticmedia.com/contact): קביעת פגישת ייעוץ ראשונית.
+- [בית](https://yarin-architecture.com/): מה ירין מציע ואיך עובד תהליך הליווי.
+- [שירותים](https://yarin-architecture.com/services): תכנון ועיצוב לבנייה חדשה ולשיפוצים.
+- [פרויקטים](https://yarin-architecture.com/examples): דוגמאות עבודה וגלריה.
+- [אודות](https://yarin-architecture.com/about): הרקע והניסיון של ירין.
+- [צרו קשר](https://yarin-architecture.com/contact): קביעת פגישת ייעוץ ראשונית.
 
 ## משפטי
 
-- [מדיניות פרטיות](https://yarin.trickticmedia.com/privacy)
-- [תנאי שימוש](https://yarin.trickticmedia.com/terms)
+- [מדיניות פרטיות](https://yarin-architecture.com/privacy)
+- [תנאי שימוש](https://yarin-architecture.com/terms)

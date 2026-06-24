@@ -25,7 +25,7 @@ jobs:
     env:
       NEXT_TELEMETRY_DISABLED: 1
       STATIC_EXPORT: "true"
-      NEXT_PUBLIC_SITE_URL: https://yarin.trickticmedia.com
+      NEXT_PUBLIC_SITE_URL: https://yarin-architecture.com
     steps:
       - name: Checkout
         uses: actions/checkout@v6

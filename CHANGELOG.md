@@ -9,6 +9,17 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.8.1] - 2026-06-24
+
+### Changed
+
+- **Live domain switched to the client's own `yarin-architecture.com`** (from the
+  temporary `yarin.trickticmedia.com`). Updated `src/config/site.ts`,
+  `NEXT_PUBLIC_SITE_URL` (`deploy-pages.yml` + `build:static`), `public/CNAME`,
+  `public/llms.txt`, and the Cloudflare Worker (`SITE_ORIGIN`, route, `zone_name`).
+  The domain now lives on the client's Cloudflare account; see the runbook at
+  `docs/18-domain-switch.md`.
+
 ## [0.8.0] - 2026-06-24
 
 Client-feedback rebrand round.

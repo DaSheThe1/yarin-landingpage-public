@@ -20,7 +20,7 @@ compatibility_date = "2025-01-01"
 # through to the GitHub Pages origin. zone_name is the Cloudflare ZONE (the
 # registrable domain); the route hostname can be a subdomain of it.
 routes = [
-  { pattern = "yarin.trickticmedia.com/api/contact", zone_name = "trickticmedia.com" }
+  { pattern = "yarin-architecture.com/api/contact", zone_name = "yarin-architecture.com" }
 ]
 
 # Don't publish a *.workers.dev URL — this Worker is reached only via the route.
@@ -30,4 +30,4 @@ workers_dev = false
 # check and the n8n payload's siteUrl — change this one line when the domain
 # changes.
 [vars]
-SITE_ORIGIN = "https://yarin.trickticmedia.com"
+SITE_ORIGIN = "https://yarin-architecture.com"

@@ -48,11 +48,12 @@ Workflow — nothing is done twice:
 3. The **public** repo's `deploy-pages.yml` builds the static export and deploys
    to Pages (public repos get free Actions minutes). This repo does not deploy.
 
-Current live host: **`yarin.trickticmedia.com`** (temporary; eventual target is
-`yarin-avraham.co.il`). The host lives in `src/config/site.ts` /
+Current live host: **`yarin-architecture.com`** (the client's own domain, on the
+client's Cloudflare account). The host lives in `src/config/site.ts` /
 `NEXT_PUBLIC_SITE_URL` (build), `public/CNAME` (Pages), and `worker/wrangler.toml`
-`SITE_ORIGIN` + route (Worker). To change domains, update those, re-publish, and
-update the Pages custom domain + Cloudflare DNS/Worker route.
+`SITE_ORIGIN` + route (Worker). To change domains, follow `docs/18-domain-switch.md`:
+update those files, re-publish, and update the Pages custom domain + Cloudflare
+DNS/Worker route.
 
 Rules: never commit real secrets or infra hostnames even **here** (examples use
 `REPLACE_WITH_…` placeholders; real values live in `.env.local` / Cloudflare /

@@ -1,13 +1,13 @@
 {
   "name": "yarin-landingpage",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "packageManager": "pnpm@11.5.2",
   "scripts": {
     "dev": "next dev --port 3005",
     "build": "next build",
     "optimize:images": "node scripts/optimize-images.mjs",
-    "build:static": "node scripts/optimize-images.mjs && STATIC_EXPORT=true NEXT_PUBLIC_SITE_URL=https://yarin.trickticmedia.com next build && node scripts/flatten-locale-export.mjs",
+    "build:static": "node scripts/optimize-images.mjs && STATIC_EXPORT=true NEXT_PUBLIC_SITE_URL=https://yarin-architecture.com next build && node scripts/flatten-locale-export.mjs",
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
