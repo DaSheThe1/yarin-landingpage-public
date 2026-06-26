@@ -15,10 +15,10 @@ export type ServiceMedia = {
  */
 export const serviceMedia: (ServiceMedia | undefined)[] = [
   // Matched by index to services.items in messages/he.json.
-  { type: "image", src: "/images/render-desert-elevations.webp", alt: "הדמיית חזיתות וילה" }, // תכנון אדריכלי
-  { type: "image", src: "/images/render-modern-pool-villas.webp", alt: "הדמיית עיצוב פנים וחוץ לוילה מודרנית" }, // עיצוב פנים
-  { type: "image", src: "/images/render-architectural-plans.webp", alt: "תכניות ותכנון אדריכלי להיתר בנייה" }, // ליווי מול רשויות והיתרי בנייה
-  { type: "image", src: "/images/render-desert-villa.webp", alt: "הדמיית וילה עם תשתיות מתוכננות" }, // תכניות חשמל ואינסטלציה
-  { type: "image", src: "/images/render-stone-villas.webp", alt: "הדמיות וילות אבן" },
-  { type: "image", src: "/images/render-villa-pair.webp", alt: "הדמיות וילה" },
+  { type: "image", src: "/images/render-stone-villas.webp", alt: "הדמיית שיפוץ ושינוי חלוקה לווילת אבן" }, // תכנון אדריכלי
+  { type: "image", src: "/images/project-nika-cafe.webp", alt: "עיצוב פנים לחלל אירוח — בית קפה מעוצב" }, // עיצוב פנים
+  { type: "image", src: "/images/render-modern-pool-villas.webp", alt: "הדמיית עיצוב פנים וחוץ לוילה מודרנית" }, // ליווי מול רשויות והיתרי בנייה
+  { type: "image", src: "/images/project-villa-floorplans.webp", alt: "תכניות אדריכליות — פריסת חשמל ואינסטלציה לוילה" }, // תכניות חשמל ואינסטלציה
+  { type: "image", src: "/images/project-renovations-grid.webp", alt: "שיפוצים ושינוי חלוקה — וילות מדבר לאחר שיפוץ" }, // שיפוצים ושינוי חלוקה
+  { type: "image", src: "/images/project-desert-villas-grid.webp", alt: "פרויקטים בשטח — וילות מדבר בליווי ביצוע" }, // ליווי ביצוע בשטח
 ];

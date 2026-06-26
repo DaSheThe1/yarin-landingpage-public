@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
@@ -12,58 +12,282 @@ import { galleryImages, type GalleryImage } from "@/content/gallery";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 
+// Slide width as a % of the carousel frame. The centred slide fills this width
+// at full size; the two neighbours sit in equally-wide slots but are scaled
+// down (SIDE_SCALE) AND nudged inward toward the centre (SIDE_SHIFT, a % of a
+// slot's width) so they sit close to the main image rather than way out at the
+// edges. The leftover edge gutters are where the arrows float on the
+// background. With SLIDE_W=40 / SIDE_SCALE=0.5 / SIDE_SHIFT=17.5 the sides land
+// at roughly 7–27% and 73–93% of the frame: ~3% gap to the centre, ~7% gutter.
+const SLIDE_W = 40;
+const SIDE_SCALE = 0.5;
+const SIDE_SHIFT = 17.5;
+
+// Mirrored clones on each end so the centred slide always has real neighbours
+// and the loop is seamless in both directions.
+const CLONES = 3;
+
 /**
- * Presentational grid of project renders. Every tile shares one 4:3 frame so the
- * rows line up cleanly — tops and bottoms aligned, no ragged masonry edges.
- * Clicking a tile opens it full-size in a centered lightbox. Shared by the
+ * Auto-advancing, infinitely-looping **centre-mode** carousel (coverflow). One
+ * slide sits enlarged in the middle while its neighbours peek in scaled-down on
+ * each side; every step slides the track over by one and the new centre grows
+ * as the old one shrinks. The user can also step with the on-screen arrows.
+ * `CLONES` copies are mirrored onto both ends and, whenever the centre lands in
+ * a clone zone, the track silently snaps to the matching real slide (no
+ * animation) so the loop never visibly rewinds. Pauses on hover/focus and while
+ * the lightbox is open; clicking a tile opens it full-size. Shared by the
  * /examples gallery and the home-page teaser.
  */
-export function GalleryGrid({ images }: { images: GalleryImage[] }) {
+export function GalleryCarousel({
+  images,
+  intervalMs = 2600,
+}: {
+  images: GalleryImage[];
+  intervalMs?: number;
+}) {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
+  // `index` is the position of the *centred* slide within the cloned `slides`
+  // array. The real images occupy [CLONES, CLONES + images.length - 1].
+  const [index, setIndex] = useState(CLONES);
+  const [animate, setAnimate] = useState(true);
+  const [paused, setPaused] = useState(false);
+  // Bumped on every manual arrow press so the auto-advance timer restarts.
+  const [kick, setKick] = useState(0);
+  // Below md we drop the 3-up coverflow for one big swipeable image.
+  const [mobile, setMobile] = useState(false);
+  const touchRef = useRef<{ x: number; y: number } | null>(null);
+  const swipedRef = useRef(false);
+
+  const n = images.length;
+  const loops = n > 1;
+
+  useEffect(() => {
+    const calc = () => setMobile(window.innerWidth < 768);
+    calc();
+    window.addEventListener("resize", calc);
+    return () => window.removeEventListener("resize", calc);
+  }, []);
+
+  const slides = loops
+    ? [...images.slice(n - CLONES), ...images, ...images.slice(0, CLONES)]
+    : images;
+
+  // On mobile a single near-full-width slide (with a sliver of each neighbour
+  // peeking to hint the swipe); on desktop the coverflow slot width.
+  const slideW = mobile ? 88 : SLIDE_W;
+
+  // Centre slide `index`: shift the track so that slide's midpoint hits the
+  // container midpoint (50%). translateX is a % of the track, whose width is
+  // 100% of the container, so the % value maps straight to container space.
+  const translatePct = loops ? 50 - (index * slideW + slideW / 2) : 0;
+
+  const step = useCallback(
+    (dir: number) => {
+      if (!loops) return;
+      setAnimate(true);
+      setIndex((i) => i + dir);
+    },
+    [loops]
+  );
+
+  // Auto-advance, unless paused or the lightbox is open. `kick` restarts it
+  // after a manual press so the next auto-step is a full interval away.
+  useEffect(() => {
+    if (paused || openIdx !== null || !loops) return;
+    const id = window.setInterval(() => step(1), intervalMs);
+    return () => window.clearInterval(id);
+  }, [paused, openIdx, loops, intervalMs, step, kick]);
+
+  // Re-enable the transition on the frame after an un-animated snap.
+  useEffect(() => {
+    if (animate) return;
+    const id = requestAnimationFrame(() =>
+      requestAnimationFrame(() => setAnimate(true))
+    );
+    return () => cancelAnimationFrame(id);
+  }, [animate]);
+
+  // When the centre settles in a clone zone, jump (no animation) to its twin.
+  const handleTransitionEnd = () => {
+    if (!loops) return;
+    if (index >= n + CLONES) {
+      setAnimate(false);
+      setIndex(index - n);
+    } else if (index < CLONES) {
+      setAnimate(false);
+      setIndex(index + n);
+    }
+  };
+
+  const onArrow = (dir: number) => {
+    step(dir);
+    setKick((k) => k + 1);
+  };
 
   const navigate = useCallback(
     (dir: number) =>
-      setOpenIdx((i) =>
-        i === null ? i : (i + dir + images.length) % images.length
-      ),
-    [images.length]
+      setOpenIdx((i) => (i === null ? i : (i + dir + n) % n)),
+    [n]
   );
 
   return (
     <>
-      <div className="mt-14 grid grid-cols-2 gap-4 sm:gap-5 lg:grid-cols-3">
-        {images.map((image, index) => (
-          <Reveal key={image.src} delay={(index % 3) * 90} className="block">
+      <div
+        className="relative mt-14"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocusCapture={() => setPaused(true)}
+        onBlurCapture={() => setPaused(false)}
+        onTouchStart={(e) => {
+          const t = e.touches[0];
+          touchRef.current = { x: t.clientX, y: t.clientY };
+          swipedRef.current = false;
+          setPaused(true);
+        }}
+        onTouchEnd={(e) => {
+          const start = touchRef.current;
+          touchRef.current = null;
+          setPaused(false);
+          if (!start) return;
+          const t = e.changedTouches[0];
+          const dx = t.clientX - start.x;
+          const dy = t.clientY - start.y;
+          // Horizontal swipe past the threshold steps one image; flag it so the
+          // tap-to-open handler doesn't also fire on release.
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+            swipedRef.current = true;
+            onArrow(dx < 0 ? 1 : -1);
+          }
+        }}
+      >
+        {/* dir=ltr on the clipping container so the track is anchored to the
+            left and overflows rightward — otherwise the surrounding RTL layout
+            right-anchors it and translateX() pushes every tile off-screen. */}
+        <div dir="ltr" className="overflow-hidden">
+          <div
+            className="flex"
+            style={{
+              width: "100%",
+              transform: `translateX(${translatePct}%)`,
+              transition: animate
+                ? "transform 600ms cubic-bezier(0.4, 0, 0.2, 1)"
+                : "none",
+            }}
+            onTransitionEnd={handleTransitionEnd}
+          >
+            {slides.map((image, i) => {
+              const isCentre = loops ? i === index : false;
+              // Left neighbours nudge right (+), right neighbours nudge left (−),
+              // so both pull in toward the centred image.
+              const sideDir = i < index ? 1 : -1;
+              const transform =
+                isCentre || !loops || mobile
+                  ? "translateX(0) scale(1)"
+                  : `translateX(${sideDir * SIDE_SHIFT}%) scale(${SIDE_SCALE})`;
+              return (
+                <div
+                  key={`${image.src}-${i}`}
+                  style={{ flex: `0 0 ${loops ? slideW : 100}%` }}
+                  className="px-1.5 sm:px-2.5"
+                >
+                  <div
+                    aria-hidden={loops && !isCentre}
+                    style={{
+                      transform,
+                      transition:
+                        "transform 600ms cubic-bezier(0.4, 0, 0.2, 1)",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      tabIndex={loops && !isCentre ? -1 : 0}
+                      onClick={() => {
+                        if (swipedRef.current) {
+                          swipedRef.current = false;
+                          return;
+                        }
+                        setOpenIdx(images.indexOf(image));
+                      }}
+                      aria-label={image.alt}
+                      className={cn(
+                        "group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl border bg-surface-1 transition-shadow duration-500",
+                        isCentre || !loops
+                          ? "border-brand/30 shadow-[0_30px_70px_-30px_rgba(201,168,76,0.55)]"
+                          : "border-white/[0.08] shadow-card"
+                      )}
+                    >
+                      <Image
+                        src={image.src}
+                        alt={image.alt}
+                        fill
+                        sizes="(min-width: 768px) 40vw, 88vw"
+                        className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
+                      />
+                      <div
+                        aria-hidden
+                        className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-white/10 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                      />
+                      <span
+                        aria-hidden
+                        className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white opacity-0 backdrop-blur transition-all duration-300 group-hover:opacity-100"
+                      >
+                        <Maximize2 className="h-4 w-4" />
+                      </span>
+                      <span className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-4 text-start text-sm font-medium leading-snug text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+                        {image.alt}
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {loops ? (
+          <>
             <button
               type="button"
-              onClick={() => setOpenIdx(index)}
-              aria-label={image.alt}
-              className="group relative block aspect-[4/3] w-full cursor-zoom-in overflow-hidden rounded-2xl border border-white/[0.08] bg-surface-1 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-brand/30 hover:shadow-[0_28px_60px_-28px_rgba(201, 168, 76,0.5)]"
+              onClick={() => onArrow(-1)}
+              aria-label="הקודם"
+              className="absolute right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition-colors hover:border-brand/40 hover:bg-black/70 md:inline-flex md:right-4"
             >
-              <Image
-                src={image.src}
-                alt={image.alt}
-                fill
-                sizes="(min-width: 1024px) 30vw, (min-width: 640px) 45vw, 50vw"
-                className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
-              />
-              <div
-                aria-hidden
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/70 via-white/12 to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-              />
-              <span
-                aria-hidden
-                className="absolute right-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/40 text-white opacity-0 backdrop-blur transition-all duration-300 group-hover:opacity-100"
-              >
-                <Maximize2 className="h-4 w-4" />
-              </span>
-              <span className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-4 text-start text-sm font-medium leading-snug text-white opacity-0 transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-                {image.alt}
-              </span>
+              <ChevronRight className="h-6 w-6" />
             </button>
-          </Reveal>
-        ))}
+            <button
+              type="button"
+              onClick={() => onArrow(1)}
+              aria-label="הבא"
+              className="absolute left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition-colors hover:border-brand/40 hover:bg-black/70 md:inline-flex md:left-4"
+            >
+              <ChevronLeft className="h-6 w-6" />
+            </button>
+          </>
+        ) : null}
       </div>
+
+      {/* Mobile controls live below the image (the side arrows are hidden); the
+          image itself is also swipeable. */}
+      {loops ? (
+        <div className="mt-6 flex items-center justify-center gap-5 md:hidden">
+          <button
+            type="button"
+            onClick={() => onArrow(-1)}
+            aria-label="הקודם"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-white transition-colors hover:border-brand/40 hover:bg-white/10"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+          <button
+            type="button"
+            onClick={() => onArrow(1)}
+            aria-label="הבא"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-white transition-colors hover:border-brand/40 hover:bg-white/10"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+        </div>
+      ) : null}
 
       {openIdx !== null ? (
         <GalleryLightbox
@@ -199,7 +423,7 @@ export function ProjectGallery() {
             description={t("galleryDescription")}
           />
         </Reveal>
-        <GalleryGrid images={galleryImages} />
+        <GalleryCarousel images={galleryImages} />
       </div>
     </section>
   );
@@ -223,7 +447,7 @@ export function GalleryTeaser() {
             description={t("description")}
           />
         </Reveal>
-        <GalleryGrid images={galleryImages.slice(0, 6)} />
+        <GalleryCarousel images={galleryImages} />
         <Reveal>
           <div className="mt-12 flex justify-center">
             <Link

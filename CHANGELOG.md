@@ -9,6 +9,99 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.11.0] - 2026-06-26
+
+### Added
+
+- **Mobile gallery: one big swipeable image.** Below the `md` breakpoint the
+  3-up coverflow (which made each image tiny on phones) is replaced by a single
+  near-full-width image with a sliver of each neighbour peeking to hint the
+  swipe. The image is **swipeable** (touch), and the prev/next arrows move to a
+  row **below** the image instead of overlapping it. Desktop keeps the
+  coverflow with side arrows unchanged.
+
+## [0.10.5] - 2026-06-26
+
+### Changed
+
+- **Gallery side images pulled in toward the centre and enlarged.** They were
+  sitting out at the frame edges (under the arrows) with a wide gap to the main
+  image. Each neighbour is now nudged inward and scaled up a touch, so it sits
+  just beside the centre image; the leftover edge gutters let the prev/next
+  arrows float on the dark background instead of overlapping the photos.
+
+## [0.10.4] - 2026-06-26
+
+### Changed
+
+- **Gallery centre image enlarged and side images restored to full colour.**
+  The centre slot now spans ~42% of the frame (up from a third) so the main
+  image reads much bigger on desktop; the two neighbours are scaled down but
+  kept fully on-screen and in colour (dropped the grayscale/dim).
+
+## [0.10.3] - 2026-06-26
+
+### Changed
+
+- **Gallery is now a centre-mode (coverflow) carousel.** One full-colour image
+  sits enlarged in the middle with the two neighbours fully visible but smaller
+  and greyed-out; each step slides the track by one and the new centre grows in
+  colour as the old one shrinks to grey. Three tiles show at once at every
+  breakpoint; arrows + auto-advance + seamless two-way loop unchanged.
+- **Gallery order reshuffled** so visually-similar renders (the stone villas,
+  the concrete desert-cliff set, the seaside cliffs) are never adjacent.
+
+## [0.10.2] - 2026-06-26
+
+### Fixed
+
+- **Gallery carousel rendered blank in the RTL layout.** The sliding track set
+  `dir="ltr"` on itself but not on its clipping container, so the surrounding
+  RTL context right-anchored the over-wide track and `translateX()` pushed every
+  tile off-screen to the left (heading + arrows showed, images did not). Moving
+  `dir="ltr"` to the `overflow-hidden` container left-anchors the track so the
+  tiles render and slide correctly on desktop and mobile.
+
+## [0.10.1] - 2026-06-26
+
+### Changed
+
+- **Gallery carousel now has prev/next arrows and loops infinitely in both
+  directions.** Clones are mirrored onto both ends and the track silently snaps
+  to the matching real slide on either edge, so there is no visible rewind —
+  it reads as one continuous loop. Arrows let the user step manually (and
+  restart the auto-advance timer); auto-advance interval eased to ~2.6s.
+- **Process timeline media** updated: step 02 (חזון ותכנון) → stone-villas
+  set; step 03 (תכנון אדריכלי) → architectural floor-plan.
+- **Services media:** the 5th card (שיפוצים ושינוי חלוקה) now shows its own
+  renovations set instead of reusing the stone-villas render.
+
+## [0.10.0] - 2026-06-26
+
+### Added
+
+- **Project gallery is now an auto-advancing carousel.** The home-page teaser
+  and the `/examples` gallery slide through every project one tile at a time on
+  a quick (~2.4s) timer, looping seamlessly, pausing on hover/focus and while
+  the lightbox is open. Replaces the static grid (`GalleryGrid` → new
+  `GalleryCarousel`).
+- **14 individual project renders** added to the gallery — the previous
+  four-in-one composite tiles were replaced with each project shown separately.
+
+### Changed
+
+- **About/founder section** on the home page now uses the brand icon photo
+  (`yarin-icon`) instead of the standing portrait.
+- **Stats:** the projects counter now reads **24+** (was 5).
+- **Process timeline media:** step 03 (תכנון אדריכלי) shows the lower "design"
+  half of the Wix office interior; step 04 (עיצוב פנים) shows the full Wix
+  office render.
+- **Services media** re-assigned per the client's selection: architectural
+  planning reuses the renovations render; interior design shows the café
+  interior; authorities/permits reuses the modern-pool-villa render; electrical
+  & plumbing shows villa floor plans; on-site execution shows the desert-villas
+  set.
+
 ## [0.9.2] - 2026-06-24
 
 ### Fixed

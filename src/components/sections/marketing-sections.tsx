@@ -662,9 +662,9 @@ export function FounderTeaser() {
               className="pointer-events-none absolute -left-20 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-brand/20 blur-[80px]"
             />
             <div className="relative min-h-96 overflow-hidden rounded-xl border border-white/[0.08] bg-surface-1 md:min-h-[30rem]">
-              {/* Full-bleed founder portrait (same image as the About page). */}
+              {/* Full-bleed founder portrait (the brand icon photo). */}
               <Image
-                src="/images/yarin-portrait.webp"
+                src="/images/yarin-icon.webp"
                 alt={founderName}
                 fill
                 sizes="(min-width: 768px) 40vw, 90vw"
