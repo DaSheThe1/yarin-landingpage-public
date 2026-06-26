@@ -248,16 +248,16 @@ export function GalleryCarousel({
           <>
             <button
               type="button"
-              onClick={() => onArrow(-1)}
-              aria-label="הקודם"
+              onClick={() => onArrow(1)}
+              aria-label="הבא"
               className="absolute right-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition-colors hover:border-brand/40 hover:bg-black/70 md:inline-flex md:right-4"
             >
               <ChevronRight className="h-6 w-6" />
             </button>
             <button
               type="button"
-              onClick={() => onArrow(1)}
-              aria-label="הבא"
+              onClick={() => onArrow(-1)}
+              aria-label="הקודם"
               className="absolute left-2 top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur transition-colors hover:border-brand/40 hover:bg-black/70 md:inline-flex md:left-4"
             >
               <ChevronLeft className="h-6 w-6" />
@@ -272,16 +272,16 @@ export function GalleryCarousel({
         <div className="mt-6 flex items-center justify-center gap-5 md:hidden">
           <button
             type="button"
-            onClick={() => onArrow(-1)}
-            aria-label="הקודם"
+            onClick={() => onArrow(1)}
+            aria-label="הבא"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-white transition-colors hover:border-brand/40 hover:bg-white/10"
           >
             <ChevronRight className="h-6 w-6" />
           </button>
           <button
             type="button"
-            onClick={() => onArrow(1)}
-            aria-label="הבא"
+            onClick={() => onArrow(-1)}
+            aria-label="הקודם"
             className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/[0.05] text-white transition-colors hover:border-brand/40 hover:bg-white/10"
           >
             <ChevronLeft className="h-6 w-6" />

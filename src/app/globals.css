@@ -349,12 +349,24 @@
   z-index: -10;
   overflow: hidden;
   pointer-events: none;
-  /* Scrolling lifts saturation and brightness a touch, so the gold field
-     visibly "warms" and glows as you move down the page. No hue-rotate — it
-     would drag the gold toward green. */
-  filter: saturate(calc(1 + var(--bg-scroll, 0) * 0.3))
-    brightness(calc(1 + var(--bg-scroll, 0) * 0.08));
-  transition: filter 700ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Scrolling lifts saturation and brightness a touch, so the gold field visibly
+   "warms" and glows as you move down the page. No hue-rotate — it would drag
+   the gold toward green.
+
+   This re-evaluates a `filter` on a fixed, full-viewport layer on EVERY scroll
+   frame. Weaker mobile GPUs can't keep that whole-screen filter repaint in sync
+   with the page: sibling layers get dropped mid-scroll (the hero title blanks
+   out) and the field itself tiles into vertical banding streaks. So the
+   scroll-reactive filter is gated to wider (typically pointer-fine) screens;
+   phones keep a static, correctly-rendered field. */
+@media (min-width: 768px) {
+  .site-bg {
+    filter: saturate(calc(1 + var(--bg-scroll, 0) * 0.3))
+      brightness(calc(1 + var(--bg-scroll, 0) * 0.08));
+    transition: filter 700ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
 }
 
 .site-bg__inner {

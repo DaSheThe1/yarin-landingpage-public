@@ -9,6 +9,22 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.11.1] - 2026-06-26
+
+### Fixed
+
+- **Gallery arrows were reversed.** On the LTR carousel track the right-side
+  button stepped to the *left* image and vice-versa. The right button now brings
+  the right neighbour to centre (next) and the left button the left neighbour
+  (previous), on both the desktop side-arrows and the mobile control row; the
+  `aria-label`s follow. Swipe direction is unchanged.
+- **Hero title and other elements blanked out while scrolling on phones.** The
+  fixed, full-viewport background re-animated a `saturate()/brightness()` filter
+  on every scroll frame; on weaker mobile GPUs that whole-screen filter repaint
+  dropped sibling paint layers (the headline vanished) and tiled the field into
+  vertical banding streaks. The scroll-reactive filter is now gated to `≥768px`
+  screens — phones render a static field; desktop is unchanged.
+
 ## [0.11.0] - 2026-06-26
 
 ### Added
