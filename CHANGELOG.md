@@ -9,6 +9,24 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.11.2] - 2026-06-26
+
+### Fixed
+
+- **Hero title and other sections blanked out and stayed blank when scrolling on
+  mobile (real root cause).** `[data-reveal]` set `will-change: opacity, transform`
+  on its base rule and never cleared it, so **every** Reveal-wrapped element (the
+  hero title, eyebrow, badges, each section, the gallery) stayed pinned as its
+  own compositor layer for the life of the page. On mobile GPUs those standing
+  layer tiles get evicted under memory pressure while scrolling and, with nothing
+  invalidating them, are never re-rastered — the content goes blank and stays
+  blank (the `WaveText` title lingered longest because its colour sweep only
+  repaints it intermittently). `will-change` is now scoped to only the pending
+  (pre-reveal) state and reset to `auto` once shown, so nothing remains a
+  standing layer. This supersedes the `0.11.1` background-filter mitigation as
+  the actual cause; that gate is kept as a complementary reduction in mobile
+  compositing churn.
+
 ## [0.11.1] - 2026-06-26
 
 ### Fixed
