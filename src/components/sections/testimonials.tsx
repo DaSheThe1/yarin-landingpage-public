@@ -172,7 +172,6 @@ function Carousel({
           count > 1 && (drag ? "cursor-grabbing" : "cursor-grab")
         )}
       >
-        <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-30" />
         <div
           aria-hidden
           className="pointer-events-none absolute -top-24 left-1/2 h-56 w-[36rem] -translate-x-1/2 rounded-full bg-brand/15 blur-[100px]"

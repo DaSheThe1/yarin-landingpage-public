@@ -14,7 +14,6 @@ export function TrustBand() {
       <div className="mx-auto max-w-4xl">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 px-6 py-14 text-center sm:px-12">
-            <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-40" />
             <div
               aria-hidden
               className="pointer-events-none absolute -top-24 left-1/2 h-56 w-[36rem] -translate-x-1/2 rounded-full bg-brand/15 blur-[100px]"

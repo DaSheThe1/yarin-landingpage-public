@@ -9,6 +9,56 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.12.0] - 2026-07-09
+
+### Added
+
+- **Price funnel in the offer section.** The single flagship offer card is
+  replaced by a three-rung funnel: the regular ₪1,990 characterization-meeting
+  price (struck through, "not incl. VAT"), the ₪997 site price (also struck
+  through), and the payoff — free for the first 10 clients this month — with the
+  flagship offer's inclusions and a booking CTA. Copy in `offers.funnel`.
+- **CTA band under the project gallery (`GalleryCta`).** A mid-page conversion
+  band directly beneath the home gallery, while the visitor is still warm from
+  the work. Primary lead CTA + WhatsApp. Copy in `galleryCta`.
+- **Display serif for headlines.** `h1`/`h2` now use Frank Ruhl Libre (loaded in
+  the locale layout, exposed as `--font-display` / `.font-display`); body copy
+  stays on Inter. The serif/sans split is the core editorial-luxury cue.
+
+### Changed
+
+- **Services copy — work plans.** The "electrical & plumbing" service is now
+  "תוכניות עבודה, חשמל ואינסטלציה", leading with detailed work plans so the
+  on-site contractor doesn't make mistakes that cost tens to hundreds of
+  thousands of shekels.
+- **Premium background.** The faint engineered grid is removed site-wide (per
+  the client's request). The site-wide colour field gains a cinematic vignette
+  (a pool of light on the centred content) and an ultra-fine film-grain overlay
+  for a printed, tactile feel.
+- **"ללא עלות" instead of "חינם".** The free consultation is now framed as
+  "at no cost" (more premium) rather than "free" across every CTA and section;
+  the ₪997 value stays shown struck-through in the price funnel.
+- **Copy cleanup.** All em-dashes / en-dashes / ellipsis characters removed from
+  Hebrew copy (they read as AI-generated) and rewritten with natural
+  punctuation; "תכנית/תכניות" normalised to full spelling "תוכנית/תוכניות"
+  (ktiv maleh) throughout.
+
+### Fixed
+
+- **Gemini watermarks removed** from the AI-render gallery/project images
+  (`public/images/*.png`) and their WebP siblings regenerated, and from the
+  showcase videos (`hero-demo.mp4`, `thank-you.mp4`) via a feathered masked
+  blur over the bottom-right corner (ffmpeg `maskedmerge`; the sparkle drifts
+  per clip so a fixed `delogo` box smeared).
+- **Footer logo** now shows the founder photo (same `yarin-icon` image as the
+  header) instead of the "יא" monogram badge.
+
+### Changed (offer funnel details)
+
+- The **second price (₪997) now shows "לא כולל מע״מ"** like the first.
+- The struck prices lose the side **X icon**; the "not your price" signal is now
+  **two strokes drawn across the number as an X** (corner-to-corner SVG).
+
 ## [0.11.2] - 2026-06-26
 
 ### Fixed

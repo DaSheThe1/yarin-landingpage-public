@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ArrowUpRight, Mail, Phone } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 
@@ -21,7 +22,6 @@ export function SiteFooter() {
 
   return (
     <footer className="relative overflow-hidden border-t border-white/[0.08] bg-background">
-      <div className="pointer-events-none absolute inset-0 bg-grid mask-fade-b opacity-40" />
       <div
         aria-hidden
         className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[44rem] -translate-x-1/2 rounded-full bg-brand/20 blur-[120px]"
@@ -56,9 +56,13 @@ export function SiteFooter() {
               href="/"
               className="flex items-center gap-2.5 text-[15px] font-semibold tracking-tight text-foreground"
             >
-              <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand text-[11px] font-bold text-primary-foreground">
-                {siteConfig.monogram}
-              </span>
+              <Image
+                src="/images/yarin-icon.webp"
+                alt={siteConfig.name}
+                width={28}
+                height={28}
+                className="h-7 w-7 rounded-full object-cover shadow-[0_0_0_1px_rgba(201,168,76,0.5)]"
+              />
               {siteConfig.name}
             </Link>
             <p className="mt-4 max-w-sm leading-6 text-muted-foreground">

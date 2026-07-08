@@ -60,9 +60,8 @@ export default async function ThankYouPage({
   return (
     <PageShell>
       <section className="relative overflow-hidden">
-        {/* Subtle neutral grid texture + a fade into the page. No coloured
-            aurora wash here — keep the thank-you hero clean and light. */}
-        <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-60" />
+        {/* A fade into the page — the thank-you hero stays clean and light,
+            with no coloured aurora wash. */}
         <div
           aria-hidden
           className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-background"

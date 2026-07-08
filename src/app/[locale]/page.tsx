@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import {
   FinalCta,
   FounderTeaser,
+  GalleryCta,
   HeroSection,
   OffersSection,
   PageShell,
@@ -50,6 +51,7 @@ export default async function Home({
       <StatsSection />
       <ProcessSection />
       <GalleryTeaser />
+      <GalleryCta />
       <TrustBand />
       <Testimonials />
       <FounderTeaser />

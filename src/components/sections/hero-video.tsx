@@ -19,7 +19,7 @@ const showcase = [
   { src: "/images/render-modern-pool-villas.webp", alt: "הדמיית וילה מודרנית עם בריכה" },
   { src: "/images/render-stone-villas.webp", alt: "הדמיות וילות אבן בנוף הרים" },
   { src: "/images/render-desert-villa.webp", alt: "הדמיית וילת מדבר עם בריכה" },
-  { src: "/images/render-desert-elevations.webp", alt: "חזיתות וילה — מבט צפון ודרום" },
+  { src: "/images/render-desert-elevations.webp", alt: "חזיתות וילה, מבט צפון ודרום" },
 ];
 const slotSeconds = 7;
 

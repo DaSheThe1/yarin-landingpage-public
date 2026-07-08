@@ -55,9 +55,10 @@ export function SiteBackground() {
         <span className="site-bg__blob site-bg__blob--4" />
         <span className="site-bg__blob site-bg__blob--5" />
       </div>
-      {/* Faint engineered grid, so the colour wash reads as a designed surface
-          rather than a plain blur. Fades out toward the bottom. */}
-      <div className="site-bg__grid" />
+      {/* Gallery-lit depth: a cinematic vignette pools light on the centre, and
+          an ultra-fine film grain removes the digital flatness of the wash. */}
+      <div className="site-bg__vignette" />
+      <div className="site-bg__noise" />
     </div>
   );
 }

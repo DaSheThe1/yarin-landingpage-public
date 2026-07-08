@@ -201,7 +201,7 @@ export function ThankYouVideo() {
 function VideoPlaceholder() {
   const t = useTranslations("pages.thankYou.video");
   return (
-    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-surface-1 bg-grid">
+    <div className="absolute inset-0 flex flex-col items-center justify-center gap-5 bg-surface-1">
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.18),transparent_70%)]"

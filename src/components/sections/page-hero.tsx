@@ -16,7 +16,6 @@ export function PageHero({
 }) {
   return (
     <section className="relative overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-50" />
       {/* Soft centered hairline instead of a hard full-width rule. */}
       <div
         aria-hidden

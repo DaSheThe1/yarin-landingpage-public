@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 import { siteConfig } from "@/config/site";
 
 export const alt =
-  "ירין אליה אברהם — תכנון ועיצוב פנים לוילות ובתי יוקרה";
+  "ירין אליה אברהם, תכנון ועיצוב פנים לוילות ובתי יוקרה";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 // Render the card once at build time (required by `output: "export"`; a no-op
@@ -82,7 +82,7 @@ export default function OpenGraphImage() {
             direction: "rtl",
           }}
         >
-          ליווי פרימיום אישי לוילות ובתי יוקרה במרכז ובצפון — מבנייה ועד שיפוץ.
+          ליווי פרימיום אישי לוילות ובתי יוקרה במרכז ובצפון, מבנייה ועד שיפוץ.
         </div>
         <div
           style={{

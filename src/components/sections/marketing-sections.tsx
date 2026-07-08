@@ -6,6 +6,7 @@ import {
   ArrowUpRight,
   Bot,
   CheckCircle2,
+  ChevronsDown,
   ClipboardList,
   FileText,
   Gauge,
@@ -17,6 +18,7 @@ import {
   Search,
   Server,
   ShieldCheck,
+  Sparkles,
   Target,
   Workflow,
   Wrench,
@@ -118,7 +120,6 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden">
       {/* Backdrop layers */}
-      <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-60" />
       <div
         aria-hidden
         className="pointer-events-none absolute -top-40 left-1/2 h-[42rem] w-[60rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.45),transparent_60%)] blur-[90px]"
@@ -544,15 +545,73 @@ export function ServicesTeaser() {
 
 /* ──────────────────────────  Offers  ────────────────────────── */
 
+type Funnel = {
+  heading: string;
+  anchorLabel: string;
+  anchorPrice: string;
+  anchorVat: string;
+  strikeNote: string;
+  midLabel: string;
+  midPrice: string;
+  midNote: string;
+  freeKicker: string;
+  freeHeadline: string;
+  freeBody: string;
+  scarcity: string;
+  cta: string;
+};
+
+/** A struck-through price tier in the funnel — the "this is what it usually
+ *  costs, but not what you pay" rungs above the free offer. */
+function StruckTier({
+  label,
+  price,
+  note,
+  vat,
+}: {
+  label: string;
+  price: string;
+  note: string;
+  vat?: string;
+}) {
+  return (
+    <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-5 text-center shadow-card">
+      <p className="text-[13px] text-muted-foreground">{label}</p>
+      <div className="mt-1.5 flex items-center justify-center gap-2.5">
+        <span className="relative inline-block px-1 text-3xl font-semibold tabular-nums text-foreground-soft/70 sm:text-4xl">
+          {price}
+          {/* Two crossing strokes drawn over the number — a clear "this is not
+              what you pay" cross-out, spanning the digits corner to corner. */}
+          <svg
+            aria-hidden
+            viewBox="0 0 100 100"
+            preserveAspectRatio="none"
+            className="pointer-events-none absolute inset-0 h-full w-full"
+          >
+            <line x1="4" y1="12" x2="96" y2="88" stroke="rgb(244,113,105)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            <line x1="96" y1="12" x2="4" y2="88" stroke="rgb(244,113,105)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+          </svg>
+        </span>
+        {vat ? (
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-subtle-foreground">
+            {vat}
+          </span>
+        ) : null}
+      </div>
+      <p className="mt-2 text-sm font-medium text-foreground-soft">{note}</p>
+    </div>
+  );
+}
+
 export function OffersSection() {
   const t = useTranslations("offers");
+  const f = t.raw("funnel") as Funnel;
   const items = t.raw("items") as OfferItem[];
-  // Until there's a real menu of packages, show the single flagship offer.
   const offer = items[offers.findIndex((o) => o.featured)] ?? items[0];
 
   return (
     <section className="bg-background px-6 pt-12 pb-12 sm:pt-24 sm:pb-14">
-      <div className="mx-auto max-w-5xl">
+      <div className="mx-auto max-w-3xl">
         <Reveal>
           <SectionHeading
             align="center"
@@ -561,41 +620,81 @@ export function OffersSection() {
             description={t("description")}
           />
         </Reveal>
+
         <Reveal delay={120}>
-          <div className="ring-shine glow-breathe relative mx-auto mt-12 grid gap-8 overflow-hidden rounded-3xl border border-brand/35 bg-brand/[0.05] p-7 sm:p-10 md:grid-cols-[1fr_1px_1fr] md:items-center">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -right-24 -top-20 h-72 w-72 rounded-full bg-brand/20 blur-[100px]"
+          <div className="relative mx-auto mt-12 flex flex-col items-center">
+            <p className="mb-6 text-center text-lg font-medium text-foreground">
+              {f.heading}
+            </p>
+
+            {/* Rung 1 — the real market price, struck through. */}
+            <StruckTier
+              label={f.anchorLabel}
+              price={f.anchorPrice}
+              vat={f.anchorVat}
+              note={f.strikeNote}
             />
-            <div className="relative">
-              <span className="inline-flex w-fit rounded-full bg-brand px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-primary-foreground">
-                {offer.bestFor}
-              </span>
-              <h3 className="mt-5 text-2xl font-medium tracking-tight text-foreground sm:text-3xl">
-                {offer.title}
-              </h3>
-              <p className="mt-3 leading-7 text-muted-foreground">
-                {offer.summary}
-              </p>
-              <LeadButton
-                variant="brand"
-                className="mt-7 h-11 rounded-lg px-5 text-[15px]"
-              >
-                {offer.cta}
-                <ArrowRight data-icon="inline-end" />
-              </LeadButton>
+
+            <ChevronsDown
+              aria-hidden
+              className="my-3 h-6 w-6 text-brand-accent/70"
+            />
+
+            {/* Rung 2 — the site price, also struck through. */}
+            <StruckTier
+              label={f.midLabel}
+              price={f.midPrice}
+              vat={f.anchorVat}
+              note={f.midNote}
+            />
+
+            <ChevronsDown
+              aria-hidden
+              className="my-3 h-7 w-7 animate-float text-brand-accent"
+            />
+
+            {/* Rung 3 — the payoff: free for the first ten. */}
+            <div className="ring-shine glow-breathe relative w-full max-w-xl overflow-hidden rounded-3xl border border-brand/45 bg-brand/[0.07] p-7 text-center sm:p-9">
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -top-24 left-1/2 h-56 w-[30rem] -translate-x-1/2 rounded-full bg-brand/25 blur-[90px]"
+              />
+              <div className="relative">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-brand px-3.5 py-1 font-mono text-[11px] uppercase tracking-wider text-primary-foreground">
+                  <Sparkles className="h-3.5 w-3.5" />
+                  {f.freeKicker}
+                </span>
+                <h3 className="font-display mt-4 text-3xl font-bold leading-tight text-gradient sm:text-[2.6rem]">
+                  {f.freeHeadline}
+                </h3>
+                <p className="mx-auto mt-4 max-w-md leading-7 text-foreground-soft">
+                  {f.freeBody}
+                </p>
+
+                <ul className="mx-auto mt-6 grid max-w-md gap-2.5 text-start text-sm text-foreground-soft sm:grid-cols-1">
+                  {offer.includes.map((item) => (
+                    <li key={item} className="flex gap-2.5">
+                      <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand-accent" />
+                      <span className="leading-6">{item}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <LeadButton
+                  variant="brand"
+                  className="mt-8 h-12 rounded-lg px-6 text-base"
+                >
+                  {f.cta}
+                  <ArrowRight data-icon="inline-end" />
+                </LeadButton>
+                <p className="mt-4 text-sm font-medium text-brand-accent">
+                  {f.scarcity}
+                </p>
+              </div>
             </div>
-            <div aria-hidden className="hidden h-full w-px bg-white/[0.08] md:block" />
-            <ul className="relative space-y-3.5 text-sm text-foreground-soft">
-              {offer.includes.map((item) => (
-                <li key={item} className="flex gap-2.5">
-                  <CheckCircle2 className="mt-0.5 h-4.5 w-4.5 shrink-0 text-brand-accent" />
-                  <span className="leading-6">{item}</span>
-                </li>
-              ))}
-            </ul>
           </div>
         </Reveal>
+
         <Reveal>
           <p className="mx-auto mt-6 max-w-2xl text-center text-sm text-subtle-foreground">
             {t("note")}
@@ -743,6 +842,59 @@ export function FounderTeaser() {
   );
 }
 
+/* ──────────────────────  Mid-page CTA (after gallery)  ────────────────────── */
+
+export function GalleryCta() {
+  const t = useTranslations("galleryCta");
+
+  return (
+    <section className="bg-background px-6 pb-6 pt-2 sm:pb-10">
+      <div className="mx-auto max-w-4xl">
+        <Reveal>
+          <div className="ring-shine relative overflow-hidden rounded-3xl border border-brand/25 bg-surface-1 px-6 py-10 text-center sm:px-12 sm:py-12">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -top-28 left-1/2 h-64 w-[40rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(201,168,76,0.35),transparent_60%)] blur-[90px]"
+            />
+            <div className="relative">
+              <div className="flex justify-center">
+                <Eyebrow>{t("eyebrow")}</Eyebrow>
+              </div>
+              <h2 className="mx-auto mt-5 max-w-xl text-3xl font-medium tracking-tight text-balance sm:text-4xl">
+                {t("title")}
+              </h2>
+              <p className="mx-auto mt-4 max-w-lg leading-7 text-muted-foreground">
+                {t("body")}
+              </p>
+              <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <LeadButton
+                  variant="brand"
+                  className="h-11 rounded-lg px-5 text-[15px]"
+                >
+                  {t("ctaPrimary")}
+                  <ArrowRight data-icon="inline-end" />
+                </LeadButton>
+                <a
+                  href={`https://wa.me/${siteConfig.phoneE164.replace("+", "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={cn(
+                    buttonVariants({ variant: "outline" }),
+                    "h-11 rounded-lg px-5 text-[15px]"
+                  )}
+                >
+                  {t("ctaSecondary")}
+                  <ArrowUpRight data-icon="inline-end" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  );
+}
+
 /* ──────────────────────────  Final CTA  ────────────────────────── */
 
 export function FinalCta() {
@@ -753,7 +905,6 @@ export function FinalCta() {
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <div className="relative overflow-hidden rounded-3xl border border-white/[0.08] bg-surface-1 px-6 py-16 text-center sm:px-10">
-            <div className="pointer-events-none absolute inset-0 bg-grid mask-fade opacity-50" />
             <div
               aria-hidden
               className="pointer-events-none absolute -top-32 left-1/2 h-80 w-[44rem] -translate-x-1/2 animate-aurora rounded-full bg-[radial-gradient(circle_at_center,rgba(201, 168, 76,0.5),transparent_60%)] blur-[80px]"

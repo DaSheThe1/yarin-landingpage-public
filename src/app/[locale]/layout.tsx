@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Frank_Ruhl_Libre, Inter, JetBrains_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -26,6 +26,16 @@ const inter = Inter({
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Elegant Hebrew serif reserved for display headlines — it's the single biggest
+// "premium editorial" cue for a Hebrew luxury/architecture brand. Body copy stays
+// on Inter; only h1/h2 pick this up (see globals.css).
+const frankRuhl = Frank_Ruhl_Libre({
+  variable: "--font-display",
+  subsets: ["hebrew", "latin"],
+  weight: ["500", "700", "900"],
   display: "swap",
 });
 
@@ -111,7 +121,7 @@ export default async function LocaleLayout({
       lang={locale}
       dir={dir}
       data-scroll-behavior="smooth"
-      className={`${inter.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${jetbrainsMono.variable} ${frankRuhl.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col bg-background text-foreground">
         <NextIntlClientProvider>
