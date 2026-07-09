@@ -28,6 +28,7 @@ import { Card, CardContent, CardDescription } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
 import { LeadButton } from "@/components/lead/lead-button";
 import { HeroVideo } from "@/components/sections/hero-video";
+import { PriceCrossout } from "@/components/sections/price-crossout";
 import { Reveal } from "@/components/ui/reveal";
 import { WaveText } from "@/components/ui/wave-text";
 import { serviceMedia } from "@/content/services";
@@ -550,9 +551,11 @@ type Funnel = {
   anchorLabel: string;
   anchorPrice: string;
   anchorVat: string;
+  anchorTip: string;
   strikeNote: string;
   midLabel: string;
   midPrice: string;
+  midTip: string;
   midNote: string;
   freeKicker: string;
   freeHeadline: string;
@@ -562,36 +565,28 @@ type Funnel = {
 };
 
 /** A struck-through price tier in the funnel — the "this is what it usually
- *  costs, but not what you pay" rungs above the free offer. */
+ *  costs, but not what you pay" rungs above the free offer. The crossed-out
+ *  price is interactive (animated X + explanatory popover) via PriceCrossout. */
 function StruckTier({
   label,
   price,
   note,
+  tip,
   vat,
+  pulseDelay,
 }: {
   label: string;
   price: string;
   note: string;
+  tip: string;
   vat?: string;
+  pulseDelay?: number;
 }) {
   return (
     <div className="w-full max-w-md rounded-2xl border border-white/[0.08] bg-white/[0.02] px-6 py-5 text-center shadow-card">
       <p className="text-[13px] text-muted-foreground">{label}</p>
       <div className="mt-1.5 flex items-center justify-center gap-2.5">
-        <span className="relative inline-block px-1 text-3xl font-semibold tabular-nums text-foreground-soft/70 sm:text-4xl">
-          {price}
-          {/* Two crossing strokes drawn over the number — a clear "this is not
-              what you pay" cross-out, spanning the digits corner to corner. */}
-          <svg
-            aria-hidden
-            viewBox="0 0 100 100"
-            preserveAspectRatio="none"
-            className="pointer-events-none absolute inset-0 h-full w-full"
-          >
-            <line x1="4" y1="12" x2="96" y2="88" stroke="rgb(244,113,105)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-            <line x1="96" y1="12" x2="4" y2="88" stroke="rgb(244,113,105)" strokeWidth="4" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-          </svg>
-        </span>
+        <PriceCrossout price={price} tip={tip} pulseDelay={pulseDelay} />
         {vat ? (
           <span className="rounded-full border border-white/10 bg-white/[0.04] px-2 py-0.5 text-[11px] text-subtle-foreground">
             {vat}
@@ -632,6 +627,7 @@ export function OffersSection() {
               label={f.anchorLabel}
               price={f.anchorPrice}
               vat={f.anchorVat}
+              tip={f.anchorTip}
               note={f.strikeNote}
             />
 
@@ -645,6 +641,8 @@ export function OffersSection() {
               label={f.midLabel}
               price={f.midPrice}
               vat={f.anchorVat}
+              tip={f.midTip}
+              pulseDelay={1200}
               note={f.midNote}
             />
 

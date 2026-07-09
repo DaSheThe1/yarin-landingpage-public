@@ -255,6 +255,27 @@
    WaveText (one crest, written inline per frame) rather than CSS keyframes — see
    that component for the rationale and the reduced-motion handling. */
 
+@keyframes price-pop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.12);
+  }
+}
+
+@keyframes price-x-stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.35) rotate(-4deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
 @keyframes glow-breathe {
   0%,
   100% {
@@ -598,6 +619,33 @@
   /* Breathing brand glow for emphasis */
   .glow-breathe {
     animation: glow-breathe 4.5s ease-in-out infinite;
+  }
+
+  /* The struck-price X "stamps" in when it scrolls into view (see
+     PriceCrossout). Renders fully visible without the class, so no-JS is fine. */
+  .price-x-stamp {
+    transform-origin: center;
+    animation: price-x-stamp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  /* Attention "pop" — the crossed price continuously breathes larger/smaller,
+     like a TV-ad price flash, so the eye keeps catching it. Runs at all times
+     (including on hover). Like the tool-strip marquee below, this is a
+     deliberate brand/marketing element and keeps animating even under reduced
+     motion — the `!important` overrides the global reduced-motion reset (which
+     is unlayered, so this layered `!important` wins the cascade). */
+  .price-pulse {
+    transform-origin: center;
+    animation: price-pop 1.5s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* The one-shot "stamp" is fine to drop; the continuous pulse stays on. */
+    .price-x-stamp {
+      animation: none;
+    }
+    .price-pulse {
+      animation: price-pop 1.5s ease-in-out infinite !important;
+    }
   }
 
   /* Travelling colour wave across split letters (see WaveText). Words stay

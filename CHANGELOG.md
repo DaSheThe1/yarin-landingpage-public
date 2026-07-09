@@ -9,6 +9,48 @@ The version lives in `package.json` and is reported by `GET /api/health`.
 Agents: every behavior-changing commit must bump the version and add an entry
 here. See `AGENTS.md` → "Versioning rules".
 
+## [0.12.4] - 2026-07-09
+
+### Fixed
+
+- **Price pulse now shows even under OS "reduce motion".** The continuous
+  struck-price breathe was being killed by the site-wide reduced-motion reset,
+  so anyone with reduce-motion enabled saw it as static. It now keeps animating
+  regardless (a deliberate marketing element, matching the tool-strip marquee's
+  existing reduced-motion exemption). The one-shot "stamp" still respects
+  reduce-motion.
+
+## [0.12.3] - 2026-07-09
+
+### Changed
+
+- **Struck-price pulse now runs continuously** — a constant breathing zoom
+  (grows/shrinks on a loop) instead of a pop-then-rest, and it no longer pauses
+  on hover, so the prices are always visibly moving. Still `prefers-reduced-motion`
+  aware.
+
+## [0.12.2] - 2026-07-09
+
+### Changed
+
+- **Struck prices now "pop".** Each crossed-out funnel price zooms up and settles
+  on a loop (a TV-ad style price flash) to catch the eye; the two prices are
+  offset so they don't throb in unison, and the pulse pauses on hover/focus so
+  the popover stays readable. Respects `prefers-reduced-motion`.
+
+## [0.12.1] - 2026-07-09
+
+### Changed
+
+- **Interactive struck prices.** The crossed-out funnel prices (₪1,990 / ₪997)
+  now use a marker-style **X that "stamps" in** on scroll and reveal an
+  explanatory **popover** on hover (desktop) or tap (mobile), with a small "?"
+  affordance — the "this isn't what you pay" reasoning is now on-demand instead
+  of static. New `PriceCrossout` client component; copy in `offers.funnel`
+  `anchorTip` / `midTip`.
+- **Hero subtitle** second sentence now opens with "תכנון אדריכלי ועיצוב פנים…"
+  (was "אדריכלות ועיצוב פנים…").
+
 ## [0.12.0] - 2026-07-09
 
 ### Added
